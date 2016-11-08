@@ -6,7 +6,6 @@ import java.util.List;
 public class Line {
     private String color;
     private List<Station> StationList;
-    private Train train = null;
     private static int numberLines = 0;
-    private static int maxLines = 3;
+    private List<Train> trainList;
 }
