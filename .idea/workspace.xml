@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f34e3e95-a575-4b02-9095-0efccd0bda6a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Game.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Line.java" afterPath="$PROJECT_DIR$/src/Line.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Station.java" afterPath="$PROJECT_DIR$/src/Station.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Train.java" afterPath="$PROJECT_DIR$/src/Train.java" />
     </list>
     <ignored path="MiniMetro.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,31 +42,56 @@
               <ID>JAVA</ID>
               <OriginalElement />
               <nodes>
-                <node x="0.0" y="551.0">com</node>
-                <node x="195.0" y="401.0">netscape</node>
-                <node x="385.0" y="401.0">oracle</node>
-                <node x="477.0" y="551.0">org</node>
-                <node x="408.0" y="185.0">Position</node>
-                <node x="0.0" y="401.0">resources</node>
-                <node x="0.0" y="326.0">toolbarButtonGraphics</node>
-                <node x="320.0" y="551.0">sun</node>
-                <node x="275.0" y="326.0">META-INF</node>
-                <node x="0.0" y="626.0">jdk</node>
-                <node x="262.0" y="11.0">Station</node>
-                <node x="46.0" y="15.0">Line</node>
-                <node x="172.0" y="476.0">apple</node>
-                <node x="-201.0" y="3.0">Game</node>
-                <node x="161.0" y="551.0">java</node>
-                <node x="340.0" y="476.0">javax</node>
-                <node x="0.0" y="476.0">javafx</node>
-                <node x="197.0" y="185.0">Client</node>
-                <node x="-48.0" y="186.0">Train</node>
+                <node x="167.0" y="617.0">com</node>
+                <node x="393.0" y="467.0">netscape</node>
+                <node x="0.0" y="542.0">oracle</node>
+                <node x="0.0" y="692.0">org</node>
+                <node x="211.0" y="348.0">Position</node>
+                <node x="198.0" y="467.0">resources</node>
+                <node x="359.0" y="348.0">toolbarButtonGraphics</node>
+                <node x="487.0" y="617.0">sun</node>
+                <node x="0.0" y="467.0">META-INF</node>
+                <node x="155.0" y="692.0">jdk</node>
+                <node x="266.0" y="0.0">Line</node>
+                <node x="-184.0" y="172.0">Station</node>
+                <node x="344.0" y="542.0">apple</node>
+                <node x="328.0" y="617.0">java</node>
+                <node x="-139.0" y="-57.0">Game</node>
+                <node x="0.0" y="617.0">javax</node>
+                <node x="172.0" y="542.0">javafx</node>
+                <node x="-180.0" y="354.0">Client</node>
+                <node x="227.0" y="185.0">Train</node>
               </nodes>
               <notes />
-              <edges />
-              <settings layout="Hierarchic Group" zoom="1.0" x="240.5" y="180.5" />
+              <edges>
+                <edge source="Train" target="Client">
+                  <point x="0.0" y="0.0" />
+                  <point x="0.0" y="0.0" />
+                </edge>
+                <edge source="Station" target="Client">
+                  <point x="0.0" y="0.0" />
+                  <point x="0.0" y="0.0" />
+                </edge>
+                <edge source="Client" target="Station">
+                  <point x="0.0" y="0.0" />
+                  <point x="0.0" y="0.0" />
+                </edge>
+                <edge source="Line" target="Train">
+                  <point x="0.0" y="0.0" />
+                  <point x="0.0" y="0.0" />
+                </edge>
+                <edge source="Line" target="Station">
+                  <point x="0.0" y="0.0" />
+                  <point x="0.0" y="0.0" />
+                </edge>
+                <edge source="Station" target="Position">
+                  <point x="0.0" y="0.0" />
+                  <point x="0.0" y="0.0" />
+                </edge>
+              </edges>
+              <settings layout="Hierarchic Group" zoom="1.0" x="248.5" y="140.5" />
               <SelectedNodes>
-                <node>Line</node>
+                <node>Game</node>
               </SelectedNodes>
               <Categories>
                 <Category>Fields</Category>
@@ -204,9 +225,9 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -816,16 +837,19 @@
       <updated>1478502943011</updated>
       <workItem from="1478502947565" duration="2855000" />
       <workItem from="1478506421464" duration="5000" />
-      <workItem from="1478605172356" duration="761000" />
+      <workItem from="1478605172356" duration="878000" />
+      <workItem from="1478610676181" duration="23000" />
+      <workItem from="1479219119635" duration="60000" />
+      <workItem from="1479221147055" duration="284000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3621000" />
+    <option name="totallyTimeSpent" value="4105000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -879,6 +903,78 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Station.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Line.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Train.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Station.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Line.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Train.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Station.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -919,27 +1015,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="uml://MODULES/mdl-MiniMetro">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>MODULES</ID>
-          <OriginalElement>mdl-MiniMetro</OriginalElement>
-          <nodes>
-            <node x="" y="">mdl-MiniMetro</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="77.0" y="15.0" />
-          <SelectedNodes />
-          <Categories />
-          <SCOPE>All</SCOPE>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Train.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Station.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
           <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Line.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -968,37 +1063,86 @@
         </state>
       </provider>
     </entry>
+    <entry file="uml://MODULES/mdl-MiniMetro">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>MODULES</ID>
+          <OriginalElement>mdl-MiniMetro</OriginalElement>
+          <nodes>
+            <node x="" y="">mdl-MiniMetro</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="76.5" y="15.0" />
+          <SelectedNodes />
+          <Categories />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Train.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="uml://JAVA/">
       <provider selected="true" editor-type-id="UmlEditorProvider">
         <state>
           <ID>JAVA</ID>
           <OriginalElement />
           <nodes>
-            <node x="0.0" y="551.0">com</node>
-            <node x="195.0" y="401.0">netscape</node>
-            <node x="385.0" y="401.0">oracle</node>
-            <node x="477.0" y="551.0">org</node>
-            <node x="408.0" y="185.0">Position</node>
-            <node x="0.0" y="401.0">resources</node>
-            <node x="0.0" y="326.0">toolbarButtonGraphics</node>
-            <node x="320.0" y="551.0">sun</node>
-            <node x="275.0" y="326.0">META-INF</node>
-            <node x="0.0" y="626.0">jdk</node>
-            <node x="262.0" y="11.0">Station</node>
-            <node x="46.0" y="15.0">Line</node>
-            <node x="172.0" y="476.0">apple</node>
-            <node x="-201.0" y="3.0">Game</node>
-            <node x="161.0" y="551.0">java</node>
-            <node x="340.0" y="476.0">javax</node>
-            <node x="0.0" y="476.0">javafx</node>
-            <node x="197.0" y="185.0">Client</node>
-            <node x="-48.0" y="186.0">Train</node>
+            <node x="167.0" y="617.0">com</node>
+            <node x="393.0" y="467.0">netscape</node>
+            <node x="0.0" y="542.0">oracle</node>
+            <node x="0.0" y="692.0">org</node>
+            <node x="211.0" y="348.0">Position</node>
+            <node x="198.0" y="467.0">resources</node>
+            <node x="359.0" y="348.0">toolbarButtonGraphics</node>
+            <node x="487.0" y="617.0">sun</node>
+            <node x="0.0" y="467.0">META-INF</node>
+            <node x="155.0" y="692.0">jdk</node>
+            <node x="266.0" y="0.0">Line</node>
+            <node x="-184.0" y="172.0">Station</node>
+            <node x="344.0" y="542.0">apple</node>
+            <node x="328.0" y="617.0">java</node>
+            <node x="-139.0" y="-57.0">Game</node>
+            <node x="0.0" y="617.0">javax</node>
+            <node x="172.0" y="542.0">javafx</node>
+            <node x="-180.0" y="354.0">Client</node>
+            <node x="227.0" y="185.0">Train</node>
           </nodes>
           <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="240.5" y="180.5" />
+          <edges>
+            <edge source="Train" target="Client">
+              <point x="0.0" y="0.0" />
+              <point x="0.0" y="0.0" />
+            </edge>
+            <edge source="Station" target="Client">
+              <point x="0.0" y="0.0" />
+              <point x="0.0" y="0.0" />
+            </edge>
+            <edge source="Client" target="Station">
+              <point x="0.0" y="0.0" />
+              <point x="0.0" y="0.0" />
+            </edge>
+            <edge source="Line" target="Train">
+              <point x="0.0" y="0.0" />
+              <point x="0.0" y="0.0" />
+            </edge>
+            <edge source="Line" target="Station">
+              <point x="0.0" y="0.0" />
+              <point x="0.0" y="0.0" />
+            </edge>
+            <edge source="Station" target="Position">
+              <point x="0.0" y="0.0" />
+              <point x="0.0" y="0.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="1.0" x="248.5" y="140.5" />
           <SelectedNodes>
-            <node>Line</node>
+            <node>Game</node>
           </SelectedNodes>
           <Categories>
             <Category>Fields</Category>
