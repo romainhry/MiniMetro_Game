@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f34e3e95-a575-4b02-9095-0efccd0bda6a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Station.java" afterPath="$PROJECT_DIR$/src/Station.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Train.java" afterPath="$PROJECT_DIR$/src/Train.java" />
     </list>
     <ignored path="MiniMetro.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,38 +31,38 @@
         <entry file="file://$PROJECT_DIR$/src/Train.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JAVA/" pinned="false" current-in-tab="true">
+      <file leaf-file-name="JAVA/" pinned="false" current-in-tab="false">
         <entry file="uml://JAVA/">
           <provider selected="true" editor-type-id="UmlEditorProvider">
             <state>
               <ID>JAVA</ID>
               <OriginalElement />
               <nodes>
-                <node x="167.0" y="617.0">com</node>
-                <node x="393.0" y="467.0">netscape</node>
-                <node x="0.0" y="542.0">oracle</node>
-                <node x="0.0" y="692.0">org</node>
-                <node x="211.0" y="348.0">Position</node>
-                <node x="198.0" y="467.0">resources</node>
-                <node x="359.0" y="348.0">toolbarButtonGraphics</node>
-                <node x="487.0" y="617.0">sun</node>
-                <node x="0.0" y="467.0">META-INF</node>
-                <node x="155.0" y="692.0">jdk</node>
-                <node x="266.0" y="0.0">Line</node>
-                <node x="-184.0" y="172.0">Station</node>
-                <node x="344.0" y="542.0">apple</node>
-                <node x="328.0" y="617.0">java</node>
-                <node x="-139.0" y="-57.0">Game</node>
-                <node x="0.0" y="617.0">javax</node>
-                <node x="172.0" y="542.0">javafx</node>
-                <node x="-180.0" y="354.0">Client</node>
-                <node x="227.0" y="185.0">Train</node>
+                <node x="335.0" y="608.0">com</node>
+                <node x="195.0" y="533.0">netscape</node>
+                <node x="385.0" y="533.0">oracle</node>
+                <node x="157.0" y="683.0">org</node>
+                <node x="-190.0" y="204.0">Position</node>
+                <node x="0.0" y="533.0">resources</node>
+                <node x="148.0" y="414.0">toolbarButtonGraphics</node>
+                <node x="0.0" y="683.0">sun</node>
+                <node x="423.0" y="414.0">META-INF</node>
+                <node x="312.0" y="683.0">jdk</node>
+                <node x="-21.0" y="174.0">Station</node>
+                <node x="247.0" y="-36.0">Line</node>
+                <node x="0.0" y="608.0">apple</node>
+                <node x="496.0" y="608.0">java</node>
+                <node x="-163.0" y="-46.0">Game</node>
+                <node x="168.0" y="608.0">javax</node>
+                <node x="557.0" y="533.0">javafx</node>
+                <node x="330.0" y="265.0">Client</node>
+                <node x="344.0" y="107.0">Train</node>
               </nodes>
               <notes />
               <edges>
@@ -68,7 +70,7 @@
                   <point x="0.0" y="0.0" />
                   <point x="0.0" y="0.0" />
                 </edge>
-                <edge source="Station" target="Client">
+                <edge source="Line" target="Train">
                   <point x="0.0" y="0.0" />
                   <point x="0.0" y="0.0" />
                 </edge>
@@ -76,7 +78,11 @@
                   <point x="0.0" y="0.0" />
                   <point x="0.0" y="0.0" />
                 </edge>
-                <edge source="Line" target="Train">
+                <edge source="Station" target="Client">
+                  <point x="0.0" y="0.0" />
+                  <point x="0.0" y="0.0" />
+                </edge>
+                <edge source="Train" target="Line">
                   <point x="0.0" y="0.0" />
                   <point x="0.0" y="0.0" />
                 </edge>
@@ -89,10 +95,8 @@
                   <point x="0.0" y="0.0" />
                 </edge>
               </edges>
-              <settings layout="Hierarchic Group" zoom="1.0" x="248.5" y="140.5" />
-              <SelectedNodes>
-                <node>Game</node>
-              </SelectedNodes>
+              <settings layout="Hierarchic Group" zoom="1.0" x="9.0" y="172.0" />
+              <SelectedNodes />
               <Categories>
                 <Category>Fields</Category>
               </Categories>
@@ -106,7 +110,17 @@
         <entry file="file://$PROJECT_DIR$/src/Game.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+              <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.03448276">
+              <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -116,7 +130,7 @@
         <entry file="file://$PROJECT_DIR$/src/Station.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+              <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -154,6 +168,8 @@
       <list>
         <option value="$PROJECT_DIR$/src/Line.java" />
         <option value="$PROJECT_DIR$/src/Game.java" />
+        <option value="$PROJECT_DIR$/src/Train.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -191,6 +207,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -226,8 +244,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -236,6 +252,116 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FullScreen" value="true" />
+  </component>
+  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
+    <UpdatedFiles>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Updated from server" />
+        <option name="myStatusName" value="Changed on server" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="CHANGED_ON_SERVER" />
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated" />
+          <option name="myStatusName" value="Changed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Game.java</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Created" />
+          <option name="myStatusName" value="Created" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CREATED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Deleted" />
+          <option name="myStatusName" value="Deleted" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="true" />
+          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Restored" />
+          <option name="myStatusName" value="Will be restored" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="RESTORED" />
+        </FILE-GROUP>
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Modified" />
+        <option name="myStatusName" value="Modified" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MODIFIED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Skipped" />
+        <option name="myStatusName" value="Skipped" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SKIPPED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with conflicts" />
+        <option name="myStatusName" value="Will be merged with conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_CONFLICTS" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with tree conflicts" />
+        <option name="myStatusName" value="Merged with tree conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with property conflicts" />
+        <option name="myStatusName" value="Will be merged with property conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged" />
+        <option name="myStatusName" value="Will be merged" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Not in repository" />
+        <option name="myStatusName" value="Not in repository" />
+        <option name="mySupportsDeletion" value="true" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="UNKNOWN" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally added" />
+        <option name="myStatusName" value="Locally added" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_ADDED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally removed" />
+        <option name="myStatusName" value="Locally removed" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_REMOVED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Switched" />
+        <option name="myStatusName" value="Switched" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SWITCHED" />
+      </FILE-GROUP>
+    </UpdatedFiles>
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -841,22 +967,24 @@
       <workItem from="1478610676181" duration="23000" />
       <workItem from="1479219119635" duration="60000" />
       <workItem from="1479221147055" duration="284000" />
+      <workItem from="1479485452824" duration="250000" />
+      <workItem from="1479485763897" duration="1693000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4105000" />
+    <option name="totallyTimeSpent" value="6048000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -911,6 +1039,78 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Station.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Line.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Train.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Station.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Line.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Train.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Station.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1042,7 +1242,7 @@
     <entry file="file://$PROJECT_DIR$/src/Station.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1051,14 +1251,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
           <folding />
         </state>
       </provider>
@@ -1073,16 +1265,25 @@
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="76.5" y="15.0" />
+          <settings layout="Hierarchic Group" zoom="1.0" x="77.0" y="15.0" />
           <SelectedNodes />
           <Categories />
+          <SCOPE>All</SCOPE>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Train.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1093,25 +1294,25 @@
           <ID>JAVA</ID>
           <OriginalElement />
           <nodes>
-            <node x="167.0" y="617.0">com</node>
-            <node x="393.0" y="467.0">netscape</node>
-            <node x="0.0" y="542.0">oracle</node>
-            <node x="0.0" y="692.0">org</node>
-            <node x="211.0" y="348.0">Position</node>
-            <node x="198.0" y="467.0">resources</node>
-            <node x="359.0" y="348.0">toolbarButtonGraphics</node>
-            <node x="487.0" y="617.0">sun</node>
-            <node x="0.0" y="467.0">META-INF</node>
-            <node x="155.0" y="692.0">jdk</node>
-            <node x="266.0" y="0.0">Line</node>
-            <node x="-184.0" y="172.0">Station</node>
-            <node x="344.0" y="542.0">apple</node>
-            <node x="328.0" y="617.0">java</node>
-            <node x="-139.0" y="-57.0">Game</node>
-            <node x="0.0" y="617.0">javax</node>
-            <node x="172.0" y="542.0">javafx</node>
-            <node x="-180.0" y="354.0">Client</node>
-            <node x="227.0" y="185.0">Train</node>
+            <node x="335.0" y="608.0">com</node>
+            <node x="195.0" y="533.0">netscape</node>
+            <node x="385.0" y="533.0">oracle</node>
+            <node x="157.0" y="683.0">org</node>
+            <node x="-190.0" y="204.0">Position</node>
+            <node x="0.0" y="533.0">resources</node>
+            <node x="148.0" y="414.0">toolbarButtonGraphics</node>
+            <node x="0.0" y="683.0">sun</node>
+            <node x="423.0" y="414.0">META-INF</node>
+            <node x="312.0" y="683.0">jdk</node>
+            <node x="-21.0" y="174.0">Station</node>
+            <node x="247.0" y="-36.0">Line</node>
+            <node x="0.0" y="608.0">apple</node>
+            <node x="496.0" y="608.0">java</node>
+            <node x="-163.0" y="-46.0">Game</node>
+            <node x="168.0" y="608.0">javax</node>
+            <node x="557.0" y="533.0">javafx</node>
+            <node x="330.0" y="265.0">Client</node>
+            <node x="344.0" y="107.0">Train</node>
           </nodes>
           <notes />
           <edges>
@@ -1119,7 +1320,7 @@
               <point x="0.0" y="0.0" />
               <point x="0.0" y="0.0" />
             </edge>
-            <edge source="Station" target="Client">
+            <edge source="Line" target="Train">
               <point x="0.0" y="0.0" />
               <point x="0.0" y="0.0" />
             </edge>
@@ -1127,7 +1328,11 @@
               <point x="0.0" y="0.0" />
               <point x="0.0" y="0.0" />
             </edge>
-            <edge source="Line" target="Train">
+            <edge source="Station" target="Client">
+              <point x="0.0" y="0.0" />
+              <point x="0.0" y="0.0" />
+            </edge>
+            <edge source="Train" target="Line">
               <point x="0.0" y="0.0" />
               <point x="0.0" y="0.0" />
             </edge>
@@ -1140,15 +1345,21 @@
               <point x="0.0" y="0.0" />
             </edge>
           </edges>
-          <settings layout="Hierarchic Group" zoom="1.0" x="248.5" y="140.5" />
-          <SelectedNodes>
-            <node>Game</node>
-          </SelectedNodes>
+          <settings layout="Hierarchic Group" zoom="1.0" x="9.0" y="172.0" />
+          <SelectedNodes />
           <Categories>
             <Category>Fields</Category>
           </Categories>
           <SCOPE>All</SCOPE>
           <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.03448276">
+          <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
