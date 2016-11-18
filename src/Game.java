@@ -7,10 +7,10 @@ public class Game {
     private int stationCapacity = null;
     private int timeSpeed = null;   
     
-    private int lineCount = null;
-    private int tunnelCount = null;
-    private int wagonCount = null;
-    private int trainCount = null;
+    private int lineNb = null;
+    private int tunnelNb = null;
+    private int wagonNb = null;
+    private int trainNb = null;
   
     
 }
