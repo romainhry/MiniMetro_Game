@@ -1,12 +1,15 @@
 Locomotives :
 - Nombre de personnes max
 - Une locomotive est affecté à une seule route
-- Gerer les wagons ? OUI/NON
+- Gerer les wagons ? OUI
 
 Caractéristiques stations :
 - Forme
 - Lieu où les passagers arrivent et apparaissent
 -Peut-être desservi par plusieurs routes
+- Quand la station est pleine, le timer commence � decr�menter si : 
+	- le temps est ecoul� : d�faite
+	- les passagers sont lib�r�s : le timer compte dans 		l'autre sens
 
 Caractéristiques passager :
 - Forme pour la destination
@@ -14,16 +17,17 @@ Caractéristiques passager :
 
 Caractéristiques routes :
 - Une route peut-être la liaison de plusieurs stations
-- Un départ et une arrivée. Possibilité de boucler ? OUI/NON
+- Un départ et une arrivée. Possibilité de boucler ? OUI
 - D'après l'exemple il peux y avoir plusieurs Locomotives par wagons
 
 Gameplay :
 - Ajout de Locomotives / Wagon
 - Ajout de lignes (Limité, lignes supplémentaires gagnés pendant le jeux)
 - Qu'est qui controle la positbilté d'ajouter des lignes/Locomotives
-- Possibilité de supprimer lignes ? OUI/NON
+- Possibilité de supprimer lignes ? OUI
 Comment perdre ?
-- Temps attente passager expiré
+- Timer station �coul�e quand celle-ci est pleine
 
-Comment gagner ?
-Gérer les jours ? OUI/NON
+Gérer les jours ? OUI
+
+SWING/JAVAFX ?
