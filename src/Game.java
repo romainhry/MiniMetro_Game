@@ -4,7 +4,13 @@
 public class Game {
     private int trainSpeed = null;
     private int trainCapacity = null;
-    private int maxLines = 3;
     private int stationCapacity = null;
-    private int timeSpeed = null;
+    private int timeSpeed = null;   
+    
+    private int lineCount = null;
+    private int tunnelCount = null;
+    private int wagonCount = null;
+    private int trainCount = null;
+  
+    
 }
