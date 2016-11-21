@@ -3,7 +3,7 @@
  */
 public class Train {
     private java.util.List<Client> clientList;
-    private int numberWagon = null;
-    private Line line = null;
-    private Boolean direction = null;
+    private int numberWagon ;
+    private Line line ;
+    private boolean direction ;
 }
