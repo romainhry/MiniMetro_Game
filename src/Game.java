@@ -17,6 +17,31 @@ public class Game {
     private int transportedClientNb;
 
     private Timer day;
+    
+    public Station popRandomStation() {
+    	return null;
+    }
   
+    public Client popRandomClient() {
+    	return null;
+    }
+    
+    public void popRandomUpgrade() {
+    	
+    }
+    
+    public void pauseGame() {
+    	
+    }
+    
+    public void setGameSpeed() {
+    	
+    }
+    
+    public void setTransportedClient() {
+    	
+    }
+    
+    
     
 }

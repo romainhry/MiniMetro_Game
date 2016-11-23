@@ -7,4 +7,12 @@ public class Line {
     private String color;
     private List<Station> StationList;
     private List<Train> trainList;
+    
+    public void addStation() {
+    	
+    }
+    
+    public void addTrain() {
+    	
+    }
 }

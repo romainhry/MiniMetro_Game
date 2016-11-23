@@ -6,4 +6,18 @@ public class Train {
     private int numberWagon ;
     private Line line ;
     private boolean direction ;
+    
+    public void setDirection(boolean b) {
+    	
+    }
+    
+    public void addWagon() {
+    	
+    }
+    
+    public void addClient() {
+    	
+    }
+    
+    
 }
