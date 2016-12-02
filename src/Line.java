@@ -7,6 +7,7 @@ public class Line {
     private String color;
     private List<Station> StationList;
     private List<Train> trainList;
+    private List<Position> path ;
     
     public void addStation(Station station) {
     	
@@ -19,6 +20,8 @@ public class Line {
     public void addTrain(Train train) {
     	
     }
+    
+
 
 
 }

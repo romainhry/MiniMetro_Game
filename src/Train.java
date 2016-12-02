@@ -2,7 +2,7 @@
  * Created by romainhry on 07/11/2016.
  */
 public class Train {
-    private Station nextStation ;
+    private int nextPointIndex; // +2 if at a station to know the next station
     private java.util.List<Client> clientList;
     private int numberWagon ;
     private Line line ;
