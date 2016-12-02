@@ -8,10 +8,18 @@ public class Train {
     private Line line ;
     private boolean direction ;
     
+    
+    public boolean isFull() {
+    	return clientList.lengh==Game.getTrainCapacity()*(numberWagon+1) ;
+    }
+    
     public void setDirection(boolean b) {
     	
     }
 
+    public void getNextPointIndex() {
+    	
+    }
 
     public void addWagon() {
     	
@@ -30,6 +38,7 @@ public class Train {
     }
     
     public void addClient(Client client) {
+    	
     	
     }
 
