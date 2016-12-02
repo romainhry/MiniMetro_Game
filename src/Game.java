@@ -5,11 +5,11 @@ import java.util.Timer;
  * Created by romainhry on 08/11/2016.
  */
 public class Game {
-    private int trainSpeed ;
-    private int trainCapacity ;
-    private int stationCapacity ;
-    private int timeSpeed ;
-    private int transportedClientNb;
+    private static int trainSpeed ;
+    private static int trainCapacity ;
+    private static int stationCapacity ;
+    private static int timeSpeed ;
+    private static int transportedClientNb;
     private Timer day;
     private Inventory inventory;
     private List<Train> trainList;

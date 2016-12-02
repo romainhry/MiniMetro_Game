@@ -3,5 +3,12 @@
  */
 public class Client {
     private Station station = null;
-    private String destinationType = null;
+    private ShapeType destinationType = null;
+
+    public void tryBoarding(Train train) {
+    	
+    }
+    public void tryUnboarding(Train train) {
+    	
+    }
 }
