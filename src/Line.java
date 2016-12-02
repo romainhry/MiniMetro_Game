@@ -7,4 +7,18 @@ public class Line {
     private String color;
     private List<Station> StationList;
     private List<Train> trainList;
+    
+    public void addStation(Station station) {
+    	
+    }
+
+    public void removeStation(Station Station) {
+
+    }
+    
+    public void addTrain(Train train) {
+    	
+    }
+
+
 }

@@ -26,6 +26,34 @@ public class Station {
         links = new ArrayList<Station>();
         distances[t.ordinal()]=0;
     }
+    
+    public void addClient (Client client) {
+    	
+    }
+    
+    public void removeClient(Client client) {
+    	
+    }
+    
+    public void addLine(Line line) {
+    	
+    }
+    
+    public void removeLine(Line line) {
+    	
+    }
+    
+    public void startFullTimer () {
+    
+    }
+    
+    public void decreaseFullTimer () {
+    	
+    }
+    
+    public void setCapacity(int capacity) {
+    	
+    }
 
     public String toString() {
         String s ="Station "+type+" at "+pos+" ";

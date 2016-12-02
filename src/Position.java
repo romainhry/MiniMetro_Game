@@ -9,6 +9,14 @@ public class Position {
         this.x=x;
         this.y=y;
     }
+    
+    public double distance (Position p) {
+    	
+    }
+    
+    public double distance (int x, int y) {
+    	
+    }
 
     public String toString() {
         return "("+x+","+y+")";
