@@ -8,11 +8,17 @@ public class Line {
     private List<Station> StationList;
     private List<Train> trainList;
     
-    public void addStation() {
+    public void addStation(Station station) {
     	
+    }
+
+    public void removeStation(Station Station) {
+
     }
     
-    public void addTrain() {
+    public void addTrain(Train train) {
     	
     }
+
+
 }

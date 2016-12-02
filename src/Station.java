@@ -27,19 +27,19 @@ public class Station {
         distances[t.ordinal()]=0;
     }
     
-    public void addClient () {
+    public void addClient (Client client) {
     	
     }
     
-    public void removeClient() {
+    public void removeClient(Client client) {
     	
     }
     
-    public void addLine() {
+    public void addLine(Line line) {
     	
     }
     
-    public void removeLine() {
+    public void removeLine(Line line) {
     	
     }
     
