@@ -28,13 +28,25 @@ public class Station {
         links = new ArrayList<Station>();
         distances[t.ordinal()]=0;
     }
+
+    public ShapeType getType() {
+        return type;
+    }
+
+    public List<Client> getClientList () {
+        return clientList;
+    }
+
+    public int getMinDistance (ShapeType s) {
+        return distances [s.ordinal()];
+    }
     
     public void addClient (Client client) {
-    	
+    	clientList.add(client);
     }
     
     public void removeClient(Client client) {
-    	
+        clientList.remove(client);
     }
     
     public void addLine(Line line) {

@@ -11,13 +11,19 @@ public class Position {
         this.x=x;
         this.y=y;
     }
+
+    public boolean equals(Position p) {
+        return x == p.x && y == p.y;
+    }
     
     public double distance (Position p) {
-    	return 0.0;
+        int dx = p.x - x, dy = p.y - y;
+    	return Math.sqrt((dx * dx) + (dy * dy));
     }
     
     public double distance (int x, int y) {
-    	return 0.0;
+        int dx = x - this.x, dy = y - this.y;
+        return Math.sqrt(dx*dx+dy*dy);
     }
 
     public String toString() {
