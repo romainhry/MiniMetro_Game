@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Created by romainhry on 07/11/2016.
  */
@@ -10,7 +12,7 @@ public class Train {
     
     
     public boolean isFull() {
-    	return clientList.lengh==Game.getTrainCapacity()*(numberWagon+1) ;
+    	return clientList.size()==Game.trainCapacity*(numberWagon+1) ;
     }
     
     public void setDirection(boolean b) {

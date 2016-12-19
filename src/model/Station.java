@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,7 +58,7 @@ public class Station {
     }
 
     public String toString() {
-        String s ="Station "+type+" at "+pos+" ";
+        String s ="model.Station "+type+" at "+pos+" ";
         for(ShapeType stype : ShapeType.values()) {
             if(distances[stype.ordinal()]!=-1)
                 s+=stype+" : "+distances[stype.ordinal()]+" ";

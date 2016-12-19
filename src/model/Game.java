@@ -1,3 +1,5 @@
+package model;
+
 import java.util.List;
 import java.util.Timer;
 
@@ -6,7 +8,7 @@ import java.util.Timer;
  */
 public class Game {
     private static int trainSpeed ;
-    private static int trainCapacity ;
+    protected static int trainCapacity ;
     private static int stationCapacity ;
     private static int timeSpeed ;
     private static int transportedClientNb;

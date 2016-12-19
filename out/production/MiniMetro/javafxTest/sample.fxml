@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.Pane?>
+<Group fx:id="group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxTest.Controller">
+   <children>
+      <Pane fx:id="pane" prefHeight="800.0" prefWidth="800.0" />
+   </children>
+</Group>

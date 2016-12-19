@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Created by romainhry on 07/11/2016.
  */
@@ -11,11 +13,11 @@ public class Position {
     }
     
     public double distance (Position p) {
-    	
+    	return 0.0;
     }
     
     public double distance (int x, int y) {
-    	
+    	return 0.0;
     }
 
     public String toString() {
