@@ -24,9 +24,9 @@ public class Wagon {
     public void removeClient(Client client) {
         clientList.remove(client);
     }
-    public java.util.List<Client> getClientList{return clientList;}
-    public boolean getWillSwap{return willSwap;}
-    public boolean setWillSwap(boolean value){willSwap=value;}
+    public java.util.List<Client> getClientList(){return clientList;}
+    public boolean getWillSwap(){return willSwap;}
+    public boolean setWillSwap(boolean value){return willSwap=value;}
 
     public void swapWagon(Train added) {
         willSwap=true;

@@ -88,15 +88,16 @@ public class Train {
 
         if(clientList.contains(client))
             clientList.remove(client);
-        else{
-            for (Wagon current : wagonList){
-                if(current.getClientList.contains(client))
+        else {
+            for (Wagon current : wagonList) {
+                if (current.getClientList().contains(client)) {
                     current.removeClient(client);
                     return;
                 }
             }
         }
     }
+
 
     public void stopAtStation () {
         /* Makes the clients to get off the train */
