@@ -2,6 +2,7 @@ package javafxTest;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import model.Position;
 
 /**
  * Created by KadirF on 18/12/2016.
@@ -15,6 +16,14 @@ public class defaultShapes {
     public static void setPosition(Shape s, double x, double y) {
         s.setTranslateX(x);
         s.setTranslateY(y);
+        s.setStroke(Color.WHITE);
+        s.setStrokeWidth(10);
+        s.setFill(Color.GREY);
+    }
+
+    public static void setPosition(Shape s, Position p) {
+        s.setTranslateX(p.getX());
+        s.setTranslateY(p.getY());
         s.setStroke(Color.WHITE);
         s.setStrokeWidth(10);
         s.setFill(Color.GREY);
@@ -35,5 +44,7 @@ public class defaultShapes {
     public static Polyline getEndLine() {
         return  new Polyline(0,0,15,0,15,-25,15,0,30,0);
     }
+
+
 
 }

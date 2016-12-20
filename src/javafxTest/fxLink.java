@@ -1,10 +1,22 @@
 package javafxTest;
 
+import javafx.scene.shape.Polyline;
 import model.Station;
 
 /**
  * Created by KadirF on 18/12/2016.
  */
-public class fxLink {
-    Station a,b;
+public class fxLink extends Polyline {
+
+    fxLink() {
+        super();
+    }
+
+    public fxLink(double x,double y,double middleX, double middleY, double x2,double y2) {
+        super(x,y,middleX,middleY,x2,y2);
+    }
+
+    void test() {
+        System.out.println("fxLINK");
+    }
 }

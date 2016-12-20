@@ -12,6 +12,14 @@ public class Position {
         this.y=y;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     public boolean equals(Position p) {
         return x == p.x && y == p.y;
     }

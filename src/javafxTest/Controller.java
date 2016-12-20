@@ -10,10 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Polyline;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.*;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -79,6 +76,7 @@ public class Controller
         /** SHAPES ** */
         Rectangle squar = getSquare();
         setPosition(squar,12.5,5);
+
 //        group.getChildren().add(square);
 
         Circle circle = getCircle();
@@ -225,4 +223,6 @@ public class Controller
         if(config == 0 && sup45degree(x,y,x2,y2) || config == 1 &&  abs(x-x2) < abs(y2-y) )
             config = 2;
     }
+
+
 }
