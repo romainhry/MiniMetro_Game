@@ -8,7 +8,7 @@ import java.util.Timer;
  */
 public class Game {
     private static int trainSpeed ;
-    protected static int trainCapacity ;
+    protected static int vehicleCapacity ;
     private static int stationCapacity ;
     private static int timeSpeed ;
     private static int transportedClientNb;

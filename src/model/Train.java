@@ -8,7 +8,8 @@ import java.util.ArrayList;
 public class Train {
     private int nextPointIndex; // +2 if at a station to know the next station
     private java.util.List<Client> clientList;
-    private int numberWagon ;
+    private java.util.List<Wagon> wagonList;
+    //private int numberWagon ;
     private Line line ;
     private boolean direction ;
     
@@ -18,13 +19,22 @@ public class Train {
         line = l;
         direction = dir;
         clientList = new ArrayList<>();
-        numberWagon = 0;
+        wagonList = new ArrayList<>();
+        //numberWagon = 0;
     }
 
     public boolean isFull() {
-    	return clientList.size()==Game.trainCapacity*(numberWagon+1) ;
+        //	return clientList.size()==Game.trainCapacity*(numberWagon+1) ;
+
+        if(clientList.size()<Game.vehicleCapacity)
+            return false;
+        //Research a not full Wagon
+        for (Wagon current : wagonList){
+            if(!current.isFull()) return false;
+        }
+        return true;
     }
-    
+
     public void setDirection(boolean dir) {
     	direction = dir;
     }
@@ -47,13 +57,10 @@ public class Train {
         return line;
     }
 
-    public void addWagon() {
-    	
+    public void addWagon(Wagon added) {
+        wagonList.add(added);
     }
 
-    public void swapWagon(Train added) {
-
-    }
 
     public void changeLine (Position newPosition,Line newLine) {
 
@@ -64,11 +71,31 @@ public class Train {
     }
     
     public void addClient(Client client) {
-        clientList.add(client);
+        //Add client to train
+        if(clientList.size()<Game.vehicleCapacity)
+            clientList.add(client);
+        else{
+            for (Wagon current : wagonList){
+                if(!current.isFull()) {
+                    current.addClient(client);
+                    return;
+                }
+            }
+        }
     }
 
     public void removeClient(Client client) {
-        clientList.remove(client);
+
+        if(clientList.contains(client))
+            clientList.remove(client);
+        else{
+            for (Wagon current : wagonList){
+                if(current.getClientList.contains(client))
+                    current.removeClient(client);
+                    return;
+                }
+            }
+        }
     }
 
     public void stopAtStation () {

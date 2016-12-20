@@ -26,7 +26,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
             Group page = (Group) FXMLLoader.load(Main.class.getResource("sample.fxml"));
-            Scene scene = new Scene(page,800,800, Color.GREY);
+            Scene scene = new Scene(page,1200,800, Color.GREY);
             primaryStage.setScene(scene);
             primaryStage.setTitle("MiniMetro test");
             primaryStage.show();
