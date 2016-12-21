@@ -1,5 +1,6 @@
 package javafxTest;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import model.Station;
 
@@ -16,9 +17,12 @@ public class fxStation {
             case CIRCLE: shape = getCircle(); break;
             case SQUARE: shape = getSquare(); break;
             case TRIANGLE: shape = getTriangle() ; break;
-            // TO DO
             default: shape = null;
         }
-        
+        shape.setTranslateX(s.getPosition().getX());
+        shape.setTranslateY(s.getPosition().getY());
+        shape.setStroke(Color.WHITE);
+        shape.setStrokeWidth(10);
+        shape.setFill(Color.GREY);
     }
 }

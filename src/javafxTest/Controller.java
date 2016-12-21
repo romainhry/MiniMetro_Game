@@ -2,16 +2,23 @@ package javafxTest;
 
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
+import model.Game;
+import model.Position;
+import model.ShapeType;
+import model.Station;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,15 +38,23 @@ public class Controller
     @FXML
     private Pane pane;
 
-    double x,y;
+    double x,y,middleX,middleY,x2,y2;
     int config;
     Polyline pline = new Polyline(0,0,0,0,0,0) ;
+    boolean stationPressed = false;
+    Station station;
+    Game game ;
+    GameView gameView;
+
 
 
 
 
     @Override // This method is called by the FXMLLoader when initialization is complete
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
+
+        //group.startFullDrag();
+
         Polyline poly = new Polyline(200,200,200,300,300,400);
         poly.setStroke(Color.AQUA);
         poly.setStrokeWidth(10);
@@ -54,10 +69,10 @@ public class Controller
         group.getChildren().add(pline);
 
 
-        Rectangle rect = new Rectangle (0, 0, 50, 25);
+        /*Rectangle rect = new Rectangle (0, 0, 50, 25);
         rect.setFill(Color.VIOLET);
 
-        group.getChildren().add(rect);
+        group.getChildren().add(rect);*/
 /*
         TranslateTransition tt = new TranslateTransition(Duration.millis(2000), rect);
         tt.setByX(100f);tt.setByY(100f);
@@ -72,6 +87,8 @@ public class Controller
                 rect.setRotate(0);
             }
         });*/
+
+
 
         /** SHAPES ** */
         Rectangle squar = getSquare();
@@ -94,7 +111,6 @@ public class Controller
         Group train = new Group();
         Rectangle r = new Rectangle(0,0,50,25); r.setStroke(Color.BLUE);
 
-        ;
         Rectangle square = new Rectangle(1,1,10,10); square.setFill(Color.RED);
         Rectangle square2 = new Rectangle(1,13.5,10,10); square2.setFill(Color.RED);
         Circle c1 = new Circle(5); c1.setCenterX(19.75); c1.setCenterY(6.25); c1.setFill(Color.RED);
@@ -127,89 +143,53 @@ public class Controller
             }
         });
 
-
-
-
-        /*   */
-
-
         group.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                double x2=event.getX(),y2=event.getY();
-                double middleX,middleY;
-
-                System.err.println(config);
-
-
-                if(x==x2)
-                    config = 0 ;
-                if(y==y2)
-                    config = 1 ;
-                if(is45degree(x,y,x2,y2))
-                    config=2;
-
-                verifiateConfig(x2,y2);
-
-
-
-                if(config == 0) {
-                    if(y2 > y) {
-                        middleX = x ;
-                        middleY = y2 - abs(x2 - x) ;
-                    }
-                    else {
-                        middleX = x ;
-                        middleY = y2 + abs(x2 - x) ;
-                    }
+                if(stationPressed) {
+                    x2 = event.getX(); y2 = event.getY();
+                    displayDrawing();
                 }
-                else if( config == 1 ) {
-                    middleY = y;
-                    if(x2 > x)
-                        middleX =  x2 - abs(y2 - y) ;
-                    else
-                        middleX =  x2 + abs(y2 - y) ;
-                }
-                else  {
-                    if(sup45degree(x,y,x2,y2)) {
-                        middleY =  y2;
-                        if(x2>x)
-                            middleX = x + abs(y2 - y)  ;
-                        else
-                            middleX = x  - abs(y2 - y) ;
-                    }
-                    else {
-                        middleX = x2;
-                        if(y2>y)
-                            middleY = y + abs(x2 - x) ;
-                        else
-                            middleY = y - abs(x2 - x) ;
-                    }
-                }
-
-                group.getChildren().remove(pline);
-                pline.setStroke(Color.BLUE);
-                pline.setStrokeWidth(10);
-                pline.getPoints().setAll(x,y,middleX,middleY,x2,y2);
-
-
-                group.getChildren().add(0,pline);
-
-
             }
         });
-
 
         group.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.err.println("Clicked");
+             //   System.err.println("Clicked");
                 x=event.getX();
                 y=event.getY();
             }
         });
-    }
 
+        group.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stationPressed = false;
+                group.getChildren().remove(pline);
+            }
+        });
+
+        /* MODEL VIEW TEST*/
+
+        gameView = new GameView(group);
+        game = new Game(gameView);
+        Station s1 = new Station(ShapeType.CIRCLE,new Position(200,200));
+        Station s2 = new Station(ShapeType.CIRCLE,new Position(400,400));
+        Station s3 = new Station(ShapeType.CIRCLE,new Position(600,700));
+        Station s4 = new Station(ShapeType.CIRCLE,new Position(800,50));
+
+
+        game.viewTest(s1);
+        game.viewTest(s2);
+        game.viewTest(s3);
+        game.viewTest(s4);
+        addStationEvent(gameView.get(s1),s1);
+        addStationEvent(gameView.get(s2),s2);
+        addStationEvent(gameView.get(s3),s3);
+        addStationEvent(gameView.get(s4),s4);
+
+    }
 
 
     private boolean is45degree(double x1, double y1, double x2, double y2) {
@@ -222,6 +202,116 @@ public class Controller
     private void verifiateConfig(double x2, double y2) {
         if(config == 0 && sup45degree(x,y,x2,y2) || config == 1 &&  abs(x-x2) < abs(y2-y) )
             config = 2;
+    }
+
+    private void addStationEvent(fxStation viewSt ,Station modelSt) {
+
+
+
+        viewSt.shape.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                viewSt.shape.startFullDrag();
+            }
+        });
+
+        viewSt.shape.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stationPressed = true;
+                System.err.println("Station Pressed");
+                station = modelSt;
+            }
+        });
+
+        viewSt.shape.setOnMouseDragOver(new EventHandler<MouseDragEvent>() {
+            @Override
+            public void handle(MouseDragEvent event) {
+                if(stationPressed) {
+                    System.err.println("Station LINKED");
+                    x2 = modelSt.getPosition().getX();
+                    y2 = modelSt.getPosition().getY();
+                    displayDrawing();
+
+                }
+            }
+        });
+
+        /*
+        viewSt.shape.setOnMouseDragEntered(new EventHandler<MouseDragEvent>() {
+            @Override
+            public void handle(MouseDragEvent event) {
+                System.err.println("Station drag Entered");
+            }
+        });*/
+
+        viewSt.shape.setOnMouseDragReleased(new EventHandler<MouseDragEvent>() {
+            @Override
+            public void handle(MouseDragEvent event) {
+                System.err.println("Drag released link : "+stationPressed);
+                if(stationPressed) {
+                    fxLink link = new fxLink(x,y,middleX,middleY,x2,y2);
+                    System.err.println("intersects : "+ gameView.intersects(link));
+   //                 if(!gameView.intersects(link)) {
+                        group.getChildren().add(0, link);
+                        modelSt.addLink(station);
+                        game.computeAllDistances();
+                        gameView.add(link);
+                        System.err.println(station + "\n" + modelSt);
+                        fxEndLine endLine = new fxEndLine(modelSt,middleX,middleY);
+                        group.getChildren().add(0,endLine);
+     //               }
+                }
+            }
+        });
+    }
+
+    public void displayDrawing () {
+        if (x == x2)
+            config = 0;
+        if (y == y2)
+            config = 1;
+        if (is45degree(x, y, x2, y2))
+            config = 2;
+
+        verifiateConfig(x2, y2);
+
+        if (config == 0) {
+            if (y2 > y) {
+                middleX = x;
+                middleY = y2 - abs(x2 - x);
+            } else {
+                middleX = x;
+                middleY = y2 + abs(x2 - x);
+            }
+        } else if (config == 1) {
+            middleY = y;
+            if (x2 > x)
+                middleX = x2 - abs(y2 - y);
+            else
+                middleX = x2 + abs(y2 - y);
+        } else {
+            if (sup45degree(x, y, x2, y2)) {
+                middleY = y2;
+                if (x2 > x)
+                    middleX = x + abs(y2 - y);
+                else
+                    middleX = x - abs(y2 - y);
+            } else {
+                middleX = x2;
+                if (y2 > y)
+                    middleY = y + abs(x2 - x);
+                else
+                    middleY = y - abs(x2 - x);
+            }
+        }
+        group.getChildren().remove(pline);
+        pline.setStroke(Color.BLUE);
+        pline.setStrokeWidth(10);
+        pline.getPoints().setAll(x, y, middleX, middleY, x2, y2);
+        group.getChildren().add(0, pline);
+        if(gameView.intersects(pline))
+            pline.setStroke(Color.TRANSPARENT);
     }
 
 

@@ -13,6 +13,10 @@ public class Client {
         st.addClient(this);
     }
 
+    public ShapeType getType() {
+        return destinationType;
+    }
+
     public void tryBoarding(Train train) {
         if(train.isFull())
             return;

@@ -22,7 +22,7 @@ public class Station {
     //for tests
     static ArrayList<Station> stationL = new ArrayList<>();
 
-    Station (ShapeType t, Position p) {
+    public Station (ShapeType t, Position p) {
         pos=p;
         type = t;
         links = new ArrayList<Station>();
@@ -32,6 +32,7 @@ public class Station {
     public ShapeType getType() {
         return type;
     }
+    public Position getPosition () {return pos;}
 
     public List<Client> getClientList () {
         return clientList;
@@ -39,6 +40,15 @@ public class Station {
 
     public int getMinDistance (ShapeType s) {
         return distances [s.ordinal()];
+    }
+
+
+    public int[] getDistances () {
+        return distances;
+    }
+
+    public void setChecked(boolean c) {
+        checked = c;
     }
     
     public void addClient (Client client) {
@@ -103,12 +113,12 @@ public class Station {
     public static void computeAllDistances() {
         for( Station st : stationL) {
             Arrays.fill(st.distances,-1);
-            st.resetChecked();
+            resetChecked();
             st.computeDistances(st,0);
         }
     }
 
-    public  void resetChecked() {
+    public  static void resetChecked() {
         for(Station s: stationL)
             s.checked=false;
     }

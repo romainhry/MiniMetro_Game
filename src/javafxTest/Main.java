@@ -4,11 +4,14 @@
 package javafxTest;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,11 +28,18 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
+
             Group page = (Group) FXMLLoader.load(Main.class.getResource("sample.fxml"));
             Scene scene = new Scene(page,1200,800, Color.GREY);
             primaryStage.setScene(scene);
             primaryStage.setTitle("MiniMetro test");
             primaryStage.show();
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    Platform.exit();
+                }
+            });
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }

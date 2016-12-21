@@ -9,4 +9,16 @@ public class Inventory {
     private int wagonNb ;
     private int trainNb ;
     private int interchangeNb;
+
+    public Inventory () {
+
+    }
+
+    public Inventory (int line,int tunnel, int wagon, int train,int inter) {
+        lineNb = line;
+        tunnelNb = tunnel;
+        wagonNb = wagon;
+        trainNb = train;
+        interchangeNb = inter;
+    }
 }
