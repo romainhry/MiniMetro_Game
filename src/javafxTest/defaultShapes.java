@@ -30,7 +30,8 @@ public class defaultShapes {
     }
 
     public static Rectangle getSquare() {
-        return new Rectangle(0,0,40,40);
+        Rectangle r = new Rectangle(0,0,40,40);
+        return r ;
     }
 
     public static Circle getCircle () {
@@ -38,7 +39,8 @@ public class defaultShapes {
     }
 
     public static Polygon getTriangle () {
-       return new Polygon(0.0, 0.0, 20.0, -34.64, 40.0, 0.0 );
+       //return new Polygon(0.0, 0.0, 20.0, -34.64, 40.0, 0.0 );
+        return new Polygon(-20,17.335,0,-34.67+17.335,20,17.335);
     }
 
     public static Polyline getEndLine() {

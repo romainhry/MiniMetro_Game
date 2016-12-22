@@ -8,6 +8,7 @@ import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
@@ -20,6 +21,7 @@ import model.Position;
 import model.ShapeType;
 import model.Station;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -39,10 +41,11 @@ public class Controller
     private Pane pane;
 
     double x,y,middleX,middleY,x2,y2;
-    int config;
+    int config,endLineIndex = 2 ;
     Polyline pline = new Polyline(0,0,0,0,0,0) ;
-    boolean stationPressed = false;
+    boolean stationPressed = false, TPressed = false;
     Station station;
+    Shape toRemove = null;
     Game game ;
     GameView gameView;
 
@@ -156,9 +159,13 @@ public class Controller
         group.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-             //   System.err.println("Clicked");
-                x=event.getX();
-                y=event.getY();
+                //System.err.println("Clicked");
+                //x=event.getX();
+                //y=event.getY();
+                System.err.println("\n\n\n");
+                for(Node n : group.getChildren())
+                    System.err.println(n);
+
             }
         });
 
@@ -166,7 +173,9 @@ public class Controller
             @Override
             public void handle(MouseEvent event) {
                 stationPressed = false;
+                TPressed = false;
                 group.getChildren().remove(pline);
+                toRemove = null;
             }
         });
 
@@ -176,18 +185,31 @@ public class Controller
         game = new Game(gameView);
         Station s1 = new Station(ShapeType.CIRCLE,new Position(200,200));
         Station s2 = new Station(ShapeType.CIRCLE,new Position(400,400));
-        Station s3 = new Station(ShapeType.CIRCLE,new Position(600,700));
-        Station s4 = new Station(ShapeType.CIRCLE,new Position(800,50));
+        Station s3 = new Station(ShapeType.SQUARE,new Position(600,700));
+        Station s4 = new Station(ShapeType.TRIANGLE,new Position(800,50));
+        Station s5 = new Station(ShapeType.CIRCLE,new Position(500,550));
+        Station s6 = new Station(ShapeType.CIRCLE,new Position(400,750));
+
 
 
         game.viewTest(s1);
         game.viewTest(s2);
         game.viewTest(s3);
         game.viewTest(s4);
-        addStationEvent(gameView.get(s1),s1);
-        addStationEvent(gameView.get(s2),s2);
-        addStationEvent(gameView.get(s3),s3);
-        addStationEvent(gameView.get(s4),s4);
+        game.viewTest(s5);
+        game.viewTest(s6);
+        addStationEvent(gameView.get(s1).shape,s1,false);
+        addStationEvent(gameView.get(s2).shape,s2,false);
+        addStationEvent(gameView.get(s3).shape,s3,false);
+        addStationEvent(gameView.get(s4).shape,s4,false);
+        addStationEvent(gameView.get(s5).shape,s5,false);
+        addStationEvent(gameView.get(s6).shape,s6,false);
+
+
+        /*
+        fxEndLine endLine = new fxEndLine(s4,500,200);
+        group.getChildren().add(endLine);
+        addStationEvent(endLine,s4);*/
 
     }
 
@@ -204,35 +226,48 @@ public class Controller
             config = 2;
     }
 
-    private void addStationEvent(fxStation viewSt ,Station modelSt) {
+    private void addStationEvent(Shape shape ,Station modelSt, boolean isT) {
 
-
-
-        viewSt.shape.setOnDragDetected(new EventHandler<MouseEvent>() {
+        shape.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                viewSt.shape.startFullDrag();
+                shape.startFullDrag();
             }
         });
 
-        viewSt.shape.setOnMousePressed(new EventHandler<MouseEvent>() {
+        shape.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                Position pos = modelSt.getPosition();
+                x = pos.getX(); y= pos.getY();
                 stationPressed = true;
                 System.err.println("Station Pressed");
                 station = modelSt;
+                if(isT) {
+                    toRemove = shape;
+                    shape.setStroke(Color.TRANSPARENT);
+                    TPressed = true;
+                }
             }
         });
 
-        viewSt.shape.setOnMouseDragOver(new EventHandler<MouseDragEvent>() {
+        if(isT) {
+            shape.setOnMouseReleased(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    shape.setStroke(Color.BLACK);
+                }
+            });
+        }
+
+        shape.setOnMouseDragOver(new EventHandler<MouseDragEvent>() {
             @Override
             public void handle(MouseDragEvent event) {
                 if(stationPressed) {
-                    System.err.println("Station LINKED");
+             //       System.err.println("Station LINKED");
                     x2 = modelSt.getPosition().getX();
                     y2 = modelSt.getPosition().getY();
                     displayDrawing();
-
                 }
             }
         });
@@ -245,22 +280,59 @@ public class Controller
             }
         });*/
 
-        viewSt.shape.setOnMouseDragReleased(new EventHandler<MouseDragEvent>() {
+        shape.setOnMouseDragReleased(new EventHandler<MouseDragEvent>() {
             @Override
             public void handle(MouseDragEvent event) {
                 System.err.println("Drag released link : "+stationPressed);
                 if(stationPressed) {
+                    /* Avoids self Linking*/
+                    if(modelSt == station)
+                        return;
+
+                    /*
+                    System.err.println("Points : "+x+" "+y+"  "+middleX+" "+middleY+ " "+x2+" "+y2);
+                    System.err.println("Contains middle : " + shape.contains(middleX,middleY) +" "+ gameView.get(station).shape.contains(middleX,middleY));
+                    System.err.println("Test Triangle " + shape.contains(806,45));
+                    System.err.println(shape);
+                    */
+
+                    /* Avoids that the middle point of a links be inside the shape*/
+                    if(shape.contains(middleX,middleY) ) {
+                        middleX=(x2 + x)/2;
+                        middleY=(y2 + y)/2;
+                    }
+
+
                     fxLink link = new fxLink(x,y,middleX,middleY,x2,y2);
-                    System.err.println("intersects : "+ gameView.intersects(link));
-   //                 if(!gameView.intersects(link)) {
-                        group.getChildren().add(0, link);
+                    /* If the current link isn't intersecting other we can add it */
+                    if(!gameView.intersects(link)) {
+                        Shape temp =  Shape.subtract(link,shape);
+                        temp = Shape.subtract(temp,gameView.get(station).shape);
+                        //group.getChildren().add(link);
+                        group.getChildren().add(temp);
+                        System.err.println(temp);
                         modelSt.addLink(station);
                         game.computeAllDistances();
-                        gameView.add(link);
+                        //gameView.add(link);
+                        gameView.add(temp);
                         System.err.println(station + "\n" + modelSt);
                         fxEndLine endLine = new fxEndLine(modelSt,middleX,middleY);
-                        group.getChildren().add(0,endLine);
-     //               }
+                        /* increment index or event bugs ?? */
+                        group.getChildren().add(1,endLine);
+                        addStationEvent(endLine,modelSt,true);
+
+                        System.err.println("T "+TPressed);
+                        if(TPressed == false) {
+                            fxEndLine endLine2 = new fxEndLine(station,middleX,middleY);
+                            group.getChildren().add(1,endLine2);
+                            addStationEvent(endLine2,station,true);
+                        }
+
+                        /* To remove the T shape of a line */
+                        if(toRemove != null)
+                            group.getChildren().remove(toRemove);
+
+                    }
                 }
             }
         });
@@ -309,7 +381,8 @@ public class Controller
         pline.setStroke(Color.BLUE);
         pline.setStrokeWidth(10);
         pline.getPoints().setAll(x, y, middleX, middleY, x2, y2);
-        group.getChildren().add(0, pline);
+        group.getChildren().add(1, pline);
+        /* If the current link is intersecting we make it transparent */
         if(gameView.intersects(pline))
             pline.setStroke(Color.TRANSPARENT);
     }

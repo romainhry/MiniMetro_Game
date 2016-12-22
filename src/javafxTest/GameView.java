@@ -3,6 +3,7 @@ package javafxTest;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Shape;
 import model.Client;
@@ -22,7 +23,7 @@ public class GameView {
     HashMap<Station,fxStation> stations;
     HashMap<Train,fxTrain> trains;
     HashMap<Client,fxClient> clients;
-    List<fxLink> links = new ArrayList<>();
+    List<Shape> links = new ArrayList<>();
 
     private Group group;
 
@@ -30,6 +31,10 @@ public class GameView {
         stations = new HashMap<>();
         trains = new HashMap<>();
         group = g;
+    }
+
+    public void addNode(Node n) {
+        group.getChildren().add(n);
     }
 
     public void put(Station s) {
@@ -58,10 +63,10 @@ public class GameView {
 
     public fxClient get(Client c) { return clients.get(c);}
 
-    public void add(fxLink l) { links.add(l);}
+    public void add(Shape l) { links.add(l);}
 
-    public boolean intersects (Polyline f) {
-        for(fxLink l : links) {
+    public boolean intersects (Shape f) {
+        for(Shape l : links) {
             Shape intersect = Shape.intersect(f, l);
             if(intersect.getBoundsInLocal().getWidth() != -1)
                 return true;
