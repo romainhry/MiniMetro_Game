@@ -22,8 +22,4 @@ public class fxLink extends Polyline {
         setStrokeWidth(10);
     }
 
-
-    void test() {
-        System.out.println("fxLINK");
-    }
 }

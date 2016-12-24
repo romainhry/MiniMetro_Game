@@ -1,5 +1,6 @@
 package model;
 
+import javafx.scene.paint.Color;
 import javafxTest.GameView;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class Game {
     private List<Client> clientList;
     private List<Line> lineList;
     private List <Station> stationList ;
+    private List <Color> linesColor ;
 
     public Game(GameView gameView) {
         view = gameView;
@@ -31,6 +33,18 @@ public class Game {
         lineList = new ArrayList<>();
         stationList = new ArrayList<>();
         inventory = new Inventory(3,3,0,3,0);
+        linesColor  = new ArrayList<>();
+        linesColor.add(Color.RED); linesColor.add(Color.BLUE); linesColor.add(Color.YELLOW);
+    }
+
+    public Color getColor() {
+        Color c = linesColor.get(0);
+        linesColor.remove(0);
+        return c;
+    }
+
+    public void addColor(Color c) {
+        linesColor.add(c);
     }
 
     public Station popRandomStation() {
@@ -76,7 +90,8 @@ public class Game {
         for( Station st : stationList) {
             Arrays.fill(st.getDistances(),-1);
             resetChecked();
-            st.computeDistances(st,0);
+            //st.computeDistances(st,0);
+            st.computeDistances();
         }
     }
 

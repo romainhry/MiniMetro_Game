@@ -23,7 +23,7 @@ public class fxEndLine extends Polyline {
         double dx = modelSt.getPosition().getX();
         double dy = modelSt.getPosition().getY();
 
-        int x = modelSt.getPosition().getX(), y=modelSt.getPosition().getY();
+        double x = modelSt.getPosition().getX(), y=modelSt.getPosition().getY();
 
         if(middleY == y) {
             if(middleX > x) {
