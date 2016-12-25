@@ -29,7 +29,7 @@ public class Position {
     	return Math.sqrt((dx * dx) + (dy * dy));
     }
     
-    public double distance (int x, int y) {
+    public double distance (double x, double y) {
         double dx = x - this.x, dy = y - this.y;
         return Math.sqrt(dx*dx+dy*dy);
     }

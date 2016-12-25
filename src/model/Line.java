@@ -60,7 +60,10 @@ public class Line {
     }
 
     public void removeStation(Station station) {
-
+        if(isLoop()) {
+            System.err.println("looped cannot choose which to remove");
+            return;
+        }
         /* todo when the station is the loop */
         station.removeLine(this);
 
@@ -77,7 +80,21 @@ public class Line {
             if(path.size()>0)
                 path.remove(path.size()-1);
         }
+    }
 
+    public void removeLoop(Station loop,boolean first) {
+        if(first) {
+            stationList.remove(0);
+            path.remove(0);
+            if(path.size()>0)
+                path.remove(0);
+        }
+        else {
+            stationList.remove(stationList.size() - 1);
+            path.remove(path.size()-1);
+            if(path.size()>0)
+                path.remove(path.size()-1);
+        }
     }
     
     public void addTrain(Train train) {
@@ -93,13 +110,14 @@ public class Line {
     }
 
     public boolean isLoop () {
-        return path.get(0).equals(path.get(path.size()-1)) ;
+        //return path.get(0).equals(path.get(path.size()-1)) ;
+        return stationList.get(0) == stationList.get(stationList.size()-1) && stationList.size()!=1 ;
     }
 
     public String toString() {
         String s = "";
-        for (Station st : stationList)
-            s+=st+"\n";
+        for (int i = 0; i<stationList.size(); ++i)
+            s+=stationList.get(i)+"\n";
         return s;
     }
 

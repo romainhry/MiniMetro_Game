@@ -54,8 +54,7 @@ public class GameView {
 
     public void removeEnds(Line l) {
         Shape [] ends = lineEnds.get(l);
-        group.getChildren().remove(ends[0]);
-        group.getChildren().remove(ends[1]);
+        System.err.println("REMOVING ENDS "+group.getChildren().remove(ends[0])+" " +group.getChildren().remove(ends[1]));
     }
 
     public Shape getLineLink(Line l,boolean inFirst) {
@@ -63,6 +62,24 @@ public class GameView {
             return lineLinks.get(l).get(0);
         else
             return lineLinks.get(l).get(lineLinks.get(l).size()-1);
+    }
+
+    public Shape getNextLineLink(Line l, Shape currentLink) {
+        ArrayList<Shape> list = lineLinks.get(l);
+        System.err.println("Index of current Link " + list.indexOf(currentLink));
+        if(list.indexOf(currentLink)==0)
+            return list.get(1);
+        else
+            return list.get(list.size()-2);
+    }
+    public Station getNextStation(Line l, Shape nextLink) {
+        ArrayList<Shape> list = lineLinks.get(l);
+        boolean loop = l.isLoop();
+        System.err.println("IS LOOP "+loop+"\nIndex of next Link : "+list.indexOf(nextLink));
+        if(list.indexOf(nextLink)==0)
+            return l.getStationList().get(1);
+        else
+            return l.getStationList().get(l.getStationList().size()-2);
     }
 
     public void addLineLink(Line l,Shape link,boolean inFirst) {
@@ -76,6 +93,8 @@ public class GameView {
             System.err.println("ADD IN LAST");
         }
         links.add(link);
+        System.err.println("Index of created LINK : "+list.indexOf(link));
+
     }
 
     public void removeLineLink(Line l, boolean inFirst) {
@@ -92,6 +111,14 @@ public class GameView {
         group.getChildren().remove(s);
         links.remove(s);
 
+        if(lineLinks.get(l).size()==0)
+            lineLinks.remove(l);
+    }
+
+    public void removeLineLink(Line l, Shape link) {
+        lineLinks.get(l).remove(link);
+        group.getChildren().remove(link);
+        links.remove(link);
         if(lineLinks.get(l).size()==0)
             lineLinks.remove(l);
     }
