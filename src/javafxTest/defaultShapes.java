@@ -49,7 +49,10 @@ public class defaultShapes {
         p.setFill(Color.WHITESMOKE);
         p.setStrokeWidth(6);
         p.setStroke(Color.DARKBLUE);
-        return p;
+    }
+
+    public static Polygon getSquare2() {
+        return new Polygon(-20,-20,20,-20,20,20,-20,20);
     }
 
     public static Circle getCircle () {

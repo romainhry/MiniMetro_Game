@@ -26,6 +26,7 @@ public class Station {
         pos=p;
         type = t;
         links = new ArrayList<Station>();
+        lines = new ArrayList<>();
         distances[t.ordinal()]=0;
     }
 
@@ -60,11 +61,11 @@ public class Station {
     }
     
     public void addLine(Line line) {
-    	
+    	lines.add(line);
     }
     
     public void removeLine(Line line) {
-    	
+    	lines.remove(line);
     }
     
     public void startFullTimer () {
@@ -74,6 +75,8 @@ public class Station {
     public void decreaseFullTimer () {
     	
     }
+
+
     
     public void setCapacity(int capacity) {
     	
@@ -98,23 +101,53 @@ public class Station {
         st.links.remove(this);
     }
 
-
+    /*
     public  void computeDistances (Station recur,int distance) {
         recur.checked = true;
         if(this.distances[recur.type.ordinal()] == -1 || this.distances[recur.type.ordinal()] > distance ) {
             this.distances[recur.type.ordinal()]=distance;
         }
+
         for(Station s: recur.links) {
             if(!s.checked)
                 computeDistances(s, distance + 1);
         }
     }
+    */
+
+
+    public  void computeDistances() {
+        ArrayList <Station> bsearch = new ArrayList<>();
+        bsearch.add(this);
+
+        this.distances[type.ordinal()] = 0;
+
+        int distance=1;
+        while(!bsearch.isEmpty()) {
+            ArrayList <Station> bbsearch =new ArrayList<>();
+            for(Station s : bsearch ) {
+                for(Station s2 : s.links) {
+                    if(!s2.checked) {
+                        if (this.distances[s2.type.ordinal()] == -1) {
+                            this.distances[s2.type.ordinal()] = distance;
+                        }
+                        bbsearch.add(s2);
+                    }
+                }
+                s.setChecked(true);
+            }
+            bsearch=bbsearch;
+            ++distance;
+        }
+    }
+
 
     public static void computeAllDistances() {
         for( Station st : stationL) {
             Arrays.fill(st.distances,-1);
             resetChecked();
-            st.computeDistances(st,0);
+         //   st.computeDistances(st,0);
+            st.computeDistances();
         }
     }
 

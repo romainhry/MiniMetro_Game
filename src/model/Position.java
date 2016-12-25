@@ -4,19 +4,19 @@ package model;
  * Created by romainhry on 07/11/2016.
  */
 public class Position {
-    private int x ;
-    private int y ;
+    private double x ;
+    private double y ;
 
-    public Position(int x,int y) {
+    public Position(double x,double y) {
         this.x=x;
         this.y=y;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
@@ -25,12 +25,12 @@ public class Position {
     }
     
     public double distance (Position p) {
-        int dx = p.x - x, dy = p.y - y;
+        double dx = p.x - x, dy = p.y - y;
     	return Math.sqrt((dx * dx) + (dy * dy));
     }
     
-    public double distance (int x, int y) {
-        int dx = x - this.x, dy = y - this.y;
+    public double distance (double x, double y) {
+        double dx = x - this.x, dy = y - this.y;
         return Math.sqrt(dx*dx+dy*dy);
     }
 

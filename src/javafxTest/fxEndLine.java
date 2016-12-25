@@ -27,7 +27,7 @@ public class fxEndLine extends Polyline {
         setStrokeLineCap(StrokeLineCap.ROUND);
         setStrokeLineJoin(StrokeLineJoin.ROUND);
 
-        int x = modelSt.getPosition().getX(), y=modelSt.getPosition().getY();
+        double x = modelSt.getPosition().getX(), y=modelSt.getPosition().getY();
 
         if(middleY == y) {
             if(middleX > x) {
