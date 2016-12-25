@@ -108,7 +108,6 @@ public class Controller implements Initializable {
 
         group.getChildren().add(borderRiver);
         group.getChildren().add(river);
-        group.getChildren().add(pline);
         /** SHAPES TEST ** */
 
         Polygon triangle = getTriangle();
