@@ -44,16 +44,14 @@ public class defaultShapes {
 
 
 
-    public static Rectangle getSquare() {
-        Rectangle p = new Rectangle(0,0,18,18);
+
+
+    public static Polygon getSquare() {
+        Polygon p = new Polygon(-15,-15,15,-15,15,15,-15,15);
         p.setFill(Color.WHITESMOKE);
         p.setStrokeWidth(6);
         p.setStroke(Color.DARKBLUE);
         return p;
-    }
-
-    public static Polygon getSquare2() {
-        return new Polygon(-20,-20,20,-20,20,20,-20,20);
     }
 
     public static Circle getCircle () {

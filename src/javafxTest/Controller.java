@@ -98,18 +98,12 @@ public class Controller implements Initializable {
 
 
 
-        Polyline poly = new Polyline(200,200,200,300,300,400);
 
-        poly.setStroke(Color.DARKRED);
-        poly.setStrokeWidth(10);
-
-
-        group.getChildren().add(poly);
 
         group.getChildren().add(borderRiver);
         group.getChildren().add(river);
         /** SHAPES TEST ** */
-
+/*
         Polygon triangle = getTriangle();
         setPosition(triangle,500,100);
         group.getChildren().add(triangle);
@@ -125,6 +119,7 @@ public class Controller implements Initializable {
         Polygon cross = getCross();
         setPosition(cross,900,400);
         group.getChildren().add(cross);
+        */
 
         group.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
@@ -177,10 +172,10 @@ public class Controller implements Initializable {
         game = new Game(gameView);
 
         Station s1 = new Station(ShapeType.CIRCLE,new Position(200,200));
-        Station s2 = new Station(ShapeType.CIRCLE,new Position(400,400));
+        Station s2 = new Station(ShapeType.STAR,new Position(400,400));
         Station s3 = new Station(ShapeType.SQUARE,new Position(150,300));
         Station s4 = new Station(ShapeType.TRIANGLE,new Position(300,50));
-        Station s5 = new Station(ShapeType.CIRCLE,new Position(500,250));
+        Station s5 = new Station(ShapeType.CROSS,new Position(500,250));
         Station s6 = new Station(ShapeType.CIRCLE,new Position(400,150));
 
         game.viewTest(s1);
@@ -200,13 +195,14 @@ public class Controller implements Initializable {
 
         group.getChildren().add(train1);
 
+        /* TRAIN TEST WITH CLIENT HERE */ 
         train1.addClient(getCircle());
-        train1.addClient(getSquare2());
+        train1.addClient(getSquare());
         train1.addClient(getTriangle());
-        train1.addClient(getCircle());
+        train1.addClient(getStar());
         train1.addClient(getTriangle());
-        train1.addClient(getSquare2());
-        train1.addClient(getCircle());
+        train1.addClient(getSquare());
+        train1.addClient(getCross());
         train1.addClient(getCircle());
     }
 
