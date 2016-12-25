@@ -34,6 +34,10 @@ public class defaultShapes {
         return r ;
     }
 
+    public static Polygon getSquare2() {
+        return new Polygon(-20,-20,20,-20,20,20,-20,20);
+    }
+
     public static Circle getCircle () {
         return new Circle (20.0) ;
     }

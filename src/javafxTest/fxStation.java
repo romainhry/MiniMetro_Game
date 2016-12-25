@@ -20,8 +20,14 @@ public class fxStation {
                         Circle c = getCircle(); c.setCenterX(s.getPosition().getX()); c.setCenterY(s.getPosition().getY());
                         shape = c; break;
             case SQUARE: /* -20 to  place it the center of shape to the wanted point */
-                        Rectangle r = getSquare(); r.setX(x-20);r.setY(y-20);
-                        shape = r; break;
+                        Polygon square = getSquare2();
+                        for(int i  = 0;i<square.getPoints().size();i+=2) {
+                            double tempX = square.getPoints().get(i) ;
+                            double tempY = square.getPoints().get(i+1);
+                            square.getPoints().set(i,x+tempX);
+                            square.getPoints().set(i+1,y+tempY);
+                        }
+                        shape = square; break;
             case TRIANGLE:
                         Polygon p = getTriangle();
                         for(int i  = 0;i<p.getPoints().size();i+=2) {

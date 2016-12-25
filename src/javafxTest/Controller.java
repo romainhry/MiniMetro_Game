@@ -17,6 +17,7 @@ import model.*;
 import org.omg.PortableServer.SERVANT_RETENTION_POLICY_ID;
 
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import static java.lang.Math.abs;
@@ -24,9 +25,7 @@ import static java.lang.Math.abs;
 import static javafxTest.defaultShapes.*;
 
 
-public class Controller
-        implements Initializable {
-
+public class Controller implements Initializable {
 
     @FXML
     private Group group;
@@ -43,83 +42,16 @@ public class Controller
     Shape currentT = null, currentLink ;
     model.Line currentLine;
 
+    fxTrain train1 = new fxTrain();
+
 
     Game game ;
     GameView gameView;
 
     @Override // This method is called by the FXMLLoader when initialization is complete
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
+
         group.getChildren().add(drawing);
-
-/*
-        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), rect);
-        tt.setByX(100f);tt.setByY(100f);
-        tt.setCycleCount(1);
-        tt.setAutoReverse(false);
-        rect.setRotate(45);
-        tt.play();
-        tt.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.err.println("FINISHED ");
-                rect.setRotate(0);
-            }
-        });*/
-
-
-
-        /** SHAPES **/
-        Rectangle squar = getSquare();
-        setPosition(squar,12.5,5);
-
-//        group.getChildren().add(square);
-
-        Circle circle = getCircle();
-        setPosition(circle,300,200);
-        //group.getChildren().add(circle);
-
-        Polygon triangle = getTriangle();
-        setPosition(triangle,400,400);
-        //group.getChildren().add(triangle);
-
-        Polyline p = getEndLine();
-        setPosition(p,500,500);
-       // group.getChildren().add(p);
-
-        Group train = new Group();
-        Rectangle r = new Rectangle(0,0,50,25); r.setStroke(Color.BLUE);
-
-        Rectangle square = new Rectangle(1,1,10,10); square.setFill(Color.RED);
-        Rectangle square2 = new Rectangle(1,13.5,10,10); square2.setFill(Color.RED);
-        Circle c1 = new Circle(5); c1.setCenterX(19.75); c1.setCenterY(6.25); c1.setFill(Color.RED);
-        Polygon p1 = new Polygon(0.0, 0.0, 5.0, -8.66, 10.0, 0.0 ); p1.setFill(Color.RED);
-        p1.setTranslateX(14); p1 .setTranslateY(24);
-        p1.setRotate(90);
-
-
-        train.getChildren().addAll(r,square2,square,c1,p1);
-        train.setTranslateX(175); train.setTranslateY(200);
-
-        train.setRotate(90);
-        group.getChildren().add(train);
-
-        TranslateTransition trainMoving = new TranslateTransition(Duration.millis(2000),train);
-        trainMoving.setByX(0);trainMoving.setByY(95f);
-        trainMoving.setCycleCount(1);
-        trainMoving.setAutoReverse(false);
-        trainMoving.play();
-
-        trainMoving.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                TranslateTransition trainMoving2 = new TranslateTransition(Duration.millis(2000),train);
-                train.setRotate(45);
-                trainMoving2.setByX(100);trainMoving2.setByY(100);
-                trainMoving2.setCycleCount(1);
-                trainMoving2.setAutoReverse(false);
-                trainMoving2.play();
-            }
-        });
 
         group.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
@@ -130,7 +62,6 @@ public class Controller
                 }
             }
         });
-
         group.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -152,8 +83,8 @@ public class Controller
                 System.err.println("---------------------------------------------");
                 */
                 System.err.println(currentLine+"\n");
-
-
+                Random r = new Random();
+                train1.move(r.nextInt(800),r.nextInt(800));
             }
         });
 
@@ -193,12 +124,17 @@ public class Controller
         addStationEvent(gameView.get(s5).shape,s5);
         addStationEvent(gameView.get(s6).shape,s6);
 
-        fxTrain train1 = new fxTrain();
+
         group.getChildren().add(train1);
-        train1.move(new Position(700,200));
-        train1.move(new Position(200,0));
 
-
+        train1.addClient(getCircle());
+        train1.addClient(getSquare2());
+        train1.addClient(getTriangle());
+        train1.addClient(getCircle());
+        train1.addClient(getTriangle());
+        train1.addClient(getSquare2());
+        train1.addClient(getCircle());
+        train1.addClient(getCircle());
     }
 
 
