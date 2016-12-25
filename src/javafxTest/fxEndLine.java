@@ -2,9 +2,11 @@ package javafxTest;
 
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Shape;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeLineJoin;
 import model.Station;
 
-import static javafxTest.defaultShapes.getEndLine;
+//import static javafxTest.defaultShapes.getEndLine;
 
 /**
  * Created by KadirF on 18/12/2016.
@@ -22,6 +24,8 @@ public class fxEndLine extends Polyline {
         setStrokeWidth(10);
         double dx = modelSt.getPosition().getX();
         double dy = modelSt.getPosition().getY();
+        setStrokeLineCap(StrokeLineCap.ROUND);
+        setStrokeLineJoin(StrokeLineJoin.ROUND);
 
         int x = modelSt.getPosition().getX(), y=modelSt.getPosition().getY();
 

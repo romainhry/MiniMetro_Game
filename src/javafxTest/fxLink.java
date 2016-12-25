@@ -1,6 +1,7 @@
 package javafxTest;
 
 import javafx.scene.shape.Polyline;
+import javafx.scene.shape.StrokeLineJoin;
 import model.Station;
 
 /**
@@ -15,6 +16,7 @@ public class fxLink extends Polyline {
     public fxLink(double x,double y,double middleX, double middleY, double x2,double y2) {
         super(x,y,middleX,middleY,x2,y2);
         setStrokeWidth(10);
+        setStrokeLineJoin(StrokeLineJoin.ROUND);
     }
 
     void test() {

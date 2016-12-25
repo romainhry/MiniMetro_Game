@@ -55,16 +55,65 @@ public class Controller
 
         //group.startFullDrag();
 
+        // River :
+        Polyline river = new Polyline(
+                150,600,
+                150,450,
+                500,450,
+                500,330,
+                530,300,
+                700,300,
+                800,370,
+                900,300,
+                1000,300,
+                1000,420,
+                1150,420,
+                1150,300,
+                1200,300
+        );
+
+        Color colorRiver = new Color((double)200/255,(double)230/255,(double)250/255,0.5);
+        river.setStroke(colorRiver);
+        river.setStrokeLineJoin(StrokeLineJoin.ROUND);
+        river.setStrokeWidth(23);
+
+        Polyline borderRiver = new Polyline(
+                150,600,
+                150,450,
+                500,450,
+                500,330,
+                530,300,
+                700,300,
+                800,370,
+                900,300,
+                1000,300,
+                1000,420,
+                1150,420,
+                1150,300,
+                1200,300
+        );
+
+        Color colorBorder = new Color((double)100/255,(double)180/255,(double)220/255,0.5);
+        borderRiver.setStroke(colorBorder);
+        borderRiver.setStrokeLineJoin(StrokeLineJoin.ROUND);
+        borderRiver.setStrokeWidth(31);
+
+
+
+
+
+
+
         Polyline poly = new Polyline(200,200,200,300,300,400);
-        poly.setStroke(Color.AQUA);
+
+        poly.setStroke(Color.DARKRED);
         poly.setStrokeWidth(10);
-
-
-        poly.getPoints() ;
 
 
         group.getChildren().add(poly);
 
+        group.getChildren().add(borderRiver);
+        group.getChildren().add(river);
 
         group.getChildren().add(pline);
 
@@ -90,23 +139,26 @@ public class Controller
 
 
 
-        /** SHAPES ** */
-        Rectangle squar = getSquare();
-        setPosition(squar,12.5,5);
-
-//        group.getChildren().add(square);
-
-        Circle circle = getCircle();
-        setPosition(circle,300,200);
-        //group.getChildren().add(circle);
+        /** SHAPES TEST ** */
 
         Polygon triangle = getTriangle();
-        setPosition(triangle,400,400);
-        //group.getChildren().add(triangle);
+        setPosition(triangle,500,100);
+        group.getChildren().add(triangle);
 
-        Polyline p = getEndLine();
-        setPosition(p,500,500);
-       // group.getChildren().add(p);
+        Polygon star = getStar();
+        setPosition(star,700,200);
+        group.getChildren().add(star);
+
+        Rectangle sq = getSquare();
+        setPosition(sq,800,300);
+        group.getChildren().add(sq);
+
+        Polygon cross = getCross();
+        setPosition(cross,900,400);
+        group.getChildren().add(cross);
+
+
+
 
         Group train = new Group();
         Rectangle r = new Rectangle(0,0,50,25); r.setStroke(Color.BLUE);

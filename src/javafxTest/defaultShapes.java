@@ -4,46 +4,112 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import model.Position;
 
-/**
- * Created by KadirF on 18/12/2016.
- */
 public class defaultShapes {
 
     public static Polygon TRIANGLE = new Polygon(0.0, 0.0, 20.0, -34.64, 40.0, 0.0 );
-    public static Circle CIRCLE = new Circle (20.0) ;
-    public static Rectangle SQUARE = new Rectangle(0,0,40,40);
+    public static Circle CIRCLE = new Circle (15.0) ;
+    public static Rectangle SQUARE = new Rectangle(0,0,18,18);
+    public static Polygon STAR = new Polygon(
+            2,8,
+            -2,23,
+            -6,8,
+            -21,8,
+            -8,0,
+            -13,-15,
+            -2,-5,
+            9,-15,
+            4,0,
+            17,8,
+            2,8
+    );
+    public static Polygon CROSS = new Polygon(
+            0,0,
+            -10,0,
+            10,0,
+            0,0,
+            0,10,
+            0,-10,
+            0,0
+    );
 
     public static void setPosition(Shape s, double x, double y) {
         s.setTranslateX(x);
         s.setTranslateY(y);
-        s.setStroke(Color.WHITE);
-        s.setStrokeWidth(10);
-        s.setFill(Color.GREY);
     }
 
     public static void setPosition(Shape s, Position p) {
         s.setTranslateX(p.getX());
         s.setTranslateY(p.getY());
-        s.setStroke(Color.WHITE);
-        s.setStrokeWidth(10);
-        s.setFill(Color.GREY);
     }
 
+
+
     public static Rectangle getSquare() {
-        return new Rectangle(0,0,40,40);
+        Rectangle p = new Rectangle(0,0,18,18);
+        p.setFill(Color.WHITESMOKE);
+        p.setStrokeWidth(6);
+        p.setStroke(Color.DARKBLUE);
+        return p;
     }
 
     public static Circle getCircle () {
-        return new Circle (20.0) ;
+        Circle p = new Circle (15.0);
+        p.setFill(Color.WHITESMOKE);
+        p.setStrokeWidth(6);
+        p.setStroke(Color.RED);
+        return p;
     }
 
     public static Polygon getTriangle () {
-       return new Polygon(0.0, 0.0, 20.0, -34.64, 40.0, 0.0 );
+        Polygon p = new Polygon(-20,17.335,0,-34.67+17.335,20,17.335);
+        p.setFill(Color.WHITESMOKE);
+        p.setStrokeType(StrokeType.INSIDE);
+        p.setStrokeWidth(5);
+        p.setStroke(Color.GREENYELLOW);
+        return p;
     }
 
-    public static Polyline getEndLine() {
-        return  new Polyline(0,0,15,0,15,-25,15,0,30,0);
+    public static Polygon getStar() {
+        Polygon p = new Polygon(
+                2,8,
+                -2,23,
+                -6,8,
+                -21,8,
+                -8,0,
+                -13,-15,
+                -2,-5,
+                9,-15,
+                4,0,
+                17,8,
+                2,8
+        );
+
+        p.setFill(Color.WHITESMOKE);
+        p.setStrokeType(StrokeType.INSIDE);
+        p.setStrokeWidth(4);
+        p.setStroke(Color.DARKORANGE);
+        return p;
     }
+
+
+    public static Polygon getCross() {
+        Polygon p = new Polygon(
+                0,0,
+                -10,0,
+                10,0,
+                0,0,
+                0,10,
+                0,-10,
+                0,0
+        );
+        p.setFill(Color.BLACK);
+        p.setStrokeType(StrokeType.OUTSIDE);
+        p.setStrokeWidth(2);
+        p.setStroke(Color.BLACK);
+        p.setStrokeLineCap(StrokeLineCap.ROUND);
+        return p;
+    }
+
 
 
 

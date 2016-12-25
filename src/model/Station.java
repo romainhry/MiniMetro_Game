@@ -129,15 +129,12 @@ public class Station {
         Station s1 = new Station(ShapeType.CIRCLE,new Position(5,5));
         Station s2 = new Station(ShapeType.TRIANGLE,new Position(5,6));
         Station s3 = new Station(ShapeType.SQUARE,new Position(5,7));
-        Station s4 = new Station(ShapeType.PENTAGON,new Position(5,8));
         Station s5 = new Station(ShapeType.CROSS,new Position(5,5));
         Station s6 = new Station(ShapeType.TRIANGLE,new Position(5,6));
-        Station s7 = new Station(ShapeType.OVAL,new Position(5,7));
-        Station s8 = new Station(ShapeType.GEM,new Position(5,8));
 
-        s1.addLink(s2); s3.addLink(s4); s2.addLink(s3); s3.addLink(s5); s3.addLink(s6); s7.addLink(s5); s8.addLink(s1);
+        s1.addLink(s2); s2.addLink(s3); s3.addLink(s5); s3.addLink(s6);
 
-        stationL.add(s1);stationL.add(s2);stationL.add(s3);stationL.add(s4);stationL.add(s5);stationL.add(s6);stationL.add(s7);stationL.add(s8);
+        stationL.add(s1);stationL.add(s2);stationL.add(s3);stationL.add(s5);stationL.add(s6);
 
         double start = System.nanoTime();
         computeAllDistances();

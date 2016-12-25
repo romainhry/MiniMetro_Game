@@ -30,7 +30,8 @@ public class Main extends Application {
         try {
 
             Group page = (Group) FXMLLoader.load(Main.class.getResource("sample.fxml"));
-            Scene scene = new Scene(page,1200,800, Color.GREY);
+            Color colorScene = new Color((double)240/255, (double)240/255,(double)240/255,0.5);
+            Scene scene = new Scene(page,1200,600, colorScene);
             primaryStage.setScene(scene);
             primaryStage.setTitle("MiniMetro test");
             primaryStage.show();
