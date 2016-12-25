@@ -6,14 +6,8 @@ package model;
 public enum ShapeType {
     SQUARE,
     CIRCLE,
-    RECTANGLE,
     TRIANGLE,
     STAR,
-    PENTAGON,
-    DIAMOND,
     CROSS,
-    TEAR,
-    GEM,
-    OVAL;
 }
 
