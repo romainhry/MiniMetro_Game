@@ -1,6 +1,7 @@
 .idea*
 *.iml
 
+*.java
+
 .idea/workspace.xml
 
-.idea\*

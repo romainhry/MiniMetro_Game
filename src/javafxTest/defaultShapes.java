@@ -113,6 +113,75 @@ public class defaultShapes {
     }
 
 
+    //Shape for client
+
+    public static Rectangle getLittleSquare() {
+        Rectangle p = new Rectangle(0,0,9,9);
+        p.setFill(Color.WHITESMOKE);
+        p.setStrokeWidth(6);
+        p.setStroke(Color.DARKBLUE);
+        return p;
+    }
+
+    public static Circle getLittleCircle () {
+        Circle p = new Circle (7.0);
+        p.setFill(Color.WHITESMOKE);
+        p.setStrokeWidth(6);
+        p.setStroke(Color.RED);
+        return p;
+    }
+
+    public static Polygon getLittleTriangle () {
+        Polygon p = new Polygon(-10,17.335/2,0,(-34.67+17.335)/2,10,17.335/2);
+        p.setFill(Color.WHITESMOKE);
+        p.setStrokeType(StrokeType.INSIDE);
+        p.setStrokeWidth(5);
+        p.setStroke(Color.GREENYELLOW);
+        return p;
+    }
+
+    public static Polygon getLittleStar() {
+        Polygon p = new Polygon(
+                1,4,
+                -1,11,
+                -3,4,
+                -10,4,
+                -4,0,
+                -6,-7,
+                -1,-2,
+                4,-7,
+                2,0,
+                8,4,
+                1,4
+        );
+
+        p.setFill(Color.WHITESMOKE);
+        p.setStrokeType(StrokeType.INSIDE);
+        p.setStrokeWidth(4);
+        p.setStroke(Color.DARKORANGE);
+        return p;
+    }
+
+
+    public static Polygon getLittleCross() {
+        Polygon p = new Polygon(
+                0,0,
+                -10,0,
+                10,0,
+                0,0,
+                0,10,
+                0,-10,
+                0,0
+        );
+        p.setFill(Color.BLACK);
+        p.setStrokeType(StrokeType.OUTSIDE);
+        p.setStrokeWidth(2);
+        p.setStroke(Color.BLACK);
+        p.setStrokeLineCap(StrokeLineCap.ROUND);
+        return p;
+    }
+
+
 
 
 }

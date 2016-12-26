@@ -97,6 +97,8 @@ public class Controller implements Initializable {
         borderRiver.setStrokeWidth(31);
 
 
+        group.getChildren().add(borderRiver);
+        group.getChildren().add(river);
 
 
 
@@ -204,13 +206,16 @@ public class Controller implements Initializable {
         train1.addClient(getSquare());
         train1.addClient(getCross());
         train1.addClient(getCircle());
+        game.start();
+
     }
+
 
 
     private boolean is45degree(double x1, double y1, double x2, double y2) {
         return abs(x1-x2)== abs(y1-y2);
     }
-    private  boolean sup45degree(double x1, double y1, double x2, double y2) {
+    private boolean sup45degree(double x1, double y1, double x2, double y2) {
         return abs(x1-x2) > abs(y2-y1);
     }
 

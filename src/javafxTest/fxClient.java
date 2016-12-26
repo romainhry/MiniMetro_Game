@@ -11,11 +11,11 @@ public class fxClient {
 
     public fxClient(Client c) {
         switch(c.getType()) {
-            case CIRCLE: shape = getCircle(); break;
-            case SQUARE: shape = getSquare(); break;
-            case TRIANGLE: shape = getTriangle() ; break;
-            case STAR: shape = getStar(); break;
-            case CROSS: shape = getCross(); break;
+            case CIRCLE: shape = getLittleCircle(); break;
+            case SQUARE: shape = getLittleSquare(); break;
+            case TRIANGLE: shape = getLittleTriangle() ; break;
+            case STAR: shape = getLittleStar(); break;
+            case CROSS: shape = getLittleCross(); break;
             default: shape = null;
         }
 
