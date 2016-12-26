@@ -141,6 +141,7 @@ public class Controller
 
         /** SHAPES TEST ** */
 
+        /*
         Polygon triangle = getTriangle();
         setPosition(triangle,500,100);
         group.getChildren().add(triangle);
@@ -156,6 +157,7 @@ public class Controller
         Polygon cross = getCross();
         setPosition(cross,900,400);
         group.getChildren().add(cross);
+        */
 
 
 
@@ -228,26 +230,26 @@ public class Controller
         game = new Game(gameView);
         Station s1 = new Station(ShapeType.CIRCLE,new Position(200,200));
         Station s2 = new Station(ShapeType.CIRCLE,new Position(400,400));
-        Station s3 = new Station(ShapeType.CIRCLE,new Position(600,700));
-        Station s4 = new Station(ShapeType.CIRCLE,new Position(800,50));
+        Station s3 = new Station(ShapeType.CIRCLE,new Position(800,50));
 
 
         game.viewTest(s1);
         game.viewTest(s2);
         game.viewTest(s3);
-        game.viewTest(s4);
         addStationEvent(gameView.get(s1),s1);
         addStationEvent(gameView.get(s2),s2);
         addStationEvent(gameView.get(s3),s3);
-        addStationEvent(gameView.get(s4),s4);
+
+        game.start();
 
     }
+
 
 
     private boolean is45degree(double x1, double y1, double x2, double y2) {
         return abs(x1-x2)== abs(y1-y2);
     }
-    private  boolean sup45degree(double x1, double y1, double x2, double y2) {
+    private boolean sup45degree(double x1, double y1, double x2, double y2) {
         return abs(x1-x2) > abs(y2-y1);
     }
 

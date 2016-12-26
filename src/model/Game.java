@@ -1,11 +1,9 @@
 package model;
 
+import javafx.application.Platform;
 import javafxTest.GameView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Timer;
+import java.util.*;
 
 /**
  * Created by romainhry on 08/11/2016.
@@ -17,12 +15,16 @@ public class Game {
     private static int stationCapacity ;
     private static int timeSpeed ;
     private static int transportedClientNb;
+    private int width = 1200;
+    private int high = 600;
     private Timer day;
     private Inventory inventory;
     private List<Train> trainList;
     private List<Client> clientList;
     private List<Line> lineList;
     private List <Station> stationList ;
+
+    private boolean clientReady,stationReady;
 
     public Game(GameView gameView) {
         view = gameView;
@@ -33,12 +35,55 @@ public class Game {
         inventory = new Inventory(3,3,0,3,0);
     }
 
-    public Station popRandomStation() {
-    	return null;
+    private void popRandomStation() {
+
+        Thread threadStation = new Thread() {
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep((int) (15000 + Math.random() * 20000));  //min 15 s, max 35 s between 2 new station
+                        Station st = new Station(
+                                ShapeType.values()[(int) (Math.random() * 5)],
+                                new Position((int) (Math.random() * width), (int) (Math.random() * high))
+                        );
+                        stationList.add(st);
+                        Platform.runLater(() ->view.put(st));
+                        System.out.println("new station");
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+        };
+        threadStation.start();
     }
   
-    public Client popRandomClient() {
-    	return null;
+    private void popRandomClient() {
+        Thread threadClient = new Thread() {
+            public void run() {
+                while(true){
+                    try {
+                        Thread.sleep((int)(0+Math.random()*10000));  //min 0 s, max 10 s of delay between 2 new clients
+
+                        Client clt = new Client(
+                                stationList.get((int)(Math.random()*stationList.size())),
+                                ShapeType.values()[(int)(Math.random()*5)]
+                        );
+                        clientList.add(clt);
+                        Platform.runLater(() ->view.put(clt));                              //bug
+                        System.out.println("new client");
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.println(e);
+                    }
+                }
+            }
+        };
+
+        threadClient.start();
+
+
     }
     
     public void pop2RandomUpgrade() {
@@ -72,7 +117,7 @@ public class Game {
         view.put(c);
     }
 
-    public  void computeAllDistances() {
+    public void computeAllDistances() {
         for( Station st : stationList) {
             Arrays.fill(st.getDistances(),-1);
             resetChecked();
@@ -84,7 +129,17 @@ public class Game {
         for(Station s: stationList)
             s.setChecked(false);
     }
-    
+
+    public void start() {
+        popRandomStation();
+        popRandomClient();
+
+
+
+
+
+    }
+
     
     
 }

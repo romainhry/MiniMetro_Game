@@ -11,8 +11,8 @@ import java.util.Timer;
 public class Station {
     private ShapeType type ;
     private Position pos ;
-    private java.util.List<Client> clientList;
-    private java.util.List<Station> links;
+    private List<Client> clientList;
+    private List<Station> links;
     private List<Line> lines;
     private Timer fullCapacity ;
     private int capacity;
@@ -27,6 +27,8 @@ public class Station {
         type = t;
         links = new ArrayList<Station>();
         distances[t.ordinal()]=0;
+        clientList = new ArrayList<Client>();
+
     }
 
     public ShapeType getType() {
