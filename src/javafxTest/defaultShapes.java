@@ -6,6 +6,12 @@ import model.Position;
 
 public class defaultShapes {
 
+    /* Defines the scale for the littles shapes*/
+    public static double littlesScale = 0.5;
+
+    /* defines the length of the side of a square in which all shapes must be contained*/
+    public static double maxLength = 30 ;
+    
     public static Polygon TRIANGLE = new Polygon(0.0, 0.0, 20.0, -34.64, 40.0, 0.0 );
     public static Circle CIRCLE = new Circle (15.0) ;
     public static Rectangle SQUARE = new Rectangle(0,0,18,18);
@@ -44,8 +50,6 @@ public class defaultShapes {
 
 
 
-
-
     public static Polygon getSquare() {
         Polygon p = new Polygon(-15,-15,15,-15,15,15,-15,15);
         p.setFill(Color.WHITESMOKE);
@@ -63,7 +67,7 @@ public class defaultShapes {
     }
 
     public static Polygon getTriangle () {
-        Polygon p = new Polygon(-20,17.335,0,-34.67+17.335,20,17.335);
+        Polygon p = new Polygon(-20,17.335,0,-17.335,20,17.335);
         p.setFill(Color.WHITESMOKE);
         p.setStrokeType(StrokeType.INSIDE);
         p.setStrokeWidth(5);
@@ -90,6 +94,7 @@ public class defaultShapes {
         p.setStrokeType(StrokeType.INSIDE);
         p.setStrokeWidth(4);
         p.setStroke(Color.DARKORANGE);
+        p.setRotate(180);
         return p;
     }
 
@@ -97,16 +102,16 @@ public class defaultShapes {
     public static Polygon getCross() {
         Polygon p = new Polygon(
                 0,0,
-                -10,0,
-                10,0,
+                -15,0,
+                15,0,
                 0,0,
-                0,10,
-                0,-10,
+                0,15,
+                0,-15,
                 0,0
         );
         p.setFill(Color.BLACK);
         p.setStrokeType(StrokeType.OUTSIDE);
-        p.setStrokeWidth(2);
+        p.setStrokeWidth(5);
         p.setStroke(Color.BLACK);
         p.setStrokeLineCap(StrokeLineCap.ROUND);
         return p;
@@ -115,32 +120,56 @@ public class defaultShapes {
 
     //Shape for client
 
-    public static Rectangle getLittleSquare() {
+    public static Polygon getLittleSquare() {
+        /*
         Rectangle p = new Rectangle(0,0,9,9);
         p.setFill(Color.WHITESMOKE);
         p.setStrokeWidth(6);
         p.setStroke(Color.DARKBLUE);
         return p;
+        */
+        Polygon r = getSquare();
+        r.setScaleX(littlesScale) ;
+        r.setScaleY(littlesScale);
+        return r;
     }
 
     public static Circle getLittleCircle () {
+        Circle c = getCircle();
+        c.setScaleX(littlesScale);
+        c.setScaleY(littlesScale);
+        return c;
+        /*
         Circle p = new Circle (7.0);
         p.setFill(Color.WHITESMOKE);
         p.setStrokeWidth(6);
         p.setStroke(Color.RED);
         return p;
+        */
     }
 
     public static Polygon getLittleTriangle () {
+        Polygon p = getTriangle();
+        p.setScaleX(littlesScale);
+        p.setScaleY(littlesScale);
+        return p;
+        /*
         Polygon p = new Polygon(-10,17.335/2,0,(-34.67+17.335)/2,10,17.335/2);
         p.setFill(Color.WHITESMOKE);
         p.setStrokeType(StrokeType.INSIDE);
         p.setStrokeWidth(5);
         p.setStroke(Color.GREENYELLOW);
         return p;
+        */
     }
 
     public static Polygon getLittleStar() {
+        Polygon p = getStar();
+        p.setScaleX(littlesScale);
+        p.setScaleY(littlesScale);
+        p.setRotate(180);
+        return p;
+        /*
         Polygon p = new Polygon(
                 1,4,
                 -1,11,
@@ -160,10 +189,16 @@ public class defaultShapes {
         p.setStrokeWidth(4);
         p.setStroke(Color.DARKORANGE);
         return p;
+        */
     }
 
 
     public static Polygon getLittleCross() {
+        Polygon p = getCross();
+        p.setScaleX(littlesScale);
+        p.setScaleY(littlesScale);
+        return p;
+        /*
         Polygon p = new Polygon(
                 0,0,
                 -10,0,
@@ -179,6 +214,7 @@ public class defaultShapes {
         p.setStroke(Color.BLACK);
         p.setStrokeLineCap(StrokeLineCap.ROUND);
         return p;
+        */
     }
 
 

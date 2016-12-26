@@ -17,6 +17,10 @@ public class Client {
         return destinationType;
     }
 
+    public Station getStation() {
+        return station;
+    }
+
     public void tryBoarding(Train train) {
         if(train.isFull())
             return;

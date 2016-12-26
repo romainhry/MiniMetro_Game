@@ -1,10 +1,14 @@
 package javafxTest;
 
-import javafx.scene.shape.Polyline;
-import javafx.scene.shape.Shape;
-import javafx.scene.shape.StrokeLineCap;
-import javafx.scene.shape.StrokeLineJoin;
+import javafx.geometry.Point3D;
+import javafx.scene.paint.*;
+import javafx.scene.shape.*;
+import javafx.scene.transform.Rotate;
 import model.Station;
+
+import java.awt.*;
+
+import static javafxTest.Controller.group2;
 
 //import static javafxTest.defaultShapes.getEndLine;
 
@@ -14,67 +18,66 @@ import model.Station;
 public class fxEndLine extends Polyline {
 
     public fxEndLine() {
-        super(15,-25,15,0,0,0,30,0);
+        super(0,0, 0,50, -15,50, 0,50, 15,50);
         setStrokeWidth(10);
-        setTranslateX(-15); setTranslateY(25);
     }
 
     public fxEndLine(Station modelSt,double middleX,double middleY) {
-        super(0,0,0,25,-20,25,15,25);
+        //super(0,0,0,25,-20,25,15,25);
+        super(0,0, 0,40, -15,40, 0,40, 15,40);
         setStrokeWidth(10);
-        double dx = modelSt.getPosition().getX();
-        double dy = modelSt.getPosition().getY();
         setStrokeLineCap(StrokeLineCap.ROUND);
         setStrokeLineJoin(StrokeLineJoin.ROUND);
 
         double x = modelSt.getPosition().getX(), y=modelSt.getPosition().getY();
+        double angle = 0;
 
         if(middleY == y) {
             if(middleX > x) {
-                setRotate(90);
-                setTranslateX(dx-30);
-                setTranslateY(dy-10);
+                angle = 90;
             }
             else {
-                setRotate(-90);
-                setTranslateX(dx+30);
-                setTranslateY(dy-10);
+                angle = -90;
             }
         }
         else if(middleX == x) {
             if(middleY > y) {
-                setRotate(180);
-                setTranslateX(dx);
-                setTranslateY(dy-45);
+                angle = 180;
             }
             else {
-                setRotate(0);
-                setTranslateX(dx);
-                setTranslateY(dy+20);
+                angle = 0;
             }
         }
         else {
             if(middleX > x && middleY > y) {
-                setRotate(135);
-                setTranslateX(dx-25);
-                setTranslateY(dy-34);
+                angle =  135;
             }
             if(middleX > x && middleY < y) {
-                setRotate(45);
-                setTranslateX(dx-25);
-                setTranslateY(dy+12);
+                angle = 45;
             }
             if(middleX < x && middleY > y) {
-                setRotate(-135);
-                setTranslateX(dx+25);
-                setTranslateY(dy-34);
+                angle = -135;
             }
             if(middleX < x && middleY < y) {
-                setRotate(-45);
-                setTranslateX(dx+25);
-                setTranslateY(dy+12);
+                angle = -45;
             }
         }
+
+        for(int i  = 0;i<getPoints().size();i+=2) {
+            double tempX = getPoints().get(i) ;
+            double tempY = getPoints().get(i+1);
+            getPoints().set(i,x+tempX);
+            getPoints().set(i+1,y+tempY);
+        }
+
+        Rotate rot = new Rotate(angle,getPoints().get(0),getPoints().get(1));
+        getTransforms().add(rot);
+
+        Circle center = new Circle(3);
+        center.setCenterX(getPoints().get(0));
+        center.setCenterY(getPoints().get(1));
+        center.setStroke(javafx.scene.paint.Color.RED);
+        group2.getChildren().add(center);
 
     }
 }

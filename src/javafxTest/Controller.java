@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.scene.transform.Rotate;
 import model.*;
 
 import java.net.URL;
@@ -43,10 +44,13 @@ public class Controller implements Initializable {
     Game game ;
     GameView gameView;
 
+    static Group group2;
+
     @Override // This method is called by the FXMLLoader when initialization is complete
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
-
+        group2 = group;
         group.getChildren().add(drawing);
+
 
         // River :
         Polyline river = new Polyline(
@@ -203,6 +207,7 @@ public class Controller implements Initializable {
 
 
         game.start();
+
 
     }
 
@@ -376,7 +381,7 @@ public class Controller implements Initializable {
                   //      Shape link =  Shape.subtract(tempLink,shape);
                         Shape link = Shape.subtract(tempLink,toSubstract.shape);
                         toSubstract = new fxStation(new Station(ShapeType.CIRCLE,currentStation.getPosition()));
-                //        link = Shape.subtract(link,gameView.get(currentStation).shape);
+                        //        link = Shape.subtract(link,gameView.get(currentStation).shape);
                         link = Shape.subtract(link,toSubstract.shape);
 
                         modelSt.addLink(currentStation);
@@ -399,7 +404,8 @@ public class Controller implements Initializable {
                             gameView.createLine(currentLine,endLine,endLine2);
                         }
                         addTEvent(endLine,modelSt,currentLine,link);
-                        group.getChildren().add(link);
+
+                        group.getChildren().add(1,link);
 
                         int currentStationIndex = 0;
                         /* this case we add a station to the current line */

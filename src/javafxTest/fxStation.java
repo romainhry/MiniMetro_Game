@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import model.Station;
 
+import static javafxTest.Controller.group2;
 import static javafxTest.defaultShapes.*;
 
 public class fxStation {
@@ -55,5 +56,6 @@ public class fxStation {
 
             default: shape = null;
         }
+
     }
 }
