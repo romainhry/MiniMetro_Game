@@ -17,7 +17,7 @@ public class Game {
     private static int timeSpeed ;
     private static int transportedClientNb;
     private int width = 1200;
-    private int high = 600;
+    private int height = 600;
     private Timer day;
     private Inventory inventory;
     private List<Train> trainList;
@@ -49,21 +49,21 @@ public class Game {
         linesColor.add(c);
     }
 
-    public Station popRandomStation() {
-    	return null;
+
     private void popRandomStation() {
 
         Thread threadStation = new Thread() {
             public void run() {
                 while (true) {
                     try {
-                        Thread.sleep((int) (15000 + Math.random() * 20000));  //min 15 s, max 35 s between 2 new station
+                        Random random = new Random();
+                        Thread.sleep( 15000 + random.nextInt(20000));  //min 15 s, max 35 s between 2 new station
                         Station st = new Station(
-                                ShapeType.values()[(int) (Math.random() * 5)],
-                                new Position((int) (Math.random() * width), (int) (Math.random() * high))
+                                ShapeType.values()[random.nextInt(ShapeType.values().length)],
+                                new Position(random.nextInt(width), random.nextInt(height))
                         );
                         stationList.add(st);
-                        Platform.runLater(() ->view.put(st));
+                        Platform.runLater(() -> addToView(st));
                         System.out.println("new station");
                     } catch (Exception e) {
                         System.out.println(e);
@@ -79,14 +79,14 @@ public class Game {
             public void run() {
                 while(true){
                     try {
-                        Thread.sleep((int)(0+Math.random()*10000));  //min 0 s, max 10 s of delay between 2 new clients
-
+                        Random random = new Random();
+                        Thread.sleep(random.nextInt(10000));  //min 0 s, max 10 s of delay between 2 new clients
                         Client clt = new Client(
-                                stationList.get((int)(Math.random()*stationList.size())),
-                                ShapeType.values()[(int)(Math.random()*5)]
+                                stationList.get(random.nextInt(stationList.size())),
+                                ShapeType.values()[random.nextInt(ShapeType.values().length)]
                         );
                         clientList.add(clt);
-                        Platform.runLater(() ->view.put(clt));                              //bug
+                        Platform.runLater(() -> addToView(clt));                              //bug
                         System.out.println("new client");
                     }
                     catch (Exception e)
@@ -118,17 +118,17 @@ public class Game {
     	
     }
 
-    public void viewTest (Station s) {
+    public void addToView(Station s) {
         stationList.add(s);
         view.put(s);
     }
 
-    public void viewTest (Train t) {
+    public void addToView(Train t) {
         trainList.add(t);
         view.put(t);
     }
 
-    public void viewTest (Client c) {
+    public void addToView(Client c) {
         clientList.add(c);
         view.put(c);
     }
@@ -150,11 +150,6 @@ public class Game {
     public void start() {
         popRandomStation();
         popRandomClient();
-
-
-
-
-
     }
 
     

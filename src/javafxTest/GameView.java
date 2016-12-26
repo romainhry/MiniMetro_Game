@@ -30,9 +30,10 @@ public class GameView {
     public GameView(Group g) {
         stations = new HashMap<>();
         trains = new HashMap<>();
-        group = g;
         lineLinks = new HashMap<>();
         lineEnds = new HashMap<>();
+        clients = new HashMap<>();
+        group = g;
     }
 
     public void createLine(Line l,Shape end1, Shape end2) {
@@ -141,7 +142,6 @@ public class GameView {
     public void put(Client c) {
         clients.put(c,new fxClient(c));
         group.getChildren().add(clients.get(c).shape);
-
     }
 
     public fxTrain get(Train t) {

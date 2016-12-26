@@ -1,20 +1,15 @@
 package javafxTest;
 
-import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import javafx.util.Duration;
 import model.*;
-import org.omg.PortableServer.SERVANT_RETENTION_POLICY_ID;
 
 import java.net.URL;
 import java.util.Random;
@@ -101,9 +96,6 @@ public class Controller implements Initializable {
         group.getChildren().add(river);
 
 
-
-        group.getChildren().add(borderRiver);
-        group.getChildren().add(river);
         /** SHAPES TEST ** */
 /*
         Polygon triangle = getTriangle();
@@ -180,12 +172,12 @@ public class Controller implements Initializable {
         Station s5 = new Station(ShapeType.CROSS,new Position(500,250));
         Station s6 = new Station(ShapeType.CIRCLE,new Position(400,150));
 
-        game.viewTest(s1);
-        game.viewTest(s2);
-        game.viewTest(s3);
-        game.viewTest(s4);
-        game.viewTest(s5);
-        game.viewTest(s6);
+        game.addToView(s1);
+        game.addToView(s2);
+        game.addToView(s3);
+        game.addToView(s4);
+        game.addToView(s5);
+        game.addToView(s6);
 
         addStationEvent(gameView.get(s1).shape,s1);
         addStationEvent(gameView.get(s2).shape,s2);
@@ -206,6 +198,8 @@ public class Controller implements Initializable {
         train1.addClient(getSquare());
         train1.addClient(getCross());
         train1.addClient(getCircle());
+
+
         game.start();
 
     }

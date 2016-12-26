@@ -10,6 +10,7 @@ public class fxClient {
     Shape shape;
 
     public fxClient(Client c) {
+
         switch(c.getType()) {
             case CIRCLE: shape = getLittleCircle(); break;
             case SQUARE: shape = getLittleSquare(); break;
