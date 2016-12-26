@@ -24,16 +24,17 @@ public class GameView {
     HashMap<model.Line,ArrayList<Shape>> lineLinks;
     HashMap<model.Line,Shape[]> lineEnds;
     List<Shape> links = new ArrayList<>();
-
     private Group group;
+    private Controller controller;
 
-    public GameView(Group g) {
+    public GameView(Group g,Controller c) {
         stations = new HashMap<>();
         trains = new HashMap<>();
         lineLinks = new HashMap<>();
         lineEnds = new HashMap<>();
         clients = new HashMap<>();
         group = g;
+        controller = c;
     }
 
     public void createLine(Line l,Shape end1, Shape end2) {
@@ -132,6 +133,7 @@ public class GameView {
     public void put(Station s) {
         stations.put(s,new fxStation(s));
         group.getChildren().add(stations.get(s).shape);
+        controller.addStationEvent(stations.get(s).shape,s);
     }
 
     public void put(Train t) {

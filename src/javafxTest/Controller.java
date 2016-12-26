@@ -162,7 +162,7 @@ public class Controller implements Initializable {
 
         /* MODEL VIEW TEST*/
 
-        gameView = new GameView(group);
+        gameView = new GameView(group,this);
         game = new Game(gameView);
 
         Station s1 = new Station(ShapeType.CIRCLE,new Position(200,200));
@@ -179,12 +179,14 @@ public class Controller implements Initializable {
         game.addToView(s5);
         game.addToView(s6);
 
+        /*
         addStationEvent(gameView.get(s1).shape,s1);
         addStationEvent(gameView.get(s2).shape,s2);
         addStationEvent(gameView.get(s3).shape,s3);
         addStationEvent(gameView.get(s4).shape,s4);
         addStationEvent(gameView.get(s5).shape,s5);
         addStationEvent(gameView.get(s6).shape,s6);
+        */
 
 
         group.getChildren().add(train1);
@@ -218,7 +220,7 @@ public class Controller implements Initializable {
             config = 2;
     }
 
-    private void addTEvent (Shape shape, Station modelSt, model.Line modelLine, Shape link) {
+    public void addTEvent (Shape shape, Station modelSt, model.Line modelLine, Shape link) {
         shape.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -249,7 +251,7 @@ public class Controller implements Initializable {
         });
     }
 
-    private void addStationEvent(Shape shape ,Station modelSt) {
+    public void addStationEvent(Shape shape ,Station modelSt) {
         shape.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -360,18 +362,23 @@ public class Controller implements Initializable {
                         middleX=(x2 + x)/2;
                         middleY=(y2 + y)/2;
                     }
-                    Polyline link = new Polyline(x,y,middleX,middleY,x2,y2);
-                    link.setStrokeWidth(10);
+                    Polyline tempLink = new Polyline(x,y,middleX,middleY,x2,y2);
+                    tempLink.setStrokeWidth(10);
                     /* If the current link isn't intersecting other we can add it */
-                    if(!gameView.intersects(link)) {
+                    if(!gameView.intersects(tempLink)) {
                         /* Avoids linking 2 station already linked by the same line*/
                         if( TPressed && !currentLine.addAllowed(modelSt) || ( currentLine!=null &&  currentLine.getStationList().size() == 2 && currentLine.getStationList().contains(modelSt) && currentLine.getStationList().contains(currentStation))) {
                             System.err.println("ALREADY linked ");
                             return;
                         }
 
-                        Shape temp =  Shape.subtract(link,shape);
-                        temp = Shape.subtract(temp,gameView.get(currentStation).shape);
+                        fxStation toSubstract = new fxStation(new Station(ShapeType.CIRCLE,modelSt.getPosition()));
+                  //      Shape link =  Shape.subtract(tempLink,shape);
+                        Shape link = Shape.subtract(tempLink,toSubstract.shape);
+                        toSubstract = new fxStation(new Station(ShapeType.CIRCLE,currentStation.getPosition()));
+                //        link = Shape.subtract(link,gameView.get(currentStation).shape);
+                        link = Shape.subtract(link,toSubstract.shape);
+
                         modelSt.addLink(currentStation);
                         game.computeAllDistances();
 
@@ -384,21 +391,21 @@ public class Controller implements Initializable {
                             group.getChildren().add(1,endLine2);
                             Color color = game.getColor();
                             model.Line created = new model.Line(currentStation,modelSt,color,middleX,middleY) ;//TO DO LINE
-                            addTEvent(endLine2,currentStation,created,temp);
+                            addTEvent(endLine2,currentStation,created,link);
                             endLine.setStroke(color);
                             endLine2.setStroke(color);
-                            temp.setStroke(color); temp.setFill(color);
+                            link.setStroke(color); link.setFill(color);
                             currentLine = created;
                             gameView.createLine(currentLine,endLine,endLine2);
                         }
-                        addTEvent(endLine,modelSt,currentLine,temp);
-                        group.getChildren().add(temp);
+                        addTEvent(endLine,modelSt,currentLine,link);
+                        group.getChildren().add(link);
 
                         int currentStationIndex = 0;
                         /* this case we add a station to the current line */
                         if(TPressed) {
-                            temp.setFill(currentLine.getColor());
-                            temp.setStroke(currentLine.getColor());
+                            link.setFill(currentLine.getColor());
+                            link.setStroke(currentLine.getColor());
                             endLine.setStroke(currentLine.getColor());
                             //
                             currentStationIndex = currentLine.getStationList().indexOf(currentStation);
@@ -415,10 +422,10 @@ public class Controller implements Initializable {
                             group.getChildren().remove(currentT);
                         }
                         System.err.println(currentLine);
-                        gameView.addLineLink(currentLine,temp,currentStationIndex==0);
+                        gameView.addLineLink(currentLine,link,currentStationIndex==0);
 
                         if(TPressed) {
-                            boolean b = gameView.lineLinks.get(currentLine).indexOf(temp) == 0;
+                            boolean b = gameView.lineLinks.get(currentLine).indexOf(link) == 0;
                             gameView.setLineEnd(currentLine,endLine,b);
                         }
 
