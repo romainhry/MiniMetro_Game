@@ -95,6 +95,16 @@ public class defaultShapes {
         p.setStrokeWidth(4);
         p.setStroke(Color.DARKORANGE);
         p.setRotate(180);
+
+        double dx=2,dy=-5;
+
+        for(int i  = 0;i<p.getPoints().size();i+=2) {
+            double tempX = p.getPoints().get(i) ;
+            double tempY = p.getPoints().get(i+1);
+            p.getPoints().set(i,dx+tempX);
+            p.getPoints().set(i+1,dy+tempY);
+        }
+
         return p;
     }
 

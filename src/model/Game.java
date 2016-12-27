@@ -36,7 +36,8 @@ public class Game {
         stationList = new ArrayList<>();
         inventory = new Inventory(3,3,0,3,0);
         linesColor  = new ArrayList<>();
-        linesColor.add(Color.RED); linesColor.add(Color.BLUE); linesColor.add(Color.GREEN);
+        linesColor.add(Color.RED); linesColor.add(Color.BLUE); linesColor.add(Color.GREEN); linesColor.add(Color.AQUAMARINE);
+        linesColor.add(Color.ORANGE);
     }
 
     public Color getColor() {
