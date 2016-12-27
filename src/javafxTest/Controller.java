@@ -147,10 +147,11 @@ public class Controller implements Initializable {
                     System.err.println(s);
                 }
                 System.err.println("---------------------------------------------");
-                */
+
                 System.err.println(currentLine+"\n");
                 Random r = new Random();
                 train1.move(r.nextInt(800),r.nextInt(800));
+                */
             }
         });
 
@@ -161,6 +162,7 @@ public class Controller implements Initializable {
                 TPressed = false;
                 group.getChildren().remove(drawing);
                 currentT = null;
+                currentLine = null;
             }
         });
 
@@ -346,10 +348,13 @@ public class Controller implements Initializable {
                         return;
                     }
                     /* Avoids self Linking*/
-                    else if(modelSt == currentStation)
+                    else if(modelSt == currentStation) {
+                        System.err.println("CANNOT LINK SAME STATION");
                         return;
+                    }
 
                     if(currentLine != null && currentLine.getStationList().size()!=0 && currentLine.isLoop()) {
+                        System.err.println("CANNOT LINK CAUSE OF LOOP");
                         return;
                     }
                     /* Avoids that the middle point of a links be inside the shape*/
@@ -367,10 +372,10 @@ public class Controller implements Initializable {
                             return;
                         }
 
-                        fxStation toSubstract = new fxStation(new Station(ShapeType.CIRCLE,modelSt.getPosition()));
+                        fxStation toSubstract = new fxStation(new Station(ShapeType.SQUARE,modelSt.getPosition()));
                   //      Shape link =  Shape.subtract(tempLink,shape);
                         Shape link = Shape.subtract(tempLink,toSubstract.shape);
-                        toSubstract = new fxStation(new Station(ShapeType.CIRCLE,currentStation.getPosition()));
+                        toSubstract = new fxStation(new Station(ShapeType.SQUARE,currentStation.getPosition()));
                         //        link = Shape.subtract(link,gameView.get(currentStation).shape);
                         link = Shape.subtract(link,toSubstract.shape);
 
