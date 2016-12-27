@@ -37,9 +37,7 @@ public class Controller implements Initializable {
     Station currentStation;
     Shape currentT = null, currentLink ;
     model.Line currentLine;
-
-    fxTrain train1 = new fxTrain();
-
+    
 
     Game game ;
     public static GameView gameView;
@@ -149,8 +147,7 @@ public class Controller implements Initializable {
                 System.err.println("---------------------------------------------");
 
                 System.err.println(currentLine+"\n");
-                Random r = new Random();
-                train1.move(r.nextInt(800),r.nextInt(800));
+
                 */
             }
         });
@@ -185,17 +182,7 @@ public class Controller implements Initializable {
         game.addToView(s5);
         game.addToView(s6);
 
-        group.getChildren().add(train1);
 
-        /* TRAIN TEST WITH CLIENT HERE */ 
-        train1.addClient(getCircle());
-        train1.addClient(getSquare());
-        train1.addClient(getTriangle());
-        train1.addClient(getStar());
-        train1.addClient(getTriangle());
-        train1.addClient(getSquare());
-        train1.addClient(getCross());
-        train1.addClient(getCircle());
 
 
         game.start();
