@@ -21,7 +21,6 @@ public class Line {
         stationList.add(a); stationList.add(b);
         path.add(a.getPosition());  path.add(new Position(middleX,middleY)); path.add(b.getPosition());
         color = c;
-
         a.addLine(this); b.addLine(this);
     }
 
@@ -98,7 +97,11 @@ public class Line {
     }
     
     public void addTrain(Train train) {
-    	
+        trainList.add(train);
+    }
+
+    public void removeTrain(Train train) {
+        trainList.remove(train);
     }
 
     public boolean containsShape(ShapeType s) {

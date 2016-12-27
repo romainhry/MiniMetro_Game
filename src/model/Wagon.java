@@ -26,7 +26,7 @@ public class Wagon {
     }
     public java.util.List<Client> getClientList(){return clientList;}
     public boolean getWillSwap(){return willSwap;}
-    public boolean setWillSwap(boolean value){return willSwap=value;}
+    public void setWillSwap(boolean value){ willSwap=value;}
 
     public void swapWagon(Train added) {
         willSwap=true;

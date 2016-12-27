@@ -1,5 +1,8 @@
 package model;
 
+import javafxTest.Controller;
+import javafxTest.GameView;
+
 import java.util.ArrayList;
 
 /**
@@ -12,7 +15,6 @@ public class Train {
     //private int numberWagon ;
     private Line line ;
     private boolean direction ;
-    
 
     public Train (int index, Line l, boolean dir) {
         nextPointIndex = index;
@@ -39,8 +41,8 @@ public class Train {
     	direction = dir;
     }
 
-    public void getNextPointIndex() {
-
+    public int getNextPointIndex() {
+        return nextPointIndex;
     }
 
     public Station nextStation() {
@@ -63,7 +65,9 @@ public class Train {
 
 
     public void changeLine (Position newPosition,Line newLine) {
-
+        line.removeTrain(this);
+        newLine.addTrain(this);
+        // nexpointindex ...
     }
 
     public void setPosition(Position pos) {
@@ -111,6 +115,9 @@ public class Train {
         for(Client cl : station.getClientList())
             cl.tryBoarding(this);
 
+        // then moves
+        move();
+
     }
 
     public void move () {
@@ -124,15 +131,16 @@ public class Train {
         else {
             if(nextPointIndex == 0 && line.isLoop())
                 nextPointIndex = line.getPath().size()-1;
-            else
+            else if(nextPointIndex == 0)
                 direction = true;
         }
-
         /* moving the train index on his line */
         if(direction)
             ++nextPointIndex;
         else
             --nextPointIndex;
+
+        Controller.gameView.move(this);
     }
     
 }

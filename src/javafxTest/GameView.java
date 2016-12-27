@@ -138,7 +138,7 @@ public class GameView {
 
     public void put(Train t) {
         trains.put(t,new fxTrain(t));
-        group.getChildren().add(trains.get(t));
+        group.getChildren().add(2,trains.get(t));
     }
 
     public void put(Client c) {
@@ -166,5 +166,10 @@ public class GameView {
             }
         }
         return false;
+    }
+
+    public void move(Train train) {
+        fxTrain fxTrain = get(train);
+        fxTrain.move(train.getLine().getPath().get(train.getNextPointIndex()));
     }
 }

@@ -17,7 +17,7 @@ public class fxStation {
             case CIRCLE:
                         Circle c = getCircle(); c.setCenterX(s.getPosition().getX()); c.setCenterY(s.getPosition().getY());
                         shape = c; break;
-            case SQUARE: /* -20 to  place it the center of shape to the wanted point */
+            case SQUARE:
                         Polygon square = getSquare();
                         for(int i  = 0;i<square.getPoints().size();i+=2) {
                             double tempX = square.getPoints().get(i) ;

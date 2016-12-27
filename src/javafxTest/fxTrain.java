@@ -1,6 +1,8 @@
 package javafxTest;
 
 import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -21,11 +23,14 @@ public class fxTrain extends Group {
     static final double height = 25 ;
 
     double trainX,trainY;
+    Train train;
 
     public fxTrain(Train t) {
         super();
         Position p = t.getLine().getPath().get(0);
-        getChildren().add(new Rectangle(p.getX(),p.getY(),width,height));
+        trainX = p.getX(); trainY = p.getY();
+        getChildren().add(new Rectangle(p.getX()-width/2,p.getY()-(height/2),width,height));
+        train = t;
     }
 
     public fxTrain () {
@@ -37,7 +42,8 @@ public class fxTrain extends Group {
     }
 
     public void move (Position p) {
-        double rotation,x = p.getX(),y = p.getY();
+        double rotation,x = p.getX(), y = p.getY();
+        System.err.println("Moving to "+p);
 
         if( x == trainX)
             rotation = 90;
@@ -54,10 +60,16 @@ public class fxTrain extends Group {
 
         setRotate(rotation);
         TranslateTransition move = new TranslateTransition(new Duration(10*distance(trainX,trainY,x,y)),this);
-        move.setByX(trainX-x); move.setByY(trainY-y);
+        move.setByX(x-trainX); move.setByY(y-trainY);
         move.play();
         trainX = x;
         trainY = y;
+        move.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                train.move();
+            }
+        });
     }
 
     public void move (double x, double y) {
