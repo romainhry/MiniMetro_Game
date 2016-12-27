@@ -43,7 +43,7 @@ public class fxTrain extends Group {
 
     public void move (Position p) {
         double rotation,x = p.getX(), y = p.getY();
-        System.err.println("Moving to "+p);
+        System.err.println("Moving to "+p +" "+train.getDirection());
 
         if( x == trainX)
             rotation = 90;

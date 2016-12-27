@@ -138,7 +138,7 @@ public class GameView {
 
     public void put(Train t) {
         trains.put(t,new fxTrain(t));
-        group.getChildren().add(2,trains.get(t));
+        group.getChildren().add(1,trains.get(t));
     }
 
     public void put(Client c) {

@@ -41,6 +41,10 @@ public class Train {
     	direction = dir;
     }
 
+    public boolean getDirection() {
+        return direction;
+    }
+
     public int getNextPointIndex() {
         return nextPointIndex;
     }

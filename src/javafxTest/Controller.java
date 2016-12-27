@@ -42,7 +42,7 @@ public class Controller implements Initializable {
 
 
     Game game ;
-    GameView gameView;
+    public static GameView gameView;
 
     static Group group2;
 
@@ -182,16 +182,6 @@ public class Controller implements Initializable {
         game.addToView(s4);
         game.addToView(s5);
         game.addToView(s6);
-
-        /*
-        addStationEvent(gameView.get(s1).shape,s1);
-        addStationEvent(gameView.get(s2).shape,s2);
-        addStationEvent(gameView.get(s3).shape,s3);
-        addStationEvent(gameView.get(s4).shape,s4);
-        addStationEvent(gameView.get(s5).shape,s5);
-        addStationEvent(gameView.get(s6).shape,s6);
-        */
-
 
         group.getChildren().add(train1);
 
@@ -390,6 +380,8 @@ public class Controller implements Initializable {
                         fxEndLine endLine = new fxEndLine(modelSt,middleX,middleY);
                         group.getChildren().add(1,endLine);
 
+                        Train train =  null;
+
                         /* this case we create a new Line */
                         if(TPressed == false) {
                             fxEndLine endLine2 = new fxEndLine(currentStation,middleX,middleY);
@@ -402,6 +394,11 @@ public class Controller implements Initializable {
                             link.setStroke(color); link.setFill(color);
                             currentLine = created;
                             gameView.createLine(currentLine,endLine,endLine2);
+
+                            train = new Train(0,created,true);
+                            gameView.put(train);
+
+
                         }
                         addTEvent(endLine,modelSt,currentLine,link);
 
@@ -434,6 +431,9 @@ public class Controller implements Initializable {
                             boolean b = gameView.lineLinks.get(currentLine).indexOf(link) == 0;
                             gameView.setLineEnd(currentLine,endLine,b);
                         }
+
+                        if(train!=null)
+                            train.move();
 
                     }
                 }
