@@ -4,6 +4,8 @@ import javafxTest.Controller;
 import javafxTest.GameView;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by romainhry on 07/11/2016.
@@ -44,6 +46,7 @@ public class Train {
     public boolean getDirection() {
         return direction;
     }
+
 
     public int getNextPointIndex() {
         return nextPointIndex;
@@ -109,22 +112,57 @@ public class Train {
 
     public void stopAtStation () {
         /* Makes the clients to get off the train */
-        for(int i = 0;i<clientList.size()-1;++i) {
+        for(int i = 0;i<clientList.size();++i) {
             Client client = clientList.get(i);
-            if(client.willGetOff(this))
+            if(client.willGetOff(this)) {
                 --i;
+            }
         }
         /* Makes the clients of the current station try to board in */
         Station station = currentStation();
-        for(Client cl : station.getClientList())
-            cl.tryBoarding(this);
+
+        for(int i = 0; i<station.getClientList().size();++i) {
+            Client cl = station.getClientList().get(i);
+            if(cl.tryBoarding(this)) {
+                --i;
+                Controller.gameView.remove(cl);
+                Controller.gameView.addClientToTrain(this,cl);
+            }
+        }
+
+        System.err.println("Train's client : " + clientList);
 
         // then moves
+
+        // BUG : TRAINS FREEZE AT RANDOM TIMES ???
+        /*
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                move();
+            }
+        }, 500);
+        */
+
         move();
 
     }
 
     public void move () {
+
+        Position p = line.getPath().get(nextPointIndex);
+
+
+
+
+
+        /* moving the train index on his line */
+        if(direction)
+            ++nextPointIndex;
+        else
+            --nextPointIndex;
+
         if(direction) {
             /* checking for the end of the line and if the line is a loop */
             if(nextPointIndex == line.getPath().size()-1 && line.isLoop())
@@ -138,13 +176,20 @@ public class Train {
             else if(nextPointIndex == 0)
                 direction = true;
         }
-        /* moving the train index on his line */
-        if(direction)
-            ++nextPointIndex;
-        else
-            --nextPointIndex;
+
 
         Controller.gameView.move(this);
+        /*
+        Timer t = new Timer();
+        double delay = p.distance(line.getPath().get(nextPointIndex))*10;
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Train.this.move();
+            }
+        }, (long) delay);
+        */
+
     }
     
 }

@@ -156,6 +156,30 @@ public class GameView {
 
     public fxClient get(Client c) { return clients.get(c);}
 
+    public void remove(Client c) {
+        fxClient fxc = get(c);
+        System.err.println("REMOVING");
+        group.getChildren().remove(fxc.shape);
+        clients.remove(c);
+    }
+
+    public void addClientToTrain(Train tr, Client client) {
+        fxTrain fxTr = get(tr);
+        Shape s = fxTr.addClient(client);
+        fxClient fxclient = new fxClient(s);
+        clients.put(client,fxclient);
+    }
+
+    public void removeClientFromTrain(Train tr,Client client) {
+        fxTrain fxTr = get(tr);
+        fxClient fxclient = get(client);
+        if(fxTr == null)
+            System.err.println("train null !!!!!!!!!!!!!!!");
+        if(fxclient == null)
+            System.err.println("client null !!!!!!!!!!!!!!");
+        fxTr.removeClient(fxclient.shape);
+    }
+
 
     public boolean intersects (Shape f) {
         for(Shape l : links) {

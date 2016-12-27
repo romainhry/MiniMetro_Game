@@ -77,8 +77,6 @@ public class Station {
     public void decreaseFullTimer () {
     	
     }
-
-
     
     public void setCapacity(int capacity) {
     	

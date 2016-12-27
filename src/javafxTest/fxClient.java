@@ -26,4 +26,8 @@ public class fxClient {
         defaultShapes.setPosition(shape,p);
 
     }
+
+    public fxClient(Shape s) {
+        shape = s;
+    }
 }

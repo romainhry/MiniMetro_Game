@@ -12,10 +12,10 @@ import java.util.*;
 public class Game {
     public GameView view;
     private static int trainSpeed ;
-    protected static int vehicleCapacity ;
+    protected static int vehicleCapacity = 8 ;
     private static int stationCapacity ;
     private static int timeSpeed ;
-    private static int transportedClientNb;
+    private static int transportedClientNb = 0;
     private int width = 1200;
     private int height = 600;
     private Timer day;
@@ -36,7 +36,7 @@ public class Game {
         stationList = new ArrayList<>();
         inventory = new Inventory(3,3,0,3,0);
         linesColor  = new ArrayList<>();
-        linesColor.add(Color.RED); linesColor.add(Color.BLUE); linesColor.add(Color.YELLOW);
+        linesColor.add(Color.RED); linesColor.add(Color.BLUE); linesColor.add(Color.GREEN);
     }
 
     public Color getColor() {
@@ -64,7 +64,7 @@ public class Game {
                         );
                         stationList.add(st);
                         Platform.runLater(() -> addToView(st));
-                        System.out.println("new station");
+                        //System.out.println("new station");
                     } catch (Exception e) {
                         System.out.println(e);
                     }
@@ -87,7 +87,7 @@ public class Game {
                         );
                         clientList.add(clt);
                         Platform.runLater(() -> addToView(clt));                              //bug
-                        System.out.println("new client");
+                        //System.out.println("new client");
                     }
                     catch (Exception e)
                     {
@@ -114,8 +114,8 @@ public class Game {
     	
     }
     
-    public void addTransportedClient() {
-    	
+    public static void addTransportedClient() {
+    	++transportedClientNb;
     }
 
     public void addToView(Station s) {

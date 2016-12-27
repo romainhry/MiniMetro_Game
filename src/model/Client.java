@@ -1,5 +1,9 @@
 package model;
 
+import javafxTest.Controller;
+
+import static model.Game.addTransportedClient;
+
 /**
  * Created by romainhry on 07/11/2016.
  */
@@ -21,16 +25,21 @@ public class Client {
         return station;
     }
 
-    public void tryBoarding(Train train) {
-        if(train.isFull())
-            return;
+    public boolean tryBoarding(Train train) {
+        if(train.isFull()) {
+            System.err.println("Train full");
+            return false;
+        }
         /* boards if the the line contains the type of the client or if the client will get closer to his type */
         if (train.getLine().containsShape(destinationType)
             || train.nextStation().getMinDistance(destinationType) < station.getMinDistance(destinationType)) {
             station.removeClient(this);
             train.addClient(this);
             station = null;
+            System.err.println("ENTERING TRAIN "+this);
+            return true;
         }
+        return false;
     	
     }
 
@@ -41,9 +50,23 @@ public class Client {
             && train.nextStation().getMinDistance(destinationType) >= train.currentStation().getMinDistance(destinationType)) ) {
             train.removeClient(this);
             station = train.currentStation();
-            station.addClient(this);
+            Controller.gameView.removeClientFromTrain(train,this);
+            if(station.getType() == this.getType()) {
+                addTransportedClient();
+                System.err.println("Transported client ");
+            }
+            else {
+                station.addClient(this);
+                Controller.gameView.put(this);
+            }
             return true;
         }
         return false;
+    }
+
+
+
+    public String toString() {
+        return "Client: "+destinationType;
     }
 }
