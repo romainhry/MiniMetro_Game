@@ -61,6 +61,18 @@ public class Client {
             }
             return true;
         }
+
+        //If a wagon willswap, client will get off
+        for (Wagon wagon:train.getWagonList()){
+            if(wagon.getClientList().contains(this)){
+                wagon.removeClient(this);
+                station.addClient(this);
+                station = train.currentStation();
+                wagon.setWillSwap(false);
+                //...
+                return true;
+            }
+        }
         return false;
     }
 

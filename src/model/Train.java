@@ -66,6 +66,8 @@ public class Train {
         return line;
     }
 
+    public java.util.List<Wagon> getWagonList(){return wagonList;}
+
     public void addWagon(Wagon added) {
         wagonList.add(added);
     }
