@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -30,10 +31,10 @@ public class Controller implements Initializable {
     private Pane pane;
 
     double x,y,middleX,middleY,x2,y2;
-    int config,endLineIndex = 2 ;
+    int config;
     Polyline drawing = new Polyline(0,0,0,0,0,0) ;
 
-    boolean stationPressed = false, TPressed = false;
+    boolean stationPressed = false, TPressed = false , canRemove = false, isDrawing , canConstruct = true;
     Station currentStation;
     Shape currentT = null, currentLink ;
     model.Line currentLine;
@@ -120,8 +121,11 @@ public class Controller implements Initializable {
         group.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(stationPressed) {
-                    x2 = event.getX(); y2 = event.getY();
+                if(stationPressed  && canConstruct) {
+                    if(!isDrawing) {
+                        x2 = event.getX();
+                        y2 = event.getY();
+                    }
                     displayDrawing();
                 }
             }
@@ -160,6 +164,9 @@ public class Controller implements Initializable {
                 group.getChildren().remove(drawing);
                 currentT = null;
                 currentLine = null;
+                canRemove = true;
+                isDrawing = false;
+                canConstruct = true;
             }
         });
 
@@ -235,6 +242,11 @@ public class Controller implements Initializable {
         });
     }
 
+
+
+
+
+
     public void addStationEvent(Shape shape ,Station modelSt) {
         shape.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
@@ -252,8 +264,8 @@ public class Controller implements Initializable {
                 currentStation = modelSt;
             }
         });
-
-        shape.setOnMouseDragOver(new EventHandler<MouseDragEvent>() {
+/*
+        shape.setOnMouseDragEntered(new EventHandler<MouseDragEvent>() {
             @Override
             public void handle(MouseDragEvent event) {
                 if(stationPressed) {
@@ -262,22 +274,25 @@ public class Controller implements Initializable {
                     displayDrawing();
                 }
             }
-        });
+        }); */
 
-        /*
-        viewSt.shape.setOnMouseDragEntered(new EventHandler<MouseDragEvent>() {
-            @Override
-            public void handle(MouseDragEvent event) {
-                System.err.println("Station drag Entered");
-            }
-        });*/
 
-        shape.setOnMouseDragReleased(new EventHandler<MouseDragEvent>() {
+
+        shape.setOnMouseDragOver(new EventHandler<MouseDragEvent>() {
             @Override
             public void handle(MouseDragEvent event) {
                 if(stationPressed) {
+
+
+
                     /* Removes the station from the selected line */
-                    if(modelSt == currentStation && TPressed) {
+                    if(modelSt == currentStation && TPressed && canRemove) {
+
+                        if(!currentLine.getStationList().contains(modelSt))
+                            return;
+
+                        canConstruct = false;
+
                         group.getChildren().remove(currentT);
 
                         System.err.println("Index removed  : " + currentLine.getStationList().indexOf(modelSt));
@@ -332,6 +347,11 @@ public class Controller implements Initializable {
                             currentLine.removeLoop(modelSt,currentLine.getStationList().indexOf(nextStation)==1);
                         }
                         modelSt.removeLink(nextStation);
+
+                        /* FULL DRAG*/
+                        currentStation = nextStation;
+                        currentT = movedEndLine;
+                        currentLink = nextLink;
                         return;
                     }
                     /* Avoids self Linking*/
@@ -339,6 +359,15 @@ public class Controller implements Initializable {
                         System.err.println("CANNOT LINK SAME STATION");
                         return;
                     }
+
+                    if(canConstruct == false)
+                        return;
+
+                    isDrawing = true;
+                    x2 = modelSt.getPosition().getX();
+                    y2 = modelSt.getPosition().getY();
+                    displayDrawing();
+
 
                     if(currentLine != null && currentLine.getStationList().size()!=0 && currentLine.isLoop()) {
                         System.err.println("CANNOT LINK CAUSE OF LOOP");
@@ -351,6 +380,8 @@ public class Controller implements Initializable {
                     }
                     Polyline tempLink = new Polyline(x,y,middleX,middleY,x2,y2);
                     tempLink.setStrokeWidth(10);
+
+
                     /* If the current link isn't intersecting other we can add it */
                     if(!gameView.intersects(tempLink)) {
                         /* Avoids linking 2 station already linked by the same line*/
@@ -427,6 +458,14 @@ public class Controller implements Initializable {
                         if(train!=null)
                             train.move();
 
+                        /* FULL DRAG*/
+                        currentT = endLine;
+                        currentStation = modelSt;
+                        x = modelSt.getPosition().getX(); y = modelSt.getPosition().getY();
+                        currentLink = link;
+                        TPressed = true;
+                        canRemove = false;
+
                     }
                 }
             }
@@ -436,6 +475,12 @@ public class Controller implements Initializable {
             @Override
             public void handle(MouseEvent event) {
             }
+        });
+
+
+        shape.setOnMouseDragExited(event -> {
+            isDrawing = false;
+            System.err.println("Exited");
         });
     }
 
