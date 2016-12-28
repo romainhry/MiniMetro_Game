@@ -419,6 +419,7 @@ public class Controller implements Initializable {
                             gameView.createLine(currentLine,endLine,endLine2);
 
                             train = new Train(0,created,true);
+                            currentLine.addTrain(train);
                             gameView.put(train);
 
 
@@ -435,11 +436,27 @@ public class Controller implements Initializable {
                             endLine.setStroke(currentLine.getColor());
                             //
                             currentStationIndex = currentLine.getStationList().indexOf(currentStation);
+
+                            boolean wasLoop = currentLine.isLoop();
+
                             if(currentStationIndex == 0 ) {
                                 currentLine.addStation(0,modelSt,middleX,middleY);
                             }
                             else {
                                 currentLine.addStation(modelSt,middleX,middleY);
+                            }
+
+                            /* line becomes a loop */
+                            if(!wasLoop && currentLine.isLoop()) {
+                                Station toRemoveLink;
+                                if(currentLine.getTrainList().get(0).getDirection()) {
+                                     toRemoveLink = currentLine.getStationList().get(currentLine.getStationList().size()-2);
+                                }
+                                else {
+                                     toRemoveLink = currentLine.getStationList().get(1);
+                                }
+                                modelSt.removeLink(toRemoveLink);
+                                game.computeAllDistances();
                             }
                         }
 

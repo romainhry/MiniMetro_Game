@@ -36,6 +36,10 @@ public class Line {
         return path;
     }
 
+    public List <Train> getTrainList () {
+        return trainList;
+    }
+
     public boolean addAllowed(Station s) {
         boolean allowed = stationList.indexOf(s) != -1
                 &&  stationList.indexOf(s) != 0
