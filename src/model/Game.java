@@ -18,6 +18,8 @@ public class Game {
     private static int transportedClientNb = 0;
     private int width = 1200;
     private int height = 600;
+    private static int maxShapeWidth = 30;
+    private static double distanceSpacing = 100;
     private Timer day;
     private Inventory inventory;
     private List<Train> trainList;
@@ -59,10 +61,12 @@ public class Game {
                     try {
                         Random random = new Random();
                         Thread.sleep( 15000 + random.nextInt(20000));  //min 15 s, max 35 s between 2 new station
-                        Station st = new Station(
-                                ShapeType.values()[random.nextInt(ShapeType.values().length)],
-                                new Position(random.nextInt(width), random.nextInt(height))
-                        );
+                        Position pos ;
+                        do {
+                          pos = new Position(maxShapeWidth/2 + random.nextInt((int) (width - maxShapeWidth)), maxShapeWidth/2 + random.nextInt((int) (height - maxShapeWidth))) ;
+                        } while (!isSpaced(pos));
+
+                        Station st = new Station(ShapeType.values()[random.nextInt(ShapeType.values().length)],pos);
                         stationList.add(st);
                         Platform.runLater(() -> addToView(st));
                         //System.out.println("new station");
@@ -76,17 +80,23 @@ public class Game {
     }
   
     private void popRandomClient() {
+
+        ArrayList <ShapeType> types = new ArrayList<>(Arrays.asList(ShapeType.values()));
+
         Thread threadClient = new Thread() {
             public void run() {
                 while(true){
                     try {
                         Random random = new Random();
                         Thread.sleep(random.nextInt(10000));  //min 0 s, max 10 s of delay between 2 new clients
-                        Client clt = new Client(
-                                stationList.get(random.nextInt(stationList.size())),
-                                ShapeType.values()[random.nextInt(ShapeType.values().length)]
-                        );
+
+                        Station randomStation = stationList.get(random.nextInt(stationList.size()));
+                        ShapeType randomType;
+                        types.remove(randomStation.getType());
+                        randomType = types.get(random.nextInt(types.size()));
+                        Client clt = new Client(randomStation,randomType);
                         clientList.add(clt);
+                        types.add(randomStation.getType());
                         Platform.runLater(() -> addToView(clt));                              //bug
                         //System.out.println("new client");
                     }
@@ -151,6 +161,14 @@ public class Game {
     public void start() {
         popRandomStation();
         popRandomClient();
+    }
+
+    public boolean isSpaced(Position p ) {
+        for (Station st : stationList) {
+            if(st.getPosition().distance(p) < distanceSpacing)
+                return false;
+        }
+        return true;
     }
 
     
