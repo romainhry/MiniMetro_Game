@@ -25,6 +25,9 @@ public class Client {
         return station;
     }
 
+    public void setStation(Station st) {
+        station = st;
+    }
     public boolean tryBoarding(Train train) {
         if(train.isFull()) {
             System.err.println("Train full");

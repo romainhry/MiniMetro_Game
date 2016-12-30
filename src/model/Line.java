@@ -83,6 +83,10 @@ public class Line {
             if(path.size()>0)
                 path.remove(path.size()-1);
         }
+
+        for(Train t : trainList)
+            if(t.getLine() != null)
+                t.verif();
     }
 
     public void removeLoop(Station loop,boolean first) {

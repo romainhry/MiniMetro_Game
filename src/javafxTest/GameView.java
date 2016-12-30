@@ -173,11 +173,14 @@ public class GameView {
     public void removeClientFromTrain(Train tr,Client client) {
         fxTrain fxTr = get(tr);
         fxClient fxclient = get(client);
-        if(fxTr == null)
-            System.err.println("train null !!!!!!!!!!!!!!!");
-        if(fxclient == null)
-            System.err.println("client null !!!!!!!!!!!!!!");
         fxTr.removeClient(fxclient.shape);
+    }
+
+    public void removeTrain(Train tr) {
+        fxTrain fxtr = get(tr);
+        group.getChildren().remove(fxtr);
+        trains.remove(fxtr);
+        fxtr = null;
     }
 
 

@@ -4,8 +4,11 @@ import javafxTest.Controller;
 import javafxTest.GameView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static model.Game.addTransportedClient;
 
 /**
  * Created by romainhry on 07/11/2016.
@@ -17,6 +20,7 @@ public class Train {
     //private int numberWagon ;
     private Line line ;
     private boolean direction ;
+
 
     public Train (int index, Line l, boolean dir) {
         nextPointIndex = index;
@@ -52,6 +56,10 @@ public class Train {
         return nextPointIndex;
     }
 
+    public List<Client> getClientList() {
+        return clientList;
+    }
+
     public Station nextStation() {
         if(direction)
             return line.getStationList().get((nextPointIndex+2)/2);
@@ -64,6 +72,9 @@ public class Train {
 
     public Line getLine() {
         return line;
+    }
+    public void setLine(Line l) {
+        line = l;
     }
 
     public java.util.List<Wagon> getWagonList(){return wagonList;}
@@ -113,6 +124,10 @@ public class Train {
 
 
     public void stopAtStation () {
+
+        if(line == null)
+            return;
+
         /* Makes the clients to get off the train */
         for(int i = 0;i<clientList.size();++i) {
             Client client = clientList.get(i);
@@ -132,7 +147,6 @@ public class Train {
             }
         }
 
-        System.err.println("Train's client : " + clientList);
 
         // then moves
 
@@ -153,9 +167,8 @@ public class Train {
 
     public void move () {
 
-        Position p = line.getPath().get(nextPointIndex);
-
-
+        if(line == null)
+            return;
 
 
 
@@ -169,8 +182,10 @@ public class Train {
             /* checking for the end of the line and if the line is a loop */
             if(nextPointIndex == line.getPath().size()-1 && line.isLoop())
                 nextPointIndex = 0;
-            else if(nextPointIndex == line.getPath().size()-1)
+            else if(nextPointIndex >= line.getPath().size()-1) {
                 direction = false;
+                nextPointIndex = line.getPath().size()-1;
+            }
         }
         else {
             if(nextPointIndex == 0 && line.isLoop())
@@ -178,8 +193,6 @@ public class Train {
             else if(nextPointIndex == 0)
                 direction = true;
         }
-
-
         Controller.gameView.move(this);
         /*
         Timer t = new Timer();
@@ -193,5 +206,37 @@ public class Train {
         */
 
     }
-    
+
+    public void verif() {
+
+
+        if(nextPointIndex > line.getPath().size()-1) {
+            if(direction) {
+                nextPointIndex = line.getPath().size()-2;
+            }
+            else {
+                nextPointIndex = line.getPath().size()-1;
+            }
+            //nextPointIndex = line.getPath().size()-1;
+        }
+
+        if(direction) {
+            /* checking for the end of the line and if the line is a loop */
+            if(nextPointIndex == line.getPath().size()-1 && line.isLoop())
+                nextPointIndex = 0;
+            else if(nextPointIndex >= line.getPath().size()-1) {
+                direction = false;
+                nextPointIndex = line.getPath().size()-1;
+            }
+        }
+        else {
+            if(nextPointIndex == 0 && line.isLoop())
+                nextPointIndex = line.getPath().size()-1;
+            else if(nextPointIndex == 0)
+                direction = true;
+        }
+
+
+    }
+
 }

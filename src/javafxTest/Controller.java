@@ -14,6 +14,7 @@ import javafx.scene.transform.Rotate;
 import model.*;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -99,25 +100,6 @@ public class Controller implements Initializable {
         group.getChildren().add(river);
 
 
-        /** SHAPES TEST ** */
-/*
-        Polygon triangle = getTriangle();
-        setPosition(triangle,500,100);
-        group.getChildren().add(triangle);
-
-        Polygon star = getStar();
-        setPosition(star,700,200);
-        group.getChildren().add(star);
-
-        Rectangle sq = getSquare();
-        setPosition(sq,800,300);
-        group.getChildren().add(sq);
-
-        Polygon cross = getCross();
-        setPosition(cross,900,400);
-        group.getChildren().add(cross);
-        */
-
         group.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -133,26 +115,7 @@ public class Controller implements Initializable {
         group.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                /*
-                System.err.println("\n\n\n");
-                for(Node n : group.getChildren())
-                    System.err.println(n);
-                */
-                /*
-                System.err.println("--------------------------------------------");
-                for(Shape s : gameView.lineLinks.get(currentLine))
-                    System.err.println(s);
 
-                System.err.println("LINKS COUNT "+gameView.lineLinks.get(currentLine).size()+"\n");
-
-                for(Shape s : gameView.links) {
-                    System.err.println(s);
-                }
-                System.err.println("---------------------------------------------");
-
-                System.err.println(currentLine+"\n");
-
-                */
             }
         });
 
@@ -295,7 +258,6 @@ public class Controller implements Initializable {
 
                         group.getChildren().remove(currentT);
 
-                        System.err.println("Index removed  : " + currentLine.getStationList().indexOf(modelSt));
 
                         Position middle ;
                         /* The station which will become a end of it's line */
@@ -305,12 +267,30 @@ public class Controller implements Initializable {
                         if(currentLine.getStationList().size()==2) {
                             gameView.removeEnds(currentLine);
                             gameView.removeLineLink(currentLine,true);
+
+                            ArrayList<Client> toDeposit = new ArrayList<Client>();
+
                             Station a = currentLine.getStationList().get(0);
                             Station b = currentLine.getStationList().get(1);
+
+                            for(Train tr : currentLine.getTrainList()) {
+                                gameView.removeTrain(tr);
+                                toDeposit.addAll(tr.getClientList());
+                                tr.setLine(null);
+                            }
                             a.removeLink(b);
                             currentLine.removeStation(a);
                             currentLine.removeStation(b);
                             game.addColor(currentLine.getColor());
+
+                            for(Client cl : toDeposit) {
+                                if(cl.getType() != a.getType()) {
+                                    cl.setStation(a);
+                                    a.addClient(cl);
+                                    game.addToView(cl);
+                                }
+                            }
+
                             return;
                         }
                         boolean inFirst = gameView.lineLinks.get(currentLine).indexOf(currentLink) == 0;
@@ -329,8 +309,6 @@ public class Controller implements Initializable {
                         middleX = middle.getX();
                         middleY = middle.getY();
 
-                        System.err.println("INDEX OF NEW T's Station : " + currentLine.getStationList().indexOf(nextStation));
-                        System.err.println("toPut T : "+nextStation);
 
 
                         fxEndLine movedEndLine = new fxEndLine(nextStation,middleX,middleY);
@@ -356,7 +334,6 @@ public class Controller implements Initializable {
                     }
                     /* Avoids self Linking*/
                     else if(modelSt == currentStation) {
-                        System.err.println("CANNOT LINK SAME STATION");
                         return;
                     }
 
@@ -368,9 +345,8 @@ public class Controller implements Initializable {
                     y2 = modelSt.getPosition().getY();
                     displayDrawing();
 
-
+                    /*cant link when loops*/
                     if(currentLine != null && currentLine.getStationList().size()!=0 && currentLine.isLoop()) {
-                        System.err.println("CANNOT LINK CAUSE OF LOOP");
                         return;
                     }
                     /* Avoids that the middle point of a links be inside the shape*/
@@ -386,7 +362,6 @@ public class Controller implements Initializable {
                     if(!gameView.intersects(tempLink)) {
                         /* Avoids linking 2 station already linked by the same line*/
                         if( TPressed && !currentLine.addAllowed(modelSt) || ( currentLine!=null &&  currentLine.getStationList().size() == 2 && currentLine.getStationList().contains(modelSt) && currentLine.getStationList().contains(currentStation))) {
-                            System.err.println("ALREADY linked ");
                             return;
                         }
 
@@ -497,7 +472,6 @@ public class Controller implements Initializable {
 
         shape.setOnMouseDragExited(event -> {
             isDrawing = false;
-            System.err.println("Exited");
         });
     }
 

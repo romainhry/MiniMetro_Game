@@ -67,7 +67,8 @@ public class fxTrain extends Group {
             rotation = -135;
 
         setRotate(rotation);
-        TranslateTransition move = new TranslateTransition(new Duration(10*distance(trainX,trainY,x,y)),this);
+        double millis = 10*distance(trainX,trainY,x,y)+100;
+        TranslateTransition move = new TranslateTransition(new Duration(millis),this);
         move.setByX(x-trainX); move.setByY(y-trainY);
         move.play();
         trainX = x;
