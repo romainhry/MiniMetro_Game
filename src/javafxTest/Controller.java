@@ -44,6 +44,8 @@ public class Controller implements Initializable {
     Game game ;
     public static GameView gameView;
 
+    private fxClock clock;
+
     static Group group2;
 
     @Override // This method is called by the FXMLLoader when initialization is complete
@@ -156,7 +158,8 @@ public class Controller implements Initializable {
         gameView.addRiver(borderRiver);
 
 
-
+        clock = new fxClock(1050,40,15);
+        gameView.addNode(clock);
 
         game.start();
 
