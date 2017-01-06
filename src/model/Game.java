@@ -112,6 +112,31 @@ public class Game {
 
 
     }
+
+
+    private void timeGo() {
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Seconde!");
+
+                //Move clock needle
+            }
+        };
+
+
+        day = new Timer();
+        day.scheduleAtFixedRate(task,0,1000);
+
+    }
+
+
+
+
+
+
+
+
     
     public void pop2RandomUpgrade() {
     	
@@ -165,6 +190,7 @@ public class Game {
     public void start() {
         popRandomStation();
         popRandomClient();
+        timeGo();
     }
 
     public boolean isSpaced(Position p ) {
