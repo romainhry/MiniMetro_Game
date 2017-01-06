@@ -267,6 +267,10 @@ public class Controller implements Initializable {
 
                         /* Delete line*/
                         if(currentLine.getStationList().size()==2) {
+
+                            if(gameView.intersectRiver(currentLink))
+                                game.getInventory().addTunnelNb(1);
+
                             gameView.removeEnds(currentLine);
                             gameView.removeLineLink(currentLine,true);
 
@@ -299,10 +303,10 @@ public class Controller implements Initializable {
 
                         /* Removing the link */
                         Shape nextLink = gameView.getNextLineLink(currentLine,currentLink);
+
                         if(gameView.intersectRiver(currentLink))
-                        {
                             game.getInventory().addTunnelNb(1);
-                        }
+
                         int currentLinkIndex = gameView.lineLinks.get(currentLine).indexOf(currentLink);
                         gameView.removeLineLink(currentLine,currentLink);
                         nextStation = gameView.getNextStation(currentLine,nextLink);
@@ -364,14 +368,17 @@ public class Controller implements Initializable {
                     tempLink.setStrokeWidth(10);
 
 
+
                     /* If the current link isn't intersecting other we can add it */
                     if(!gameView.intersects(tempLink)) {
                         //check river intersection
                         boolean riverCrossing = gameView.intersectRiver(tempLink);
                         if ( game.getInventory().getTunnelNb()>0 || !riverCrossing) {
+                            Shape tunnel ;
                             if(riverCrossing)
                             {
                                 game.getInventory().subTunnelNb(1);
+
                             }
                             /* Avoids linking 2 station already linked by the same line*/
                             if (TPressed && !currentLine.addAllowed(modelSt) || (currentLine != null && currentLine.getStationList().size() == 2 && currentLine.getStationList().contains(modelSt) && currentLine.getStationList().contains(currentStation))) {
@@ -384,6 +391,13 @@ public class Controller implements Initializable {
                             toSubstract = new fxStation(new Station(ShapeType.SQUARE, currentStation.getPosition()));
                             //        link = Shape.subtract(link,gameView.get(currentStation).shape);
                             link = Shape.subtract(link, toSubstract.shape);
+
+                            if(riverCrossing) { /* Making the tunnel */
+                                link = Shape.subtract(link,gameView.river);
+                                tempLink.getStrokeDashArray().addAll(12d,15d);
+                                tunnel =gameView.getTunnelShape(tempLink);
+                                link = Shape.union(link,tunnel);
+                            }
 
                             modelSt.addLink(currentStation);
                             game.computeAllDistances();

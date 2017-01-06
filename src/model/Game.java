@@ -120,7 +120,6 @@ public class Game {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Seconde!"+clock.getTime());
                 clock.incrementeTime();
                 view.updateClock(clock.getTime(),clock.getDay());
             }

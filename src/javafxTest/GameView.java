@@ -51,6 +51,10 @@ public class GameView {
         river = r;
     }
 
+    public Shape getTunnelShape(Shape line) {
+        return Shape.intersect(river,line);
+    }
+
     public void createLine(Line l,Shape end1, Shape end2) {
         ArrayList<Shape> list = new ArrayList<>();
         lineLinks.put(l,list);
