@@ -37,12 +37,13 @@ public class GameView {
         clients = new HashMap<>();
         group = g;
         controller = c;
-        clock = new fxClock(1050,40,15);
+        clock = new fxClock(1100,40,16);
         group.getChildren().add(clock);
     }
 
-    public void updateClock () {
-        clock.incrementNeedle();
+    public void updateClock (int hour, String dayName) {
+        clock.moveNeedle(hour);
+        clock.setDay(dayName);
     }
 
     public void addRiver(Shape r)

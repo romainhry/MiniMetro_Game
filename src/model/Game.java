@@ -27,6 +27,7 @@ public class Game {
     private List<Line> lineList;
     private List <Station> stationList ;
     private List <Color> linesColor ;
+    private Clock clock;
 
     private boolean clientReady,stationReady;
 
@@ -40,6 +41,7 @@ public class Game {
         linesColor  = new ArrayList<>();
         linesColor.add(Color.RED); linesColor.add(Color.BLUE); linesColor.add(Color.GREEN); linesColor.add(Color.AQUAMARINE);
         linesColor.add(Color.ORANGE);
+        clock = new Clock();
     }
 
     public Color getColor() {
@@ -118,8 +120,9 @@ public class Game {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Seconde!");
-                view.updateClock();
+                System.out.println("Seconde!"+clock.getTime());
+                clock.incrementeTime();
+                view.updateClock(clock.getTime(),clock.getDay());
             }
         };
 
