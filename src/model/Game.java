@@ -119,8 +119,7 @@ public class Game {
             @Override
             public void run() {
                 System.out.println("Seconde!");
-
-                //Move clock needle
+                view.updateClock();
             }
         };
 
@@ -129,14 +128,7 @@ public class Game {
         day.scheduleAtFixedRate(task,0,1000);
 
     }
-
-
-
-
-
-
-
-
+    
     
     public void pop2RandomUpgrade() {
     	

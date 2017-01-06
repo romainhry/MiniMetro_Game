@@ -158,8 +158,6 @@ public class Controller implements Initializable {
         gameView.addRiver(borderRiver);
 
 
-        clock = new fxClock(1050,40,15);
-        gameView.addNode(clock);
 
         game.start();
 

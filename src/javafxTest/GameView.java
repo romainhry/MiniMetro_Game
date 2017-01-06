@@ -27,6 +27,7 @@ public class GameView {
     Shape river;
     private Group group;
     private Controller controller;
+    private fxClock clock;
 
     public GameView(Group g,Controller c) {
         stations = new HashMap<>();
@@ -36,6 +37,12 @@ public class GameView {
         clients = new HashMap<>();
         group = g;
         controller = c;
+        clock = new fxClock(1050,40,15);
+        group.getChildren().add(clock);
+    }
+
+    public void updateClock () {
+        // clock ...
     }
 
     public void addRiver(Shape r)
