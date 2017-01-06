@@ -142,18 +142,16 @@ public class Controller implements Initializable {
         game = new Game(gameView);
 
         Station s1 = new Station(ShapeType.CIRCLE,new Position(200,200));
-        Station s2 = new Station(ShapeType.STAR,new Position(400,400));
+        Station s2 = new Station(ShapeType.STAR,new Position(700,500));
         Station s3 = new Station(ShapeType.SQUARE,new Position(150,300));
-        Station s4 = new Station(ShapeType.TRIANGLE,new Position(300,50));
-        Station s5 = new Station(ShapeType.CROSS,new Position(500,250));
-        Station s6 = new Station(ShapeType.CIRCLE,new Position(400,150));
+        Station s4 = new Station(ShapeType.TRIANGLE,new Position(400,400));
+        Station s5 = new Station(ShapeType.CROSS,new Position(900,250));
 
         game.addToView(s1);
         game.addToView(s2);
         game.addToView(s3);
         game.addToView(s4);
         game.addToView(s5);
-        game.addToView(s6);
 
         gameView.addRiver(borderRiver);
 
@@ -425,7 +423,7 @@ public class Controller implements Initializable {
                                 link.setFill(currentLine.getColor());
                                 link.setStroke(currentLine.getColor());
                                 endLine.setStroke(currentLine.getColor());
-                                //
+
                                 currentStationIndex = currentLine.getStationList().indexOf(currentStation);
 
                                 boolean wasLoop = currentLine.isLoop();
