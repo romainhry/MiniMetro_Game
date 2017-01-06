@@ -42,7 +42,7 @@ public class GameView {
     }
 
     public void updateClock () {
-        // clock ...
+        clock.incrementNeedle();
     }
 
     public void addRiver(Shape r)

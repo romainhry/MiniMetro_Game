@@ -16,6 +16,7 @@ public class fxClock extends Group {
     private Circle clockBorder;
     private Point2D origin;
     private double radius;
+    private int secondes;
 
     public fxClock(double posX, double posY, double radius){
         super();
@@ -49,5 +50,11 @@ public class fxClock extends Group {
         Point2D posEndPoint=calcEndPoint(origin,radius,angle);
         clockNeedle.setEndX(posEndPoint.getX());
         clockNeedle.setEndY(posEndPoint.getY());
+    }
+
+    public void incrementNeedle(){
+        secondes++;
+        if(secondes>=60)secondes=0;
+        moveNeedle(secondes);
     }
 }

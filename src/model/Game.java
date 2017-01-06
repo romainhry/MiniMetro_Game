@@ -125,7 +125,7 @@ public class Game {
 
 
         day = new Timer();
-        day.scheduleAtFixedRate(task,0,1000);
+        day.scheduleAtFixedRate(task,0,100);
 
     }
     
