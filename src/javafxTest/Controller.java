@@ -100,6 +100,7 @@ public class Controller implements Initializable {
         group.getChildren().add(river);
 
 
+
         group.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -151,6 +152,8 @@ public class Controller implements Initializable {
         game.addToView(s4);
         game.addToView(s5);
         game.addToView(s6);
+
+        gameView.addRiver(borderRiver);
 
 
 
@@ -297,6 +300,10 @@ public class Controller implements Initializable {
 
                         /* Removing the link */
                         Shape nextLink = gameView.getNextLineLink(currentLine,currentLink);
+                        if(gameView.intersectRiver(currentLink))
+                        {
+                            game.getInventory().addTunnelNb(1);
+                        }
                         int currentLinkIndex = gameView.lineLinks.get(currentLine).indexOf(currentLink);
                         gameView.removeLineLink(currentLine,currentLink);
                         nextStation = gameView.getNextStation(currentLine,nextLink);
@@ -360,104 +367,112 @@ public class Controller implements Initializable {
 
                     /* If the current link isn't intersecting other we can add it */
                     if(!gameView.intersects(tempLink)) {
-                        /* Avoids linking 2 station already linked by the same line*/
-                        if( TPressed && !currentLine.addAllowed(modelSt) || ( currentLine!=null &&  currentLine.getStationList().size() == 2 && currentLine.getStationList().contains(modelSt) && currentLine.getStationList().contains(currentStation))) {
-                            return;
-                        }
-
-                        fxStation toSubstract = new fxStation(new Station(ShapeType.SQUARE,modelSt.getPosition()));
-                  //      Shape link =  Shape.subtract(tempLink,shape);
-                        Shape link = Shape.subtract(tempLink,toSubstract.shape);
-                        toSubstract = new fxStation(new Station(ShapeType.SQUARE,currentStation.getPosition()));
-                        //        link = Shape.subtract(link,gameView.get(currentStation).shape);
-                        link = Shape.subtract(link,toSubstract.shape);
-
-                        modelSt.addLink(currentStation);
-                        game.computeAllDistances();
-
-                        fxEndLine endLine = new fxEndLine(modelSt,middleX,middleY);
-                        group.getChildren().add(1,endLine);
-
-                        Train train =  null;
-
-                        /* this case we create a new Line */
-                        if(TPressed == false) {
-                            fxEndLine endLine2 = new fxEndLine(currentStation,middleX,middleY);
-                            group.getChildren().add(1,endLine2);
-                            Color color = game.getColor();
-                            model.Line created = new model.Line(currentStation,modelSt,color,middleX,middleY) ;//TO DO LINE
-                            addTEvent(endLine2,currentStation,created,link);
-                            endLine.setStroke(color);
-                            endLine2.setStroke(color);
-                            link.setStroke(color); link.setFill(color);
-                            currentLine = created;
-                            gameView.createLine(currentLine,endLine,endLine2);
-
-                            train = new Train(0,created,true);
-                            currentLine.addTrain(train);
-                            gameView.put(train);
-
-
-                        }
-                        addTEvent(endLine,modelSt,currentLine,link);
-
-                        group.getChildren().add(1,link);
-
-                        int currentStationIndex = 0;
-                        /* this case we add a station to the current line */
-                        if(TPressed) {
-                            link.setFill(currentLine.getColor());
-                            link.setStroke(currentLine.getColor());
-                            endLine.setStroke(currentLine.getColor());
-                            //
-                            currentStationIndex = currentLine.getStationList().indexOf(currentStation);
-
-                            boolean wasLoop = currentLine.isLoop();
-
-                            if(currentStationIndex == 0 ) {
-                                currentLine.addStation(0,modelSt,middleX,middleY);
+                        //check river intersection
+                        boolean riverCrossing = gameView.intersectRiver(tempLink);
+                        if ( game.getInventory().getTunnelNb()>0 || !riverCrossing) {
+                            if(riverCrossing)
+                            {
+                                game.getInventory().subTunnelNb(1);
                             }
-                            else {
-                                currentLine.addStation(modelSt,middleX,middleY);
+                            /* Avoids linking 2 station already linked by the same line*/
+                            if (TPressed && !currentLine.addAllowed(modelSt) || (currentLine != null && currentLine.getStationList().size() == 2 && currentLine.getStationList().contains(modelSt) && currentLine.getStationList().contains(currentStation))) {
+                                return;
                             }
 
-                            /* line becomes a loop */
-                            if(!wasLoop && currentLine.isLoop()) {
-                                Station toRemoveLink;
-                                if(currentLine.getTrainList().get(0).getDirection()) {
-                                     toRemoveLink = currentLine.getStationList().get(currentLine.getStationList().size()-2);
+                            fxStation toSubstract = new fxStation(new Station(ShapeType.SQUARE, modelSt.getPosition()));
+                            //      Shape link =  Shape.subtract(tempLink,shape);
+                            Shape link = Shape.subtract(tempLink, toSubstract.shape);
+                            toSubstract = new fxStation(new Station(ShapeType.SQUARE, currentStation.getPosition()));
+                            //        link = Shape.subtract(link,gameView.get(currentStation).shape);
+                            link = Shape.subtract(link, toSubstract.shape);
+
+                            modelSt.addLink(currentStation);
+                            game.computeAllDistances();
+
+                            fxEndLine endLine = new fxEndLine(modelSt, middleX, middleY);
+                            group.getChildren().add(1, endLine);
+
+                            Train train = null;
+
+                            /* this case we create a new Line */
+                            if (TPressed == false) {
+                                fxEndLine endLine2 = new fxEndLine(currentStation, middleX, middleY);
+                                group.getChildren().add(1, endLine2);
+                                Color color = game.getColor();
+                                model.Line created = new model.Line(currentStation, modelSt, color, middleX, middleY);//TO DO LINE
+                                addTEvent(endLine2, currentStation, created, link);
+                                endLine.setStroke(color);
+                                endLine2.setStroke(color);
+                                link.setStroke(color);
+                                link.setFill(color);
+                                currentLine = created;
+                                gameView.createLine(currentLine, endLine, endLine2);
+
+                                train = new Train(0, created, true);
+                                currentLine.addTrain(train);
+                                gameView.put(train);
+
+
+                            }
+                            addTEvent(endLine, modelSt, currentLine, link);
+
+                            group.getChildren().add(1, link);
+
+                            int currentStationIndex = 0;
+                            /* this case we add a station to the current line */
+                            if (TPressed) {
+                                link.setFill(currentLine.getColor());
+                                link.setStroke(currentLine.getColor());
+                                endLine.setStroke(currentLine.getColor());
+                                //
+                                currentStationIndex = currentLine.getStationList().indexOf(currentStation);
+
+                                boolean wasLoop = currentLine.isLoop();
+
+                                if (currentStationIndex == 0) {
+                                    currentLine.addStation(0, modelSt, middleX, middleY);
+                                } else {
+                                    currentLine.addStation(modelSt, middleX, middleY);
                                 }
-                                else {
-                                     toRemoveLink = currentLine.getStationList().get(1);
+
+                                /* line becomes a loop */
+                                if (!wasLoop && currentLine.isLoop()) {
+                                    Station toRemoveLink;
+                                    if (currentLine.getTrainList().get(0).getDirection()) {
+                                        toRemoveLink = currentLine.getStationList().get(currentLine.getStationList().size() - 2);
+                                    } else {
+                                        toRemoveLink = currentLine.getStationList().get(1);
+                                    }
+                                    modelSt.removeLink(toRemoveLink);
+                                    game.computeAllDistances();
                                 }
-                                modelSt.removeLink(toRemoveLink);
-                                game.computeAllDistances();
                             }
+
+                            /* To remove the T shape of a line */
+                            if (currentT != null) {
+                                group.getChildren().remove(currentT);
+                            }
+                            System.err.println(currentLine);
+                            gameView.addLineLink(currentLine, link, currentStationIndex == 0);
+
+                            if (TPressed) {
+                                boolean b = gameView.lineLinks.get(currentLine).indexOf(link) == 0;
+                                gameView.setLineEnd(currentLine, endLine, b);
+                            }
+
+                            if (train != null)
+                                train.move();
+
+                            /* FULL DRAG*/
+                            currentT = endLine;
+                            currentStation = modelSt;
+                            x = modelSt.getPosition().getX();
+                            y = modelSt.getPosition().getY();
+                            currentLink = link;
+                            TPressed = true;
+                            canRemove = false;
+
                         }
-
-                        /* To remove the T shape of a line */
-                        if(currentT != null) {
-                            group.getChildren().remove(currentT);
-                        }
-                        System.err.println(currentLine);
-                        gameView.addLineLink(currentLine,link,currentStationIndex==0);
-
-                        if(TPressed) {
-                            boolean b = gameView.lineLinks.get(currentLine).indexOf(link) == 0;
-                            gameView.setLineEnd(currentLine,endLine,b);
-                        }
-
-                        if(train!=null)
-                            train.move();
-
-                        /* FULL DRAG*/
-                        currentT = endLine;
-                        currentStation = modelSt;
-                        x = modelSt.getPosition().getX(); y = modelSt.getPosition().getY();
-                        currentLink = link;
-                        TPressed = true;
-                        canRemove = false;
-
                     }
                 }
             }
@@ -519,9 +534,10 @@ public class Controller implements Initializable {
         drawing.setStrokeWidth(10);
         drawing.getPoints().setAll(x, y, middleX, middleY, x2, y2);
         group.getChildren().add(1, drawing);
-        /* If the current link is intersecting we make it transparent */
-        if(gameView.intersects(drawing))
+        /* If the current link is intersecting other line or river without tunnel available, we make it transparent */
+        if ( gameView.intersects(drawing) || (game.getInventory().getTunnelNb()==0 && gameView.intersectRiver(drawing))) {
             drawing.setStroke(Color.TRANSPARENT);
+        }
     }
 
 

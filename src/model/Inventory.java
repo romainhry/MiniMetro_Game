@@ -1,8 +1,5 @@
 package model;
 
-/**
- * Created by KadirF on 02/12/2016.
- */
 public class Inventory {
     private int lineNb ;
     private int tunnelNb ;
@@ -20,5 +17,20 @@ public class Inventory {
         wagonNb = wagon;
         trainNb = train;
         interchangeNb = inter;
+    }
+
+    public int getTunnelNb()
+    {
+        return tunnelNb;
+    }
+
+    public void subTunnelNb(int t)
+    {
+        tunnelNb=tunnelNb-t;
+    }
+
+    public void addTunnelNb(int t)
+    {
+        tunnelNb=tunnelNb+t;
     }
 }

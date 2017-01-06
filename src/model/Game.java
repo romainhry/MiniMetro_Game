@@ -153,6 +153,10 @@ public class Game {
         }
     }
 
+    public Inventory getInventory() {
+        return inventory;
+    }
+
     public   void resetChecked() {
         for(Station s: stationList)
             s.setChecked(false);

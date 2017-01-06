@@ -24,6 +24,7 @@ public class GameView {
     HashMap<model.Line,ArrayList<Shape>> lineLinks;
     HashMap<model.Line,Shape[]> lineEnds;
     List<Shape> links = new ArrayList<>();
+    Shape river;
     private Group group;
     private Controller controller;
 
@@ -35,6 +36,11 @@ public class GameView {
         clients = new HashMap<>();
         group = g;
         controller = c;
+    }
+
+    public void addRiver(Shape r)
+    {
+        river = r;
     }
 
     public void createLine(Line l,Shape end1, Shape end2) {
@@ -191,6 +197,15 @@ public class GameView {
                 System.err.println("INTERSECTS !! ");
                 return true;
             }
+        }
+        return false;
+    }
+
+    public boolean intersectRiver (Shape f) {
+        Shape intersect = Shape.intersect(f, river);
+        if(intersect.getBoundsInLocal().getWidth() != -1) {
+            System.err.println("INTERSECTS RIVER !! ");
+            return true;
         }
         return false;
     }
