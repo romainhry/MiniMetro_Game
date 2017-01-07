@@ -2,47 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f34e3e95-a575-4b02-9095-0efccd0bda6a" name="Default" comment="Add tunnels management">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/Controller$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/Controller$10.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/Controller$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/Controller$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/Controller$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/Controller$5.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/Controller$6.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/Controller$7.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/Controller$8.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/Controller$9.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/Controller.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/GameView.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/Main$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/Main.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/defaultShapes.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/fxClient$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/fxClient.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/fxEndLine.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/fxLink.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/fxStation$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/fxStation.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/javafxTest/fxTrain.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/model/Client.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/model/Game$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/model/Game$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/model/Game.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/model/Line.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/model/Position.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/model/ShapeType.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/model/Station.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/model/Train.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/MiniMetro/model/Wagon.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/MiniMetro/model/Inventory.class" afterPath="$PROJECT_DIR$/out/production/MiniMetro/model/Inventory.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javafxTest/Controller.java" afterPath="$PROJECT_DIR$/src/javafxTest/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/javafxTest/fxTrain.java" afterPath="$PROJECT_DIR$/src/javafxTest/fxTrain.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Game.java" afterPath="$PROJECT_DIR$/src/model/Game.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Inventory.java" afterPath="$PROJECT_DIR$/src/model/Inventory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Line.java" afterPath="$PROJECT_DIR$/src/model/Line.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Position.java" afterPath="$PROJECT_DIR$/src/model/Position.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Train.java" afterPath="$PROJECT_DIR$/src/model/Train.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -62,11 +22,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="GameView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/javafxTest/GameView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="212">
+              <caret line="55" column="16" lean-forward="false" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
+              <folding>
+                <element signature="e#1466#1467#0" expanded="true" />
+                <element signature="e#1504#1505#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="fxTrain.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/javafxTest/fxTrain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+            <state relative-caret-position="735">
+              <caret line="71" column="42" lean-forward="true" selection-start-line="71" selection-start-column="42" selection-end-line="71" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -75,8 +48,8 @@
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/javafxTest/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-795">
-              <caret line="289" column="29" lean-forward="true" selection-start-line="289" selection-start-column="29" selection-end-line="289" selection-end-column="29" />
+            <state relative-caret-position="210">
+              <caret line="317" column="87" lean-forward="false" selection-start-line="317" selection-start-column="87" selection-end-line="317" selection-end-column="87" />
               <folding />
             </state>
           </provider>
@@ -162,8 +135,8 @@
       <file leaf-file-name="Train.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/Train.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+            <state relative-caret-position="233">
+              <caret line="240" column="13" lean-forward="true" selection-start-line="240" selection-start-column="13" selection-end-line="240" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -205,6 +178,7 @@
         <option value="$PROJECT_DIR$/src/javafxTest/fxTrain.java" />
         <option value="$PROJECT_DIR$/src/javafxTest/fxInformations.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/model/Train.java" />
         <option value="$PROJECT_DIR$/src/javafxTest/Controller.java" />
       </list>
     </option>
@@ -742,12 +716,12 @@
       <workItem from="1483725559456" duration="1223000" />
       <workItem from="1483804333376" duration="6348000" />
       <workItem from="1483820870219" duration="179000" />
-      <workItem from="1483824604905" duration="379000" />
+      <workItem from="1483824604905" duration="2200000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26847000" />
+    <option name="totallyTimeSpent" value="28668000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="1024" extended-state="0" />
@@ -756,7 +730,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32739726" sideWeight="0.496875" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32677597" sideWeight="0.496875" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -983,14 +957,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Train.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/Station.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1200,23 +1166,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javafxTest/GameView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="64" column="22" lean-forward="false" selection-start-line="64" selection-start-column="22" selection-end-line="64" selection-end-column="22" />
-          <folding>
-            <element signature="e#1381#1382#0" expanded="true" />
-            <element signature="e#1421#1422#0" expanded="true" />
-            <element signature="e#1466#1467#0" expanded="true" />
-            <element signature="e#1504#1505#0" expanded="true" />
-            <element signature="e#1549#1550#0" expanded="true" />
-            <element signature="e#1587#1588#0" expanded="true" />
-            <element signature="e#1630#1631#0" expanded="true" />
-            <element signature="e#1666#1667#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/javafxTest/fxInformations.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="810">
@@ -1339,16 +1288,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/javafxTest/fxTrain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+        <state relative-caret-position="735">
+          <caret line="71" column="42" lean-forward="true" selection-start-line="71" selection-start-column="42" selection-end-line="71" selection-end-column="42" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/Train.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="240" column="13" lean-forward="true" selection-start-line="240" selection-start-column="13" selection-end-line="240" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javafxTest/GameView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="55" column="16" lean-forward="false" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
+          <folding>
+            <element signature="e#1466#1467#0" expanded="true" />
+            <element signature="e#1504#1505#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/javafxTest/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-795">
-          <caret line="289" column="29" lean-forward="true" selection-start-line="289" selection-start-column="29" selection-end-line="289" selection-end-column="29" />
+        <state relative-caret-position="210">
+          <caret line="317" column="87" lean-forward="false" selection-start-line="317" selection-start-column="87" selection-end-line="317" selection-end-column="87" />
           <folding />
         </state>
       </provider>

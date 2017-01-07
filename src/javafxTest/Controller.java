@@ -313,8 +313,10 @@ public class Controller implements Initializable {
                         /* Removing the link */
                         Shape nextLink = gameView.getNextLineLink(currentLine,currentLink);
 
-                        if(gameView.intersectRiver(currentLink))
+                        if(gameView.intersectRiver(currentLink)) {
                             game.getInventory().addTunnelNb(1);
+                            gameView.updateTunnelNb(game.getInventory().getTunnelNb());
+                        }
 
                         int currentLinkIndex = gameView.lineLinks.get(currentLine).indexOf(currentLink);
                         gameView.removeLineLink(currentLine,currentLink);

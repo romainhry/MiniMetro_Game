@@ -177,6 +177,21 @@ public class Train {
             return;
 
 
+        /* avoids stopping at the middle of a line*/
+        if(  nextPointIndex != line.getPath().size()-1 && nextPointIndex%2 == 0) {
+            if( direction && angle(line.getPath().get(nextPointIndex),line.getPath().get(nextPointIndex+1))
+                    == angle(line.getPath().get(nextPointIndex+1),line.getPath().get(nextPointIndex+2))) {
+                ++nextPointIndex;
+                verif();
+            }
+        }
+        if(  nextPointIndex != 0 && nextPointIndex%2 == 0) {
+            if( !direction && angle(line.getPath().get(nextPointIndex),line.getPath().get(nextPointIndex-1))
+                    == angle(line.getPath().get(nextPointIndex-1),line.getPath().get(nextPointIndex-2))) {
+                --nextPointIndex;
+                verif();
+            }
+        }
 
         /* moving the train index on his line */
         if(direction)
@@ -200,15 +215,6 @@ public class Train {
                 direction = true;
         }
 
-        if( nextPointIndex != 0 && nextPointIndex != line.getPath().size()-1
-                && angle(line.getPath().get(nextPointIndex-1),line.getPath().get(nextPointIndex))
-                == angle(line.getPath().get(nextPointIndex),line.getPath().get(nextPointIndex+1))) {
-            if (direction)
-                ++nextPointIndex;
-            else
-                --nextPointIndex;
-            verif();
-        }
 
 
 
@@ -236,7 +242,10 @@ public class Train {
             else {
                 nextPointIndex = line.getPath().size()-1;
             }
-            //nextPointIndex = line.getPath().size()-1;
+        }
+
+        if(nextPointIndex < 0) {
+            nextPointIndex = 0;
         }
 
         if(direction) {
