@@ -1,11 +1,4 @@
 .idea*
 *.iml
-
-*.java
-
 .idea/workspace.xml
-
-
-*.class
-
 *.class
