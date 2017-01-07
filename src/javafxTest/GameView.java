@@ -193,11 +193,16 @@ public class GameView {
 
     public fxClient get(Client c) { return clients.get(c);}
 
-    public void remove(Client c) {
+    public  void remove(Client c) {
         fxClient fxc = get(c);
-        System.err.println("REMOVING");
         group.getChildren().remove(fxc.shape);
         clients.remove(c);
+
+        Station st = c.getStation();
+        for(int i =0; i< st.getClientList().size(); ++i) {
+            fxClient fxCl = get(st.getClientList().get(i));
+            fxCl.updatePos(st,i+1);
+        }
     }
 
     public void addClientToTrain(Train tr, Client client) {

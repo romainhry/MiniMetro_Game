@@ -30,4 +30,10 @@ public class fxClient {
     public fxClient(Shape s) {
         shape = s;
     }
+
+
+    public void updatePos(Station st,int index) {
+        Position p = new Position(st.getPosition().getX()+10+index*20,st.getPosition().getY()-10);
+        defaultShapes.setPosition(shape,p);
+    }
 }

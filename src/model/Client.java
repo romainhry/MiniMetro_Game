@@ -30,7 +30,6 @@ public class Client {
     }
     public boolean tryBoarding(Train train) {
         if(train.isFull()) {
-            System.err.println("Train full");
             return false;
         }
         /* boards if the the line contains the type of the client or if the client will get closer to his type */
@@ -38,8 +37,6 @@ public class Client {
             || train.nextStation().getMinDistance(destinationType) < station.getMinDistance(destinationType)) {
             station.removeClient(this);
             train.addClient(this);
-            station = null;
-            System.err.println("ENTERING TRAIN "+this);
             return true;
         }
         return false;
