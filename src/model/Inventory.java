@@ -33,4 +33,55 @@ public class Inventory {
     {
         tunnelNb=tunnelNb+t;
     }
+
+
+
+    public int getLine()
+    {
+        return lineNb;
+    }
+
+    public void subLine()
+    {
+        --lineNb;
+    }
+
+    public void addLine()
+    {
+        ++lineNb;
+    }
+
+
+    public int getWagon()
+    {
+        return wagonNb;
+    }
+
+    public void subWagon(int t)
+    {
+        --wagonNb;
+    }
+
+    public void addWagon()
+    {
+        ++wagonNb;
+    }
+
+
+
+    public int getTrain()
+    {
+        return trainNb;
+    }
+
+    public void subTrain()
+    {
+        --trainNb;
+    }
+
+    public void addTrain()
+    {
+        ++trainNb;
+    }
+
 }

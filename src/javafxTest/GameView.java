@@ -28,6 +28,7 @@ public class GameView {
     private Group group;
     private Controller controller;
     private fxClock clock;
+    private fxInformations info;
 
     public GameView(Group g,Controller c) {
         stations = new HashMap<>();
@@ -38,12 +39,30 @@ public class GameView {
         group = g;
         controller = c;
         clock = new fxClock(1100,40,16);
+        info = new fxInformations(200,550);
         group.getChildren().add(clock);
+        group.getChildren().add(info);
     }
 
     public void updateClock (int hour, String dayName) {
         clock.moveNeedle(hour);
         clock.setDay(dayName);
+    }
+
+    public void updateTunnelNb (int tunnel) {
+        info.setNbTunnel(tunnel);
+    }
+
+    public void updateTrainNb (int train) {
+        info.setNbTrain(train);
+    }
+
+    public void updateWagonNb (int wagon) {
+        info.setNbWagon(wagon);
+    }
+
+    public void updateLineNb (int rail) {
+        info.setNbLine(rail);
     }
 
     public void addRiver(Shape r)
