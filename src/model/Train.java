@@ -3,12 +3,14 @@ package model;
 import javafxTest.Controller;
 import javafxTest.GameView;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static model.Game.addTransportedClient;
+import static model.Position.angle;
 
 /**
  * Created by romainhry on 07/11/2016.
@@ -54,6 +56,10 @@ public class Train {
 
     public int getNextPointIndex() {
         return nextPointIndex;
+    }
+
+    public void setNextPointIndex(int index) {
+        nextPointIndex = index;
     }
 
     public List<Client> getClientList() {
@@ -193,6 +199,19 @@ public class Train {
             else if(nextPointIndex == 0)
                 direction = true;
         }
+
+        if( nextPointIndex != 0 && nextPointIndex != line.getPath().size()-1
+                && angle(line.getPath().get(nextPointIndex-1),line.getPath().get(nextPointIndex))
+                == angle(line.getPath().get(nextPointIndex),line.getPath().get(nextPointIndex+1))) {
+            if (direction)
+                ++nextPointIndex;
+            else
+                --nextPointIndex;
+            verif();
+        }
+
+
+
         Controller.gameView.move(this);
         /*
         Timer t = new Timer();

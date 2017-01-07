@@ -1,7 +1,7 @@
 package model;
 
 public class Inventory {
-    private int lineNb ;
+    private  int lineNb ;
     private int tunnelNb ;
     private int wagonNb ;
     private int trainNb ;
@@ -84,4 +84,35 @@ public class Inventory {
         ++trainNb;
     }
 
+    public int getLineNb() {
+        return lineNb;
+    }
+
+    public void setLineNb(int lineNb) {
+        this.lineNb = lineNb;
+    }
+
+    public int getWagonNb() {
+        return wagonNb;
+    }
+
+    public void setWagonNb(int wagonNb) {
+        this.wagonNb = wagonNb;
+    }
+
+    public int getTrainNb() {
+        return trainNb;
+    }
+
+    public void setTrainNb(int trainNb) {
+        this.trainNb = trainNb;
+    }
+
+    public int getInterchangeNb() {
+        return interchangeNb;
+    }
+
+    public void setInterchangeNb(int interchangeNb) {
+        this.interchangeNb = interchangeNb;
+    }
 }

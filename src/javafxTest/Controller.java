@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 import static java.lang.Math.abs;
 
 import static javafxTest.defaultShapes.*;
+import static model.Position.angle;
 
 
 public class Controller implements Initializable {
@@ -304,6 +305,7 @@ public class Controller implements Initializable {
                                 }
                             }
 
+
                             return;
                         }
                         boolean inFirst = gameView.lineLinks.get(currentLine).indexOf(currentLink) == 0;
@@ -368,8 +370,11 @@ public class Controller implements Initializable {
                     }
                     /* Avoids that the middle point of a links be inside the shape*/
                     if(shape.contains(middleX,middleY) ) {
-                        middleX=(x2 + x)/2;
-                        middleY=(y2 + y)/2;
+                        if(angle(x,y,middleX,middleY) != 0 && angle(x,y,middleX,middleY) != 90)  {
+                            middleX = (x2 + x) / 2;
+                            middleY = (y2 + y) / 2;
+                        }
+
                     }
                     Polyline tempLink = new Polyline(x,y,middleX,middleY,x2,y2);
                     tempLink.setStrokeWidth(10);
@@ -411,12 +416,15 @@ public class Controller implements Initializable {
                             game.computeAllDistances();
 
                             fxEndLine endLine = new fxEndLine(modelSt, middleX, middleY);
-                            group.getChildren().add(1, endLine);
 
                             Train train = null;
 
                             /* this case we create a new Line */
                             if (TPressed == false) {
+
+                                if(game.getInventory().getLineNb() == 0)
+                                    return;
+
                                 fxEndLine endLine2 = new fxEndLine(currentStation, middleX, middleY);
                                 group.getChildren().add(1, endLine2);
                                 Color color = game.getColor();
@@ -446,9 +454,13 @@ public class Controller implements Initializable {
 
 
 
+
+
+
+
                             }
                             addTEvent(endLine, modelSt, currentLine, link);
-
+                            group.getChildren().add(1, endLine);
                             group.getChildren().add(1, link);
 
                             int currentStationIndex = 0;
@@ -563,7 +575,12 @@ public class Controller implements Initializable {
             }
         }
         group.getChildren().remove(drawing);
-        drawing.setStroke(Color.PAPAYAWHIP);
+
+        if(currentLine != null)
+            drawing.setStroke(currentLine.getColor());
+        else
+            drawing.setStroke(Color.PAPAYAWHIP);
+
         drawing.setStrokeWidth(10);
         drawing.getPoints().setAll(x, y, middleX, middleY, x2, y2);
         group.getChildren().add(1, drawing);

@@ -34,6 +34,27 @@ public class Position {
         return Math.sqrt(dx*dx+dy*dy);
     }
 
+    public static double angle(double x1, double y1, double x2, double y2) {
+        double rotation;
+        if( x1 == x2)
+            rotation = 90;
+        else if( y1 == y2)
+            rotation = 0;
+        else if(x1 > x2 && y1 > y2)
+            rotation = 45 ;
+        else if( x1 > x2 && y1 < y2)
+            rotation = 135;
+        else if( y1 > y2)
+            rotation = -45;
+        else
+            rotation = -135;
+        return rotation;
+    }
+
+    public static double angle(Position a, Position b) {
+        return angle(a.getX(),a.getY(),b.getX(),b.getY());
+    }
+
     public String toString() {
         return "("+x+","+y+")";
     }

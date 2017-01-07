@@ -39,8 +39,7 @@ public class Game {
         stationList = new ArrayList<>();
         inventory = new Inventory(3,3,0,3,0);
         linesColor  = new ArrayList<>();
-        linesColor.add(Color.RED); linesColor.add(Color.BLUE); linesColor.add(Color.GREEN); linesColor.add(Color.AQUAMARINE);
-        linesColor.add(Color.ORANGE);
+        linesColor.add(Color.RED); linesColor.add(Color.BLUE);linesColor.add(Color.ORANGE);
         clock = new Clock();
     }
 
@@ -124,11 +123,8 @@ public class Game {
                 view.updateClock(clock.getTime(),clock.getDay());
             }
         };
-
-
         day = new Timer();
         day.scheduleAtFixedRate(task,0,100);
-
     }
     
     

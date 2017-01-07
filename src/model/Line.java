@@ -60,6 +60,10 @@ public class Line {
 
         /* todo when the station is the loop */
         station.addLine(this);
+
+        for(Train t : trainList) {
+            t.setNextPointIndex(t.getNextPointIndex()+2);
+        }
     }
 
     public void removeStation(Station station) {
@@ -84,9 +88,19 @@ public class Line {
                 path.remove(path.size()-1);
         }
 
-        for(Train t : trainList)
-            if(t.getLine() != null)
+        for(Train t : trainList) {
+            /* prevents the trains to "teleport" by updating index*/
+            if( index == 0) {
+                t.setNextPointIndex(t.getNextPointIndex()-2);
+                System.err.println("SUB 2 INDEX");
+            }
+
+            /* prevents array of bounds*/
+            if (t.getLine() != null)
                 t.verif();
+
+        }
+
     }
 
     public void removeLoop(Station loop,boolean first) {

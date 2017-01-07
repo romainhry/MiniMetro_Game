@@ -19,6 +19,7 @@ import static java.awt.geom.Point2D.distance;
 import static javafxTest.defaultShapes.*;
 import static javafxTest.defaultShapes.getCross;
 import static javafxTest.defaultShapes.getLittleSquare;
+import static model.Position.angle;
 
 /**
  * Created by KadirF on 18/12/2016.
@@ -46,26 +47,12 @@ public class fxTrain extends Group {
         super();
 
         getChildren().add(new Rectangle(250, 300, width, height));
-        trainX = 250;
-        trainY = 300;
+        trainX = 250+width/2;
+        trainY = 300+height/2;
     }
 
     public void move (Position p) {
-        double rotation,x = p.getX(), y = p.getY();
-
-        if( x == trainX)
-            rotation = 90;
-        else if( y == trainY)
-            rotation = 0;
-        else if(x > trainX && y > trainY)
-            rotation = 45 ;
-        else if( x > trainX && y < trainY)
-            rotation = 135;
-        else if( y > trainY)
-            rotation = -45;
-        else
-            rotation = -135;
-
+        double rotation = angle(p,new Position(trainX,trainY)),x = p.getX(), y = p.getY();
         setRotate(rotation);
         double millis = 10*distance(trainX,trainY,x,y)+100;
         TranslateTransition move = new TranslateTransition(new Duration(millis),this);
@@ -90,38 +77,6 @@ public class fxTrain extends Group {
             }
         });
 
-    }
-
-    public void move (double x, double y) {
-        double rotation;
-
-        if( x == trainX)
-            rotation = 90;
-        else if( y == trainY)
-            rotation = 0;
-        else if(x > trainX && y > trainY)
-            rotation = 45 ;
-        else if( x > trainX && y < trainY)
-            rotation = 135;
-        else if( y > trainY)
-            rotation = -45;
-        else
-            rotation = -135;
-
-
-        setRotate(rotation);
-        TranslateTransition move = new TranslateTransition(new Duration(10*distance(trainX,trainY,x,y)),this);
-        move.setByX(y-trainX); move.setByY(y-trainY);
-        move.play();
-        trainX = x;
-        trainY = y;
-
-        move.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                train.move();
-            }
-        });
     }
 
     public void addClient (Shape s) {
