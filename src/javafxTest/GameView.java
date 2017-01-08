@@ -191,8 +191,20 @@ public class GameView {
     }
 
     public void updateNbClient() {
-        nbClient.setText(Integer.toString(Integer.parseInt(nbClient.getText())+1));
-        //nbClient.setText("2");
+        int newI = Integer.parseInt(nbClient.getText())+1;
+        if(newI>=10)
+        {
+            nbClient.setX(948);
+        }
+        if(newI>=100)
+        {
+            nbClient.setX(936);
+        }
+        if(newI>=1000)
+        {
+            nbClient.setX(924);
+        }
+        nbClient.setText(Integer.toString(newI));
     }
 
     public Shape getTunnelShape(Shape line) {
