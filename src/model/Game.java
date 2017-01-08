@@ -63,9 +63,11 @@ public class Game {
                         Random random = new Random();
                         Thread.sleep( 15000 + random.nextInt(20000));  //min 15 s, max 35 s between 2 new station
                         Position pos ;
+                        boolean again = false;
                         do {
-                          pos = new Position(maxShapeWidth/2 + random.nextInt((int) (width - maxShapeWidth)), maxShapeWidth/2 + random.nextInt((int) (height - maxShapeWidth))) ;
-                        } while (!isSpaced(pos));
+                            pos = new Position(maxShapeWidth/2 + random.nextInt((int) (width - maxShapeWidth)), maxShapeWidth/2 + random.nextInt((int) (height - maxShapeWidth))) ;
+                            again = (pos.getY()>530 && pos.getX()>460 && pos.getX()<740) || (pos.getY()<60 && pos.getX()>900); // check if pos is in clock or in informations
+                        } while (!isSpaced(pos) || view.intersectRiver(pos) || again);
 
                         Station st = new Station(ShapeType.values()[random.nextInt(ShapeType.values().length)],pos);
                         stationList.add(st);

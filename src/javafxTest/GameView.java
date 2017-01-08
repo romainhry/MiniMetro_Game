@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
@@ -21,6 +22,8 @@ import javafx.util.Duration;
 import model.*;
 
 import java.util.*;
+
+import static javafxTest.defaultShapes.getSquare;
 
 /**
  * Created by KadirF on 20/12/2016.
@@ -376,6 +379,22 @@ public class GameView {
 
     public boolean intersectRiver (Shape f) {
         Shape intersect = Shape.intersect(f, river);
+        if(intersect.getBoundsInLocal().getWidth() != -1) {
+            System.err.println("INTERSECTS RIVER !! ");
+            return true;
+        }
+        return false;
+    }
+
+    public boolean intersectRiver (Position p) {
+        Polygon square = getSquare();
+        for(int i  = 0;i<square.getPoints().size();i+=2) {
+            double tempX = square.getPoints().get(i) ;
+            double tempY = square.getPoints().get(i+1);
+            square.getPoints().set(i,p.getX()+tempX);
+            square.getPoints().set(i+1,p.getY()+tempY);
+        }
+        Shape intersect = Shape.intersect(square, river);
         if(intersect.getBoundsInLocal().getWidth() != -1) {
             System.err.println("INTERSECTS RIVER !! ");
             return true;
