@@ -104,6 +104,10 @@ public class Controller implements Initializable {
 
 
 
+
+
+
+
         group.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

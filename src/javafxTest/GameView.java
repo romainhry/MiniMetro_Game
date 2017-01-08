@@ -1,17 +1,21 @@
 package javafxTest;
 
+import javafx.animation.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Shape;
+import javafx.util.Duration;
 import model.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by KadirF on 20/12/2016.
@@ -29,6 +33,9 @@ public class GameView {
     private Controller controller;
     private fxClock clock;
     private fxInformations info;
+    private boolean anim =false;
+    private Circle point;
+
 
     public GameView(Group g,Controller c) {
         stations = new HashMap<>();
@@ -39,9 +46,45 @@ public class GameView {
         group = g;
         controller = c;
         clock = new fxClock(1100,40,16);
-        info = new fxInformations(200,550);
+
+
+        info = new fxInformations(480,620);
+        info.setVisible(false);
+
         group.getChildren().add(clock);
         group.getChildren().add(info);
+
+        /*
+        info.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(anim)
+                {
+                    hideInfo();
+                    anim =false;
+                }
+            }
+        });
+        */
+        point = new Circle(600,575,4);
+
+        point.setStroke(Color.GRAY);
+
+        point.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(!anim) {
+                    seeInfo();
+                    anim = true;
+                }
+            }
+        });
+
+        group.getChildren().add(point);
+
+
+
+
     }
 
     public void updateClock (int hour, String dayName) {
@@ -68,6 +111,77 @@ public class GameView {
     public void addRiver(Shape r)
     {
         river = r;
+    }
+
+    public void seeInfo()
+    {
+        info.setVisible(true);
+        TranslateTransition translateTransition =
+                new TranslateTransition(Duration.millis(1000), info);
+        translateTransition.setFromY(0);
+        translateTransition.setToY(-70);
+        translateTransition.setCycleCount(1);
+        translateTransition.setAutoReverse(true);
+        translateTransition.play();
+
+        TranslateTransition translateTransition2 =
+                new TranslateTransition(Duration.millis(1000), point);
+        translateTransition2.setFromY(0);
+        translateTransition2.setToY(-70);
+        translateTransition2.setCycleCount(1);
+        translateTransition2.setAutoReverse(true);
+        translateTransition2.play();
+
+        ParallelTransition para = new ParallelTransition();
+        para.getChildren().addAll(
+                translateTransition2,
+                translateTransition
+        );
+        para.setCycleCount(1);
+        para.play();
+
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                hideInfo();
+            }
+        },
+        5000);
+    }
+
+    public void hideInfo()
+    {
+        TranslateTransition translateTransition =
+                new TranslateTransition(Duration.millis(1000), info);
+        translateTransition.setFromY(-70);
+        translateTransition.setToY(0);
+        translateTransition.setCycleCount(1);
+        translateTransition.setAutoReverse(true);
+        translateTransition.play();
+
+        TranslateTransition translateTransition2 =
+                new TranslateTransition(Duration.millis(1000), point);
+        translateTransition2.setFromY(-70);
+        translateTransition2.setToY(0);
+        translateTransition2.setCycleCount(1);
+        translateTransition2.setAutoReverse(true);
+        translateTransition2.play();
+
+        ParallelTransition para = new ParallelTransition();
+        para.getChildren().addAll(
+                translateTransition2,
+                translateTransition
+        );
+        para.setCycleCount(1);
+        para.play();
+        para.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                info.setVisible(false);
+            }
+        });
+
     }
 
     public Shape getTunnelShape(Shape line) {

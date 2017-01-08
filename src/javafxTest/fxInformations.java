@@ -3,10 +3,15 @@ package javafxTest;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+
+import java.awt.*;
 
 /**
  * Created by romainhry on 07/01/2017.
@@ -43,30 +48,31 @@ public class fxInformations extends Group {
         imageTrain.setX(posX);
         imageTrain.setY(posY);
         nbTrain = new Text(posX+40, posY+5,"3");
-        nbTrain.setFill(Color.BISQUE);
+        nbTrain.setFill(Color.CHOCOLATE);
         nbTrain.setFont(Font.font(null, FontWeight.BOLD,15));
 
         imageWagon.setX(posX+65);
         imageWagon.setY(posY+4);
         nbWagon = new Text(posX+105, posY+5,"0");
-        nbWagon.setFill(Color.BISQUE);
+        nbWagon.setFill(Color.CHOCOLATE);
         nbWagon.setFont(Font.font(null, FontWeight.BOLD,15));
 
         imageLine.setX(posX+130);
         imageLine.setY(posY+6);
         nbLine = new Text(posX+170, posY+5,"3");
-        nbLine.setFill(Color.BISQUE);
+        nbLine.setFill(Color.CHOCOLATE);
         nbLine.setFont(Font.font(null, FontWeight.BOLD,15));
 
         imageTunnel.setX(posX+195);
         imageTunnel.setY(posY);
         nbTunnel = new Text(posX+235, posY+5,"3");
-        nbTunnel.setFill(Color.BISQUE);
+        nbTunnel.setFill(Color.CHOCOLATE);
         nbTunnel.setFont(Font.font(null, FontWeight.BOLD,15));
 
         textInfo = new Text(400, 250,"");
-        textInfo.setFill(Color.BISQUE);
+        textInfo.setFill(Color.CHOCOLATE);
         textInfo.setFont(Font.font(null, FontWeight.BOLD,25));
+
 
 
         getChildren().add(textInfo);
