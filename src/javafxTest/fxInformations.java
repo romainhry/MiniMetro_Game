@@ -28,21 +28,15 @@ public class fxInformations extends Group {
     private ImageView imageWagon;
     private ImageView imageLine;
 
-    private Text textInfo;
 
 
     public fxInformations(double posX, double posY){
         super();
 
-        Image i1 = new Image("file:src/img/tunnel.png",40,40,false,false);
-        Image i2 = new Image("file:src/img/train.png",40,40,false,false);
-        Image i3 = new Image("file:src/img/wagon.png",40,40,false,false);
-        Image i4 = new Image("file:src/img/rails.png",40,40,false,false);
-
-        imageTunnel = new ImageView(i1);
-        imageTrain = new ImageView(i2);
-        imageWagon = new ImageView(i3);
-        imageLine = new ImageView(i4);
+        imageTunnel = new ImageView(new Image("file:src/img/tunnel.png",40,40,false,false));
+        imageTrain = new ImageView(new Image("file:src/img/train.png",40,40,false,false));
+        imageWagon = new ImageView(new Image("file:src/img/wagon.png",40,40,false,false));
+        imageLine = new ImageView(new Image("file:src/img/rails.png",40,40,false,false));
 
 
         imageTrain.setX(posX);
@@ -69,13 +63,8 @@ public class fxInformations extends Group {
         nbTunnel.setFill(Color.CHOCOLATE);
         nbTunnel.setFont(Font.font(null, FontWeight.BOLD,15));
 
-        textInfo = new Text(400, 250,"");
-        textInfo.setFill(Color.CHOCOLATE);
-        textInfo.setFont(Font.font(null, FontWeight.BOLD,25));
 
 
-
-        getChildren().add(textInfo);
 
         getChildren().add(nbLine);
         getChildren().add(nbTrain);
@@ -109,11 +98,6 @@ public class fxInformations extends Group {
         nbLine.setText(Integer.toString(i));
     }
 
-
-    public void setTextInfo(String s)
-    {
-        textInfo.setText(s);
-    }
 
 
 

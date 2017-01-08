@@ -7,11 +7,16 @@ import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.*;
 
@@ -35,6 +40,8 @@ public class GameView {
     private fxInformations info;
     private boolean anim =false;
     private Circle point;
+    private ImageView imageClient;
+    private Text nbClient;
 
 
     public GameView(Group g,Controller c) {
@@ -45,7 +52,7 @@ public class GameView {
         clients = new HashMap<>();
         group = g;
         controller = c;
-        clock = new fxClock(1100,40,16);
+        clock = new fxClock(1150,35,16);
 
 
         info = new fxInformations(480,620);
@@ -54,18 +61,17 @@ public class GameView {
         group.getChildren().add(clock);
         group.getChildren().add(info);
 
-        /*
-        info.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if(anim)
-                {
-                    hideInfo();
-                    anim =false;
-                }
-            }
-        });
-        */
+        imageClient = new ImageView(new Image("file:src/img/man.png",40,40,false,false));
+        imageClient.setX(980);
+        imageClient.setY(13);
+        nbClient = new Text(960, 43,"0");
+        nbClient.setFill(Color.CHOCOLATE);
+        nbClient.setFont(Font.font(null, FontWeight.BOLD,25));
+
+        group.getChildren().add(nbClient);
+        group.getChildren().add(imageClient);
+
+
         point = new Circle(600,575,4);
 
         point.setStroke(Color.GRAY);
@@ -179,9 +185,14 @@ public class GameView {
             @Override
             public void handle(ActionEvent event) {
                 info.setVisible(false);
+                anim=false;
             }
         });
+    }
 
+    public void updateNbClient() {
+        nbClient.setText(Integer.toString(Integer.parseInt(nbClient.getText())+1));
+        //nbClient.setText("2");
     }
 
     public Shape getTunnelShape(Shape line) {

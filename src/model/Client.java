@@ -53,6 +53,8 @@ public class Client {
             Controller.gameView.removeClientFromTrain(train,this);
             if(station.getType() == this.getType()) {
                 addTransportedClient();
+                Controller.gameView.updateNbClient();
+
                 System.err.println("Transported client ");
             }
             else {
