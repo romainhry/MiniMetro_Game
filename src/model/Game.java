@@ -128,7 +128,7 @@ public class Game {
                 while(true){
                     if(!getPause()) {
                         try {
-                            System.out.println("here");
+
                             clock.incrementeTime();
                             view.updateClock(clock.getTime(), clock.getDay());
                             if(clock.getDay()=="LUN" && !gift)

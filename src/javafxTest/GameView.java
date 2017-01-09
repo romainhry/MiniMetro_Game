@@ -110,18 +110,8 @@ public class GameView {
     }
 
     public void updateClock (int hour, String dayName) {
-        if(!pause) {
             clock.moveNeedle(hour);
             clock.setDay(dayName);
-            if (dayName == "MAR" && !gift) {
-                gift = true;
-                pause=true;
-
-
-
-            } else if (dayName != "MAR")
-                gift = false;
-        }
     }
 
     public void setGift(int gift1, int gift2) {
@@ -175,6 +165,7 @@ public class GameView {
                     Game.resumeGame();
                     seeInfo();
                     anim = true;
+                    System.out.println(!Game.getPause());
 
                 } catch (Exception e) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);

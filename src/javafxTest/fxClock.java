@@ -20,6 +20,7 @@ public class fxClock extends Group {
     private Point2D origin;
     private double radius;
     private Text dayName;
+    private boolean day = false;
 
     public fxClock(double posX, double posY, double radius){
         super();
@@ -29,12 +30,14 @@ public class fxClock extends Group {
 
         clockBorder = new Circle(origin.getX(),origin.getY(),radius+5);
         clockBorder.setStrokeWidth(2);
-        clockBorder.setStroke(Color.web("#42322f",1));
-        clockBorder.setFill(null);
+        clockBorder.setStroke(Color.WHITESMOKE);
+        clockBorder.setFill(Color.web("#42322f",1));
 
         clockNeedle = new Line(origin.getX(),origin.getY(),origin.getX(),origin.getY());
         clockNeedle.setStrokeWidth(2);
-        clockNeedle.setStroke(Color.web("#42322f",1));
+        clockNeedle.setStroke(Color.WHITESMOKE);
+
+
         moveNeedle(0);
         dayName = new Text(posX-80, posY+7,"LUN");
         dayName.setFill(Color.web("#42322f",1));
@@ -54,6 +57,31 @@ public class fxClock extends Group {
     public void moveNeedle(int pos){
         if(pos>60)pos-=60;
         int angle=pos*6;
+        if(angle==180 && !day)
+        {
+            day = true;
+        }
+        else if(day && angle==180)
+        {
+            day=false;
+        }
+
+        if(day)
+        {
+            clockBorder.setStroke(Color.web("#42322f",1));
+            clockBorder.setFill(Color.WHITESMOKE);
+
+            clockNeedle.setStrokeWidth(2);
+            clockNeedle.setStroke(Color.web("#42322f",1));
+        }
+        else
+        {
+            clockBorder.setStroke(Color.TRANSPARENT);
+            clockBorder.setFill(Color.web("#42322f",1));
+
+            clockNeedle.setStrokeWidth(2);
+            clockNeedle.setStroke(Color.WHITESMOKE);
+        }
         Point2D posEndPoint=calcEndPoint(origin,radius,angle);
         clockNeedle.setEndX(posEndPoint.getX());
         clockNeedle.setEndY(posEndPoint.getY());
