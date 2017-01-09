@@ -103,10 +103,6 @@ public class GameView {
         });
 
         group.getChildren().add(point);
-
-
-
-
     }
 
     public void updateClock (int hour, String dayName) {
@@ -148,8 +144,6 @@ public class GameView {
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get() == buttonTypeOne) {
                         Game.getInventory().addLine();
-                        Game.getInventory().addTrain();
-                        updateTrainNb(Game.getInventory().getTrain());
                         updateLineNb(Game.getInventory().getLine());
                     } else if (result.get() == buttonTypeTwo) {
                         Game.getInventory().addWagon();
@@ -389,6 +383,8 @@ public class GameView {
     public void put(Train t) {
         trains.put(t,new fxTrain(t));
         group.getChildren().add(1,trains.get(t));
+        controller.addTrainEvent(trains.get(t).r,t);
+
     }
 
     public void put(Client c) {

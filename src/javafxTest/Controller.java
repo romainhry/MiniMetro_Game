@@ -35,11 +35,15 @@ public class Controller implements Initializable {
     double x,y,middleX,middleY,x2,y2;
     int config;
     Polyline drawing = new Polyline(0,0,0,0,0,0) ;
+    Polygon drawingTrain = new Polygon(0,0,0,0,0,0,0,0,0,0,0,0);
 
-    boolean stationPressed = false, TPressed = false , canRemove = false, isDrawing , canConstruct = true;
+    boolean stationPressed = false, TPressed = false , canRemove = false, isDrawing, isTrainDrawing , canConstruct = true, trainPressed =false;
     Station currentStation;
-    Shape currentT = null, currentLink ;
+
+    Shape currentT = null, currentLink, currentTrain ;
     model.Line currentLine;
+
+
 
 
     Game game ;
@@ -53,7 +57,7 @@ public class Controller implements Initializable {
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
         group2 = group;
         group.getChildren().add(drawing);
-
+        group.getChildren().add(drawingTrain);
 
         // River :
         Polyline river = new Polyline(
@@ -117,7 +121,15 @@ public class Controller implements Initializable {
                         y2 = event.getY();
                     }
                     displayDrawing();
+                }else if(trainPressed)
+                {
+                    if(!isTrainDrawing) {
+                        x2 = event.getX();
+                        y2 = event.getY();
+                    }
+                    displayTrainDrawing();
                 }
+
             }
         });
         group.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -132,7 +144,10 @@ public class Controller implements Initializable {
             public void handle(MouseEvent event) {
                 stationPressed = false;
                 TPressed = false;
+                trainPressed=false;
                 group.getChildren().remove(drawing);
+                group.getChildren().remove(drawingTrain);
+                currentTrain.opacityProperty().set(1);
                 currentT = null;
                 currentLine = null;
                 canRemove = true;
@@ -168,19 +183,6 @@ public class Controller implements Initializable {
     }
 
 
-
-    private boolean is45degree(double x1, double y1, double x2, double y2) {
-        return abs(x1-x2)== abs(y1-y2);
-    }
-    private boolean sup45degree(double x1, double y1, double x2, double y2) {
-        return abs(x1-x2) > abs(y2-y1);
-    }
-
-    private void verifiateConfig(double x2, double y2) {
-        if(config == 0 && sup45degree(x,y,x2,y2) || config == 1 &&  abs(x-x2) < abs(y2-y) )
-            config = 2;
-    }
-
     public void addTEvent (Shape shape, Station modelSt, model.Line modelLine, Shape link) {
         shape.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
@@ -210,6 +212,20 @@ public class Controller implements Initializable {
                 shape.setStroke(currentLine.getColor());
             }
         });
+    }
+
+    public void addTrainEvent (Shape shape, Train modelTr) {
+
+        shape.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                shape.opacityProperty().set(0.5);
+                trainPressed = true;
+                currentTrain = shape;
+
+            }
+        });
+
     }
 
 
@@ -252,8 +268,6 @@ public class Controller implements Initializable {
             @Override
             public void handle(MouseDragEvent event) {
                 if(stationPressed) {
-
-
 
                     /* Removes the station from the selected line */
                     if(modelSt == currentStation && TPressed && canRemove) {
@@ -541,6 +555,21 @@ public class Controller implements Initializable {
         });
     }
 
+    //drawing train
+    public void displayTrainDrawing()
+    {
+        group.getChildren().remove(drawingTrain);
+
+        drawingTrain.setStroke(Color.LIGHTGREY);
+        drawingTrain.setFill(Color.LIGHTGREY);
+
+        drawingTrain.setStrokeWidth(10);
+        drawingTrain.getPoints().setAll(x2-12, y2-25, x2, y2-30, x2+12, y2-25,x2+12,y2+25,x2-12,y2+25,x2-12, y2-25);
+        group.getChildren().add(1, drawingTrain);
+
+    }
+
+    //drawing lines
     public void displayDrawing () {
         if (x == x2)
             config = 0;
@@ -594,6 +623,20 @@ public class Controller implements Initializable {
         if ( gameView.intersects(drawing) || (game.getInventory().getTunnelNb()==0 && gameView.intersectRiver(drawing))) {
             drawing.setStroke(Color.TRANSPARENT);
         }
+    }
+
+
+
+    private boolean is45degree(double x1, double y1, double x2, double y2) {
+        return abs(x1-x2)== abs(y1-y2);
+    }
+    private boolean sup45degree(double x1, double y1, double x2, double y2) {
+        return abs(x1-x2) > abs(y2-y1);
+    }
+
+    private void verifiateConfig(double x2, double y2) {
+        if(config == 0 && sup45degree(x,y,x2,y2) || config == 1 &&  abs(x-x2) < abs(y2-y) )
+            config = 2;
     }
 
 

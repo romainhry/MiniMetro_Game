@@ -1,8 +1,10 @@
 package javafxTest;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -10,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import model.Position;
 
 import java.awt.*;
 
@@ -35,6 +38,17 @@ public class fxInformations extends Group {
 
         imageTunnel = new ImageView(new Image("file:src/img/tunnel.png",40,40,false,false));
         imageTrain = new ImageView(new Image("file:src/img/train.png",40,40,false,false));
+        imageTrain.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                //Position pos = modelSt.getPosition();
+                //x = pos.getX(); y = pos.getY();
+                //stationPressed = true;
+                //currentStation = modelSt;
+            }
+        });
+
+
         imageWagon = new ImageView(new Image("file:src/img/wagon.png",40,40,false,false));
         imageLine = new ImageView(new Image("file:src/img/rails.png",40,40,false,false));
 
