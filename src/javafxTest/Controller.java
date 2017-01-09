@@ -148,7 +148,8 @@ public class Controller implements Initializable {
                 trainPressed=false;
                 group.getChildren().remove(drawing);
                 group.getChildren().remove(drawingTrain);
-                currentTrain.opacityProperty().set(1);
+                if(currentTrain != null)
+                    currentTrain.opacityProperty().set(1);
                 currentT = null;
                 currentLine = null;
                 canRemove = true;
