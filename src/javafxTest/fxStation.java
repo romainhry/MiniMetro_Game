@@ -9,10 +9,16 @@ import static javafxTest.defaultShapes.*;
 
 public class fxStation {
     Shape shape;
+    Arc arcTimer;
 
 
     public fxStation(Station s) {
         double x = s.getPosition().getX(), y = s.getPosition().getY();
+        arcTimer=new Arc(x, y, 50, 50, 0, 0);
+        arcTimer.setType(ArcType.OPEN);
+        arcTimer.setStrokeWidth(10);
+        arcTimer.setStroke(Color.CORAL);
+        arcTimer.setFill(null);
         switch(s.getType()) {
             case CIRCLE:
                         Circle c = getCircle(); c.setCenterX(s.getPosition().getX()); c.setCenterY(s.getPosition().getY());

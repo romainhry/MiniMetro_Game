@@ -106,6 +106,7 @@ public class Game {
                         types.add(randomStation.getType());
                         Platform.runLater(() -> addToView(clt));                              //bug
                         //System.out.println("new client");
+                        if(clt.getStation().getClientList().size()>=clt.getStation().getCapacity()) clt.getStation().startFullTimer();
                     }
                     catch (Exception e)
                     {

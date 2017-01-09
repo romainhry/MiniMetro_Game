@@ -1,9 +1,10 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Timer;
+import javafx.application.Platform;
+import javafxTest.Controller;
+import javafxTest.GameView;
+
+import java.util.*;
 
 /**
  * Created by romainhry on 07/11/2016.
@@ -29,6 +30,7 @@ public class Station {
         lines = new ArrayList<>();
         distances[t.ordinal()]=0;
         clientList = new ArrayList<Client>();
+        capacity=1;//tmp
 
     }
 
@@ -71,16 +73,38 @@ public class Station {
     }
     
     public void startFullTimer () {
-    
+        Station st=this;
+       /* Thread threadStation = new Thread() {
+            public void run() {
+                System.out.print("Start waiting to people free the station");
+                int tempo=0;
+              //  while (clientList.size()>capacity) {
+                    try {
+
+                        Thread.sleep(1000);  //min 0 s, max 10 s of delay between 2 new clients
+                        //tempo++;
+*/
+                        //startIncreaseArc(Station st)
+                        System.out.println("start increase");
+                        Controller.gameView.startIncreaseArc(st);
+                        //System.out.print(tempo);
+/*
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                }
+            //}
+        };
+        threadStation.start();*/
     }
-    
     public void decreaseFullTimer () {
     	
     }
     
     public void setCapacity(int capacity) {
-    	
+    	this.capacity=capacity;
     }
+    public int getCapacity() {return this.capacity;}
 
     public String toString() {
         String s ="model.Station "+type+" at "+pos+" ";

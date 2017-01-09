@@ -17,10 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBoxBuilder;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Polyline;
-import javafx.scene.shape.Shape;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -29,6 +26,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import model.*;
+import model.Line;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -103,6 +101,18 @@ public class GameView {
         });
 
         group.getChildren().add(point);
+    }
+    public void startIncreaseArc(Station st){
+        Arc arcTimer=stations.get(st).arcTimer;
+        arcTimer.setStroke(Color.CORAL);
+
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(true);
+        KeyValue kv = new KeyValue(arcTimer.lengthProperty(),360);
+        KeyFrame kf = new KeyFrame(Duration.millis(5000), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
     }
 
     public void updateClock (int hour, String dayName) {
@@ -372,6 +382,7 @@ public class GameView {
     public void put(Station s) {
         stations.put(s,new fxStation(s));
         group.getChildren().add(stations.get(s).shape);
+        group.getChildren().add(stations.get(s).arcTimer);
         controller.addStationEvent(stations.get(s).shape,s);
     }
 

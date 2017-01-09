@@ -60,6 +60,7 @@ public class Client {
             else {
                 station.addClient(this);
                 Controller.gameView.put(this);
+                if(station.getClientList().size() > station.getCapacity()) station.startFullTimer();
             }
             return true;
         }
@@ -68,8 +69,9 @@ public class Client {
         for (Wagon wagon:train.getWagonList()){
             if(wagon.getClientList().contains(this)){
                 wagon.removeClient(this);
-                station.addClient(this);
                 station = train.currentStation();
+                station.addClient(this);
+                if(station.getClientList().size()> station.getCapacity()) station.startFullTimer();
                 wagon.setWillSwap(false);
                 //...
                 return true;
