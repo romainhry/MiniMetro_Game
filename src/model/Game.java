@@ -5,6 +5,8 @@ import javafx.application.Platform;
 import javafxTest.GameView;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by romainhry on 08/11/2016.
@@ -21,13 +23,15 @@ public class Game {
     private static int maxShapeWidth = 30;
     private static double distanceSpacing = 100;
     private Timer day;
-    private Inventory inventory;
+    private static Inventory inventory;
     private List<Train> trainList;
     private List<Client> clientList;
     private List<Line> lineList;
     private List <Station> stationList ;
     private List <Color> linesColor ;
     private Clock clock;
+    private static boolean pause =false;
+    private static boolean gift = true;
 
     private boolean clientReady,stationReady;
 
@@ -118,25 +122,59 @@ public class Game {
 
 
     private void timeGo() {
-        TimerTask task = new TimerTask() {
-            @Override
+
+        Thread threadTime = new Thread() {
             public void run() {
-                clock.incrementeTime();
-                view.updateClock(clock.getTime(),clock.getDay());
+                while(true){
+                    if(!getPause()) {
+                        try {
+                            System.out.println("here");
+                            clock.incrementeTime();
+                            view.updateClock(clock.getTime(), clock.getDay());
+                            if(clock.getDay()=="LUN" && !gift)
+                            {
+                                pop2RandomUpgrade();
+                                gift=true;
+                            }
+                            else if (clock.getDay()!="LUN") {
+                                gift=false;
+                            }
+
+                            sleep(100);
+                        }
+                        catch(Exception ex) {
+                            System.out.println(ex);
+                        }
+                    }
+
+                }
             }
         };
-        day = new Timer();
-        day.scheduleAtFixedRate(task,0,100);
+        threadTime.start();
     }
     
     
     public void pop2RandomUpgrade() {
-    	
+        Random random = new Random();
+
+        pauseGame();
+
+        view.setGift(random.nextInt(4),random.nextInt(4));
+
+
     }
     
-    public void pauseGame() {
-    	
+    public static void pauseGame() {
+    	pause=true;
     }
+    public static void resumeGame() {
+        pause=false;
+    }
+
+    public static boolean getPause() {
+        return pause;
+    }
+
     
     public void setGameSpeed(int speed) {
     	
@@ -170,7 +208,7 @@ public class Game {
         }
     }
 
-    public Inventory getInventory() {
+    public static Inventory getInventory() {
         return inventory;
     }
 

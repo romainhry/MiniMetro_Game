@@ -1,15 +1,21 @@
 package javafxTest;
 
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBoxBuilder;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
@@ -18,10 +24,15 @@ import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import model.*;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static javafxTest.defaultShapes.getSquare;
 
@@ -45,6 +56,8 @@ public class GameView {
     private Circle point;
     private ImageView imageClient;
     private Text nbClient;
+    private boolean pause=false;
+    private boolean gift=true;
 
 
     public GameView(Group g,Controller c) {
@@ -97,8 +110,77 @@ public class GameView {
     }
 
     public void updateClock (int hour, String dayName) {
-        clock.moveNeedle(hour);
-        clock.setDay(dayName);
+        if(!pause) {
+            clock.moveNeedle(hour);
+            clock.setDay(dayName);
+            if (dayName == "MAR" && !gift) {
+                gift = true;
+                pause=true;
+
+
+
+            } else if (dayName != "MAR")
+                gift = false;
+        }
+    }
+
+    public void setGift(int gift1, int gift2) {
+        Platform.runLater(new Runnable() {
+            public void run() {
+                Stage stage = new Stage();
+                try {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("New week");
+                    alert.setHeaderText("Wellcome in a new week ! We offer you a gift for your result !");
+                    alert.setContentText("Choose your gift.");
+
+                    //alert.setGraphic(new ImageView(new Image("file:src/img/tunnel.png",40,40,false,false)));
+                    /*
+                    alert.getDialogPane().getChildren().add(new ImageView(new Image("file:src/img/tunnel.png",40,40,false,false)));
+                    alert.getDialogPane().getChildren().add(new ImageView(new Image("file:src/img/rails.png",40,40,false,false)));
+                    alert.getDialogPane().getChildren().add(new ImageView(new Image("file:src/img/train.png",40,40,false,false)));
+                    alert.getDialogPane().getChildren().add(new ImageView(new Image("file:src/img/wagon.png",40,40,false,false)));
+                    */
+                    ButtonType buttonTypeOne = new ButtonType("New line");
+                    ButtonType buttonTypeTwo = new ButtonType("New wagon");
+                    ButtonType buttonTypeThree = new ButtonType("New train");
+                    ButtonType buttonTypeFour = new ButtonType("New tunnel");
+
+                    ArrayList<ButtonType> list = new ArrayList<ButtonType>();
+                    list.add(buttonTypeOne);
+                    list.add(buttonTypeTwo);
+                    list.add(buttonTypeThree);
+                    list.add(buttonTypeFour);
+
+
+                    alert.getButtonTypes().setAll(list.get(gift1),list.get(gift2));
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == buttonTypeOne) {
+                        Game.getInventory().addLine();
+                        Game.getInventory().addTrain();
+                        updateTrainNb(Game.getInventory().getTrain());
+                        updateLineNb(Game.getInventory().getLine());
+                    } else if (result.get() == buttonTypeTwo) {
+                        Game.getInventory().addWagon();
+                        updateWagonNb(Game.getInventory().getWagon());
+                    } else if (result.get() == buttonTypeThree) {
+                        Game.getInventory().addTrain();
+                        updateTrainNb(Game.getInventory().getTrain());
+                    } else if (result.get() == buttonTypeFour) {
+                        Game.getInventory().addTunnelNb(1);
+                        updateTunnelNb(Game.getInventory().getTunnelNb());
+                    }
+
+                    Game.resumeGame();
+                    seeInfo();
+                    anim = true;
+
+                } catch (Exception e) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+        });
     }
 
     public void updateTunnelNb (int tunnel) {
