@@ -56,7 +56,8 @@ public class fxClock extends Group {
 
     public void moveNeedle(int pos){
         if(pos>60)pos-=60;
-        int angle=pos*6;
+        //int angle=pos*6;
+        int angle=pos*30;
         if(angle==180 && !day)
         {
             day = true;

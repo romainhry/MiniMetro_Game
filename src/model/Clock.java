@@ -16,7 +16,7 @@ public class Clock {
     }
     public void incrementeTime(){
         time++;
-        if(time>=120){
+        if(time>=24){
             time=0;
             incrementeDay();
         }

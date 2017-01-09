@@ -140,7 +140,7 @@ public class Game {
                                 gift=false;
                             }
 
-                            sleep(100);
+                            sleep(833);
                         }
                         catch(Exception ex) {
                             System.out.println(ex);
