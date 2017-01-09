@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.transform.Rotate;
 import model.*;
+import model.Line;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -181,6 +182,24 @@ public class Controller implements Initializable {
             config = 2;
     }
 
+    public void addLineEvent(Shape shape,Station a, Station b,model.Line line) {
+
+        shape.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                shape.startFullDrag();
+            }
+        });
+
+        shape.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.err.println("Line clicked "+line);
+            }
+        });
+
+    }
+
     public void addTEvent (Shape shape, Station modelSt, model.Line modelLine, Shape link) {
         shape.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
@@ -215,14 +234,13 @@ public class Controller implements Initializable {
 
 
 
-
-
     public void addStationEvent(Shape shape ,Station modelSt) {
         shape.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 shape.startFullDrag();
             }
+
         });
 
         shape.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -234,17 +252,6 @@ public class Controller implements Initializable {
                 currentStation = modelSt;
             }
         });
-/*
-        shape.setOnMouseDragEntered(new EventHandler<MouseDragEvent>() {
-            @Override
-            public void handle(MouseDragEvent event) {
-                if(stationPressed) {
-                    x2 = modelSt.getPosition().getX();
-                    y2 = modelSt.getPosition().getY();
-                    displayDrawing();
-                }
-            }
-        }); */
 
 
 
@@ -466,6 +473,7 @@ public class Controller implements Initializable {
 
                             }
                             addTEvent(endLine, modelSt, currentLine, link);
+                            addLineEvent(link,modelSt,currentStation,currentLine);
                             group.getChildren().add(1, endLine);
                             group.getChildren().add(1, link);
 
