@@ -158,10 +158,12 @@ public class Game {
         Random random = new Random();
 
         pauseGame();
-
-        view.setGift(random.nextInt(4),random.nextInt(4));
-
-
+        int n1,n2;
+        n1=random.nextInt(4);
+        do {
+            n2 =random.nextInt(4);
+        }while(n2==n1);
+        view.setGift(n1,n2);
     }
     
     public static void pauseGame() {

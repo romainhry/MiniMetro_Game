@@ -116,21 +116,16 @@ public class GameView {
                 Stage stage = new Stage();
                 try {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("New week");
-                    alert.setHeaderText("Wellcome in a new week ! We offer you a gift for your result !");
-                    alert.setContentText("Choose your gift.");
+                    alert.setTitle("Nouvelle semaine");
+                    alert.setHeaderText("Bienvenue dans une nouvelle semaine ! Vous avez reçu une nouvelle locomotive.")  ;
+                    alert.setContentText("Comment voulez-vous depenser le reste de votre budget ?");
 
-                    //alert.setGraphic(new ImageView(new Image("file:src/img/tunnel.png",40,40,false,false)));
-                    /*
-                    alert.getDialogPane().getChildren().add(new ImageView(new Image("file:src/img/tunnel.png",40,40,false,false)));
-                    alert.getDialogPane().getChildren().add(new ImageView(new Image("file:src/img/rails.png",40,40,false,false)));
-                    alert.getDialogPane().getChildren().add(new ImageView(new Image("file:src/img/train.png",40,40,false,false)));
-                    alert.getDialogPane().getChildren().add(new ImageView(new Image("file:src/img/wagon.png",40,40,false,false)));
-                    */
-                    ButtonType buttonTypeOne = new ButtonType("New line");
-                    ButtonType buttonTypeTwo = new ButtonType("New wagon");
-                    ButtonType buttonTypeThree = new ButtonType("New train");
-                    ButtonType buttonTypeFour = new ButtonType("New tunnel");
+                    alert.setGraphic(new ImageView(new Image("file:src/img/train.png",40,40,false,false)));
+
+                    ButtonType buttonTypeOne = new ButtonType("Nouvelle ligne");
+                    ButtonType buttonTypeTwo = new ButtonType("Nouvelle wagon");
+                    ButtonType buttonTypeThree = new ButtonType("Nouveau train");
+                    ButtonType buttonTypeFour = new ButtonType("Nouveau tunnel");
 
                     ArrayList<ButtonType> list = new ArrayList<ButtonType>();
                     list.add(buttonTypeOne);
