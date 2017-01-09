@@ -37,6 +37,10 @@ public class Client {
             || train.nextStation().getMinDistance(destinationType) < station.getMinDistance(destinationType)) {
             station.removeClient(this);
             train.addClient(this);
+            //If the station is actually not full and was full before
+            if( (station.getClientList().size() <= station.getCapacity()) && station.getIsFull()){
+                station.decreaseFullTimer();
+            }
             return true;
         }
         return false;
@@ -60,7 +64,10 @@ public class Client {
             else {
                 station.addClient(this);
                 Controller.gameView.put(this);
-                if(station.getClientList().size() > station.getCapacity()) station.startFullTimer();
+                //If the station is actually full and was not already full
+                if( (station.getClientList().size() > station.getCapacity()) && !station.getIsFull()){
+                    station.startFullTimer();
+                }
             }
             return true;
         }
@@ -71,7 +78,10 @@ public class Client {
                 wagon.removeClient(this);
                 station = train.currentStation();
                 station.addClient(this);
-                if(station.getClientList().size()> station.getCapacity()) station.startFullTimer();
+                //If the station is actually full and was not already full
+                if( (station.getClientList().size() > station.getCapacity()) && !station.getIsFull()){
+                    station.startFullTimer();
+                }
                 wagon.setWillSwap(false);
                 //...
                 return true;

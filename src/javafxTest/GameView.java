@@ -106,15 +106,37 @@ public class GameView {
         Arc arcTimer=stations.get(st).arcTimer;
         arcTimer.setStroke(Color.CORAL);
 
-        Timeline timeline = new Timeline();
-        timeline.setCycleCount(1);
-        timeline.setAutoReverse(true);
-        KeyValue kv = new KeyValue(arcTimer.lengthProperty(),360);
-        KeyFrame kf = new KeyFrame(Duration.millis(5000), kv);
-        timeline.getKeyFrames().add(kf);
-        timeline.play();
-    }
+        stations.get(st).arcTimeline.stop();
+        stations.get(st).arcTimeline.getKeyFrames().clear();
 
+        KeyValue kv = new KeyValue(arcTimer.lengthProperty(),360);
+        KeyFrame kf = new KeyFrame(Duration.millis(50000), kv);
+
+        stations.get(st).arcTimeline.getKeyFrames().add(kf);
+        stations.get(st).arcTimeline.play();
+
+        stations.get(st).arcTimeline.setOnFinished(new EventHandler<ActionEvent>(){
+
+            @Override
+            public void handle(ActionEvent arg0) {
+                System.out.println("End game");
+            }
+        });
+    }
+    public void startDecreaseArc(Station st){
+        Arc arcTimer=stations.get(st).arcTimer;
+        arcTimer.setStroke(Color.GOLD);
+
+        stations.get(st).arcTimeline.stop();
+        stations.get(st).arcTimeline.getKeyFrames().clear();
+
+        KeyValue kv = new KeyValue(arcTimer.lengthProperty(),0);
+        KeyFrame kf = new KeyFrame(Duration.millis(5000), kv);
+        stations.get(st).arcTimeline.getKeyFrames().add(kf);
+
+
+        stations.get(st).arcTimeline.playFromStart();
+    }
     public void updateClock (int hour, String dayName) {
             clock.moveNeedle(hour);
             clock.setDay(dayName);

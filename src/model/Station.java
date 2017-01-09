@@ -17,6 +17,7 @@ public class Station {
     private List<Line> lines;
     private Timer fullCapacity ;
     private int capacity;
+    private boolean isFull;
 
     private int[] distances = new int[ShapeType.values().length];
     private boolean checked = false;
@@ -71,33 +72,20 @@ public class Station {
     public void removeLine(Line line) {
     	lines.remove(line);
     }
-    
-    public void startFullTimer () {
-        Station st=this;
-       /* Thread threadStation = new Thread() {
-            public void run() {
-                System.out.print("Start waiting to people free the station");
-                int tempo=0;
-              //  while (clientList.size()>capacity) {
-                    try {
 
-                        Thread.sleep(1000);  //min 0 s, max 10 s of delay between 2 new clients
-                        //tempo++;
-*/
-                        //startIncreaseArc(Station st)
-                        System.out.println("start increase");
-                        Controller.gameView.startIncreaseArc(st);
-                        //System.out.print(tempo);
-/*
-                    } catch (Exception e) {
-                        System.out.println(e);
-                    }
-                }
-            //}
-        };
-        threadStation.start();*/
+    public boolean getIsFull(){return  isFull;}
+
+    public void setIsFull(boolean b){ isFull=b;}
+
+    public void startFullTimer () {
+        isFull=true;
+        System.out.println("start increase");
+        Controller.gameView.startIncreaseArc(this);
     }
     public void decreaseFullTimer () {
+        isFull=false;
+        System.out.println("start decrease");
+        Controller.gameView.startDecreaseArc(this);
     	
     }
     

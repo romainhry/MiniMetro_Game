@@ -1,5 +1,6 @@
 package javafxTest;
 
+import javafx.animation.Timeline;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import model.Station;
@@ -10,15 +11,21 @@ import static javafxTest.defaultShapes.*;
 public class fxStation {
     Shape shape;
     Arc arcTimer;
+    Timeline arcTimeline;
 
 
     public fxStation(Station s) {
         double x = s.getPosition().getX(), y = s.getPosition().getY();
-        arcTimer=new Arc(x, y, 50, 50, 0, 0);
+        arcTimer=new Arc(x, y, 25, 25, 0, 0);
         arcTimer.setType(ArcType.OPEN);
         arcTimer.setStrokeWidth(10);
         arcTimer.setStroke(Color.CORAL);
         arcTimer.setFill(null);
+
+        arcTimeline = new Timeline();
+//        arcTimeline.setCycleCount(1);
+        arcTimeline.setAutoReverse(true);
+
         switch(s.getType()) {
             case CIRCLE:
                         Circle c = getCircle(); c.setCenterX(s.getPosition().getX()); c.setCenterY(s.getPosition().getY());
