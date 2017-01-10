@@ -29,6 +29,7 @@ public class Game {
     private List<Line> lineList;
     private List <Station> stationList ;
     private List <Color> linesColor ;
+    private List <Color> giftColor ;
     private Clock clock;
     private static boolean pause =false;
     private static boolean gift = true;
@@ -44,6 +45,7 @@ public class Game {
         inventory = new Inventory(3,3,1,3,0);
         linesColor  = new ArrayList<>();
         linesColor.add(Color.RED); linesColor.add(Color.BLUE);linesColor.add(Color.ORANGE);
+        giftColor = new ArrayList<>();  giftColor.add(Color.GREEN); giftColor.add(Color.AQUAMARINE); giftColor.add(Color.PURPLE);
         clock = new Clock();
     }
 
@@ -53,8 +55,18 @@ public class Game {
         return c;
     }
 
+    public Color getDrawingColor() {
+        if(linesColor.size()==0)
+            return Color.PAPAYAWHIP;
+        return linesColor.get(0);
+    }
+
     public void addColor(Color c) {
         linesColor.add(c);
+    }
+
+    public void addGiftColor() {
+        addColor(giftColor.remove(0));
     }
 
 
@@ -160,11 +172,20 @@ public class Game {
 
         pauseGame();
         int n1,n2;
-        n1=random.nextInt(4);
-        do {
-            n2 =random.nextInt(4);
-        }while(n2==n1);
-        view.setGift(n1,n2);
+        if(giftColor.size() != 0) {
+            n1 = random.nextInt(4);
+            do {
+                n2 = random.nextInt(4);
+            } while (n2 == n1);
+            view.setGift(n1, n2);
+        }
+        else {
+            n1 = random.nextInt(3) + 1;
+            do {
+                n2 = random.nextInt(3) +1;
+            } while (n2 == n1);
+            view.setGift(n1, n2);
+        }
     }
     
     public static void pauseGame() {
