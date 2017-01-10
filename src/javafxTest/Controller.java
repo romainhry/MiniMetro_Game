@@ -1,6 +1,9 @@
 package javafxTest;
 
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventTarget;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -38,14 +41,12 @@ public class Controller implements Initializable {
     Polyline drawing = new Polyline(0,0,0,0,0,0) ;
     Polygon drawingTrain = new Polygon(0,0,0,0,0,0,0,0,0,0,0,0);
 
-    boolean stationPressed = false, TPressed = false , canRemove = false, isDrawing, isTrainDrawing , canConstruct = true, trainPressed =false;
+    boolean stationPressed = false, TPressed = false , canRemove = false, isDrawing, isTrainDrawing , canConstruct = true, trainPressed =false, readyForTrain = false;
     Station currentStation;
 
     Shape currentT = null, currentLink, currentTrain ;
     model.Line currentLine;
-
-
-
+    Train modelTrain;
 
     Game game ;
     public static GameView gameView;
@@ -103,15 +104,8 @@ public class Controller implements Initializable {
         borderRiver.setStrokeLineJoin(StrokeLineJoin.ROUND);
         borderRiver.setStrokeWidth(31);
 
-
         group.getChildren().add(borderRiver);
         group.getChildren().add(river);
-
-
-
-
-
-
 
         group.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
@@ -177,11 +171,30 @@ public class Controller implements Initializable {
 
         gameView.addRiver(borderRiver);
 
-
-
         game.start();
 
 
+    }
+
+    public void addTrainEvent (Shape shape, Train modelTr) {
+
+        shape.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                shape.startFullDrag();
+            }
+        });
+
+        shape.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                shape.opacityProperty().set(0.5);
+                trainPressed = true;
+                currentTrain = shape;
+                modelTrain=modelTr;
+
+            }
+        });
     }
 
 
@@ -190,7 +203,17 @@ public class Controller implements Initializable {
         shape.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                System.err.println("Line draged "+line);
                 shape.startFullDrag();
+            }
+        });
+
+        shape.setOnMouseDragReleased(new EventHandler<MouseDragEvent>() {
+            @Override
+            public void handle(MouseDragEvent event) {
+                gameView.removeTrain(modelTrain);
+                modelTrain.changeLine(new Position(event.getX(),event.getY()),line);
+                gameView.put(modelTrain);
             }
         });
 
@@ -233,24 +256,6 @@ public class Controller implements Initializable {
             }
         });
     }
-
-    public void addTrainEvent (Shape shape, Train modelTr) {
-
-        shape.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                shape.opacityProperty().set(0.5);
-                trainPressed = true;
-                currentTrain = shape;
-
-            }
-        });
-
-    }
-
-
-
-
 
 
     public void addStationEvent(Shape shape ,Station modelSt) {

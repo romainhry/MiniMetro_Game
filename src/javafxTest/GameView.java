@@ -155,7 +155,7 @@ public class GameView {
                     alert.setGraphic(new ImageView(new Image("file:src/img/train.png",40,40,false,false)));
 
                     ButtonType buttonTypeOne = new ButtonType("Nouvelle ligne");
-                    ButtonType buttonTypeTwo = new ButtonType("Nouvelle wagon");
+                    ButtonType buttonTypeTwo = new ButtonType("Nouveau wagon");
                     ButtonType buttonTypeThree = new ButtonType("Nouveau train");
                     ButtonType buttonTypeFour = new ButtonType("Nouveau tunnel");
 
@@ -167,6 +167,9 @@ public class GameView {
 
 
                     alert.getButtonTypes().setAll(list.get(gift1),list.get(gift2));
+
+                    Game.getInventory().addTrain();
+                    updateTrainNb(Game.getInventory().getTrain());
 
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get() == buttonTypeOne) {

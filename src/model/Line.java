@@ -120,6 +120,7 @@ public class Line {
     
     public void addTrain(Train train) {
         trainList.add(train);
+        train.setLine(this);
     }
 
     public void removeTrain(Train train) {
