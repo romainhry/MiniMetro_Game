@@ -48,7 +48,7 @@ public class Controller implements Initializable {
     model.Line currentLine;
     Train modelTrain;
 
-    Game game ;
+    public static Game game ;
     public static GameView gameView;
 
     private fxClock clock;
@@ -486,13 +486,6 @@ public class Controller implements Initializable {
 
                                     gameView.put(train);
                                 }
-
-
-
-
-
-
-
                             }
                             addTEvent(endLine, modelSt, currentLine, link);
                             addLineEvent(link,modelSt,currentStation,currentLine);
@@ -630,7 +623,7 @@ public class Controller implements Initializable {
         if(currentLine != null)
             drawing.setStroke(currentLine.getColor());
         else
-            drawing.setStroke(Color.PAPAYAWHIP);
+            drawing.setStroke(game.getDrawingColor());
 
         drawing.setStrokeWidth(10);
         drawing.getPoints().setAll(x, y, middleX, middleY, x2, y2);

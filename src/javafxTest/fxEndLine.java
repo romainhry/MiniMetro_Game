@@ -69,15 +69,7 @@ public class fxEndLine extends Polyline {
             getPoints().set(i,x+tempX);
             getPoints().set(i+1,y+tempY);
         }
-
         Rotate rot = new Rotate(angle,getPoints().get(0),getPoints().get(1));
         getTransforms().add(rot);
-
-        Circle center = new Circle(3);
-        center.setCenterX(getPoints().get(0));
-        center.setCenterY(getPoints().get(1));
-        center.setStroke(javafx.scene.paint.Color.RED);
-        group2.getChildren().add(center);
-
     }
 }

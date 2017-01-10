@@ -174,6 +174,7 @@ public class GameView {
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get() == buttonTypeOne) {
                         Game.getInventory().addLine();
+                        Controller.game.addGiftColor();
                         updateLineNb(Game.getInventory().getLine());
                     } else if (result.get() == buttonTypeTwo) {
                         Game.getInventory().addWagon();
