@@ -124,6 +124,7 @@ public class GameView {
             @Override
             public void handle(ActionEvent arg0) {
                 System.out.println("End game");
+                Game.setTrainSpeed(0);
             }
         });
     }
@@ -148,6 +149,20 @@ public class GameView {
 
         stations.get(st).arcTimeline.playFromStart();
     }
+
+    public void pauseArc(){
+        //stations.values().g
+        for(fxStation fxt: stations.values()){
+            fxt.arcTimeline.pause();
+        }
+    }
+
+    public void resumeArc(){
+        for(fxStation fxt: stations.values()){
+            fxt.arcTimeline.play();
+        }
+    }
+    
     public void updateClock (int hour, String dayName) {
             clock.moveNeedle(hour);
             clock.setDay(dayName);
@@ -541,6 +556,6 @@ public class GameView {
 
     public void move(Train train) {
         fxTrain fxTrain = get(train);
-        fxTrain.move(train.getLine().getPath().get(train.getNextPointIndex()));
+        fxTrain.move(train.getLine().getPath().get(train.getNextPointIndex()), Game.getTrainSpeed());
     }
 }

@@ -52,10 +52,12 @@ public class fxTrain extends Group {
         trainY = 300+height/2;
     }
 
-    public void move (Position p) {
+    public void move (Position p, int speed) {
+        if(speed==0)return;
         double rotation = angle(p,new Position(trainX,trainY)),x = p.getX(), y = p.getY();
         setRotate(rotation);
-        double millis = 10*distance(trainX,trainY,x,y)+100;
+        //double millis = 10*distance(trainX,trainY,x,y)+100;
+        double millis = 10*distance(trainX,trainY,x,y)+0;
         TranslateTransition move = new TranslateTransition(new Duration(millis),this);
         move.setByX(x-trainX); move.setByY(y-trainY);
         move.play();

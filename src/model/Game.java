@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  */
 public class Game {
     public GameView view;
-    private static int trainSpeed ;
+    private static int trainSpeed = 1;
     protected static int vehicleCapacity = 8 ;
     private static int stationCapacity ;
     private static int timeSpeed ;
@@ -70,6 +70,12 @@ public class Game {
     public void addGiftColor() {
         addColor(giftColor.remove(0));
     }
+
+    public static void setTrainSpeed(int speed){
+        trainSpeed=speed;
+    }
+
+    public static int getTrainSpeed(){return trainSpeed;}
 
 
     private void popRandomStation() {
@@ -211,11 +217,15 @@ public class Game {
 
     public void pauseGame() {
     	pause=true;
+        setTrainSpeed(0);
+        view.pauseArc();
     }
     public void resumeGame() {
         synchronized (pauseLock) {
             pause = false;
+            setTrainSpeed(1);
             pauseLock.notifyAll(); // Unblocks thread
+            view.resumeArc();
         }
     }
     public static boolean getPause() {
