@@ -112,6 +112,16 @@ public class fxInformations extends Group {
         nbLine.setText(Integer.toString(i));
     }
 
+    public ImageView getImageTrain()
+    {
+        return imageTrain;
+    }
+
+    public ImageView getImageWagon()
+    {
+        return imageWagon;
+    }
+
 
 
 
