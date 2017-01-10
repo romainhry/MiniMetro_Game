@@ -104,13 +104,17 @@ public class GameView {
     }
     public void startIncreaseArc(Station st){
         Arc arcTimer=stations.get(st).arcTimer;
-        arcTimer.setStroke(Color.CORAL);
+        arcTimer.setType(ArcType.ROUND);
+        arcTimer.setFill(Color.web("#a39c9c",0.8));
+        arcTimer.setStrokeWidth(0);
+
+        Double remainingTime=(45000*(360-arcTimer.lengthProperty().get()))/360;
 
         stations.get(st).arcTimeline.stop();
         stations.get(st).arcTimeline.getKeyFrames().clear();
 
         KeyValue kv = new KeyValue(arcTimer.lengthProperty(),360);
-        KeyFrame kf = new KeyFrame(Duration.millis(50000), kv);
+        KeyFrame kf = new KeyFrame(Duration.millis(remainingTime), kv);//40s
 
         stations.get(st).arcTimeline.getKeyFrames().add(kf);
         stations.get(st).arcTimeline.play();
@@ -125,13 +129,20 @@ public class GameView {
     }
     public void startDecreaseArc(Station st){
         Arc arcTimer=stations.get(st).arcTimer;
-        arcTimer.setStroke(Color.GOLD);
+        arcTimer.setStrokeWidth(10);
+        arcTimer.setFill(null);
+        arcTimer.setStroke(Color.web("#a39c9c",0.8));
+        arcTimer.setType(ArcType.OPEN);
+
+        Duration passedTime=stations.get(st).arcTimeline.getCurrentTime();
 
         stations.get(st).arcTimeline.stop();
         stations.get(st).arcTimeline.getKeyFrames().clear();
 
+        Double remainingTime=(45000*arcTimer.lengthProperty().get())/360;
+
         KeyValue kv = new KeyValue(arcTimer.lengthProperty(),0);
-        KeyFrame kf = new KeyFrame(Duration.millis(5000), kv);
+        KeyFrame kf = new KeyFrame(Duration.millis(remainingTime), kv);
         stations.get(st).arcTimeline.getKeyFrames().add(kf);
 
 
@@ -407,8 +418,8 @@ public class GameView {
 
     public void put(Station s) {
         stations.put(s,new fxStation(s));
-        group.getChildren().add(stations.get(s).shape);
         group.getChildren().add(stations.get(s).arcTimer);
+        group.getChildren().add(stations.get(s).shape);
         controller.addStationEvent(stations.get(s).shape,s);
     }
 
