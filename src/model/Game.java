@@ -41,7 +41,7 @@ public class Game {
         clientList = new ArrayList<>();
         lineList = new ArrayList<>();
         stationList = new ArrayList<>();
-        inventory = new Inventory(3,3,0,3,0);
+        inventory = new Inventory(3,3,1,3,0);
         linesColor  = new ArrayList<>();
         linesColor.add(Color.RED); linesColor.add(Color.BLUE);linesColor.add(Color.ORANGE);
         clock = new Clock();

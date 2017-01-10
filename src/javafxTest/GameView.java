@@ -69,7 +69,7 @@ public class GameView {
         clock = new fxClock(1150,35,16);
 
 
-        info = new fxInformations(480,620);
+        info = c.getInfo();
         info.setVisible(false);
 
         group.getChildren().add(clock);

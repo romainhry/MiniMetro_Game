@@ -1,30 +1,22 @@
 package javafxTest;
 
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventTarget;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import javafx.scene.transform.Rotate;
 import model.*;
-import model.Line;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 import static java.lang.Math.abs;
 
-import static javafxTest.defaultShapes.*;
 import static model.Position.angle;
 
 
@@ -40,13 +32,15 @@ public class Controller implements Initializable {
     int config;
     Polyline drawing = new Polyline(0,0,0,0,0,0) ;
     Polygon drawingTrain = new Polygon(0,0,0,0,0,0,0,0,0,0,0,0);
+    Polygon drawingWagon = new Polygon(0,0,0,0,0,0,0,0,0,0);
 
-    boolean stationPressed = false, TPressed = false , canRemove = false, isDrawing, isTrainDrawing , canConstruct = true, trainPressed =false, readyForTrain = false;
+    boolean stationPressed = false, TPressed = false , canRemove = false, isDrawing, wagonPressed =false, canConstruct = true, trainPressed =false;
     Station currentStation;
 
     Shape currentT = null, currentLink, currentTrain ;
     model.Line currentLine;
     Train modelTrain;
+    Wagon modelWagon;
 
     Game game ;
     public static GameView gameView;
@@ -118,10 +112,14 @@ public class Controller implements Initializable {
                     displayDrawing();
                 }else if(trainPressed)
                 {
-                    if(!isTrainDrawing) {
-                        x2 = event.getX();
-                        y2 = event.getY();
-                    }
+                    x2 = event.getX();
+                    y2 = event.getY();
+                    displayTrainDrawing();
+                }
+                else if(wagonPressed)
+                {
+                    x2 = event.getX();
+                    y2 = event.getY();
                     displayTrainDrawing();
                 }
 
@@ -197,6 +195,40 @@ public class Controller implements Initializable {
         });
     }
 
+    public fxInformations getInfo()
+    {
+        fxInformations info = new fxInformations(480,620);
+        info.getImageTrain().setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                info.getImageTrain().startFullDrag();
+            }
+        });
+
+        info.getImageTrain().setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(Game.getInventory().getTrainNb()!=0)
+                    trainPressed = true;
+            }
+        });
+
+        info.getImageWagon().setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                info.getImageTrain().startFullDrag();
+            }
+        });
+
+        info.getImageWagon().setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(Game.getInventory().getWagonNb()!=0)
+                    wagonPressed = true;
+            }
+        });
+        return info;
+    }
 
     public void addLineEvent(Shape shape,Station a, Station b,model.Line line) {
 
@@ -211,9 +243,48 @@ public class Controller implements Initializable {
         shape.setOnMouseDragReleased(new EventHandler<MouseDragEvent>() {
             @Override
             public void handle(MouseDragEvent event) {
-                gameView.removeTrain(modelTrain);
-                modelTrain.changeLine(new Position(event.getX(),event.getY()),line);
-                gameView.put(modelTrain);
+                if(trainPressed) {
+                    if (modelTrain!=null){
+                        gameView.removeTrain(modelTrain);
+                        modelTrain.changeLine(new Position(event.getX(), event.getY()), line);
+                        gameView.put(modelTrain);
+                        modelTrain = null;
+                    }
+                    else if( modelTrain==null)
+                    {
+                        modelTrain = new Train(0,line,true);
+                        line.addTrain(modelTrain);
+                        gameView.put(modelTrain);
+                        modelTrain.move();
+                        modelTrain = null;
+                        Game.getInventory().subTrain();
+                        gameView.updateTrainNb(Game.getInventory().getTrain());
+                    }
+                    trainPressed=false;
+                }
+                else if(wagonPressed) {
+                    if (line.getTrainList().size() != 0) {
+                        if (modelWagon != null) {
+
+                            //gameView.removeWagon(modelWagon);
+                            modelWagon.changeTrain(line.getTrainList().get(0));
+                            //gameView.put(modelWagon);
+                            modelWagon = null;
+
+                        } else if (modelWagon == null) {
+                            /*modelWagon = new Wagon(;
+                            line.getTrainList().get(0).addTrain(modelWagon);
+                            gameView.put(modelWagon);
+                            //modelWagon.move();
+                            modelWagon = null;
+                            Game.getInventory().subWagonNb(1);
+                            gameView.updateWagonNb(Game.getInventory().getWagonNb());*/
+                        }
+                        wagonPressed = false;
+                    }
+                }
+
+
             }
         });
 
@@ -575,13 +646,24 @@ public class Controller implements Initializable {
     public void displayTrainDrawing()
     {
         group.getChildren().remove(drawingTrain);
-
         drawingTrain.setStroke(Color.LIGHTGREY);
         drawingTrain.setFill(Color.LIGHTGREY);
 
         drawingTrain.setStrokeWidth(10);
         drawingTrain.getPoints().setAll(x2-12, y2-25, x2, y2-30, x2+12, y2-25,x2+12,y2+25,x2-12,y2+25,x2-12, y2-25);
         group.getChildren().add(1, drawingTrain);
+
+    }
+
+    public void displayWagonDrawing()
+    {
+        group.getChildren().remove(drawingWagon);
+        drawingWagon.setStroke(Color.LIGHTGREY);
+        drawingWagon.setFill(Color.LIGHTGREY);
+
+        drawingWagon.setStrokeWidth(10);
+        drawingWagon.getPoints().setAll(x2-12, y2-25, x2+12, y2-25,x2+12,y2+25,x2-12,y2+25,x2-12, y2-25);
+        group.getChildren().add(1, drawingWagon);
 
     }
 
