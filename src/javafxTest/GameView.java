@@ -346,6 +346,15 @@ public class GameView {
         System.err.println("REMOVING ENDS "+group.getChildren().remove(ends[0])+" " +group.getChildren().remove(ends[1]));
     }
 
+    public void correctRotation(Line l) {
+        Shape [] ends  = lineEnds.get(l);
+        fxEndLine end = (fxEndLine) ends[0];
+        System.err.println(l.getStationList().get(0));
+        end.correctRotation(l.getStationList().get(0),l.getPath().get(1).getX(),l.getPath().get(1).getY());
+        end = (fxEndLine) ends[1];
+        end.correctRotation(l.getStationList().get(l.getStationList().size()-1),l.getPath().get(l.getPath().size()-2).getX(),l.getPath().get(l.getPath().size()-2).getY());
+    }
+
     public Shape getLineLink(Line l,boolean inFirst) {
         if(inFirst)
             return lineLinks.get(l).get(0);
@@ -383,7 +392,19 @@ public class GameView {
         }
         links.add(link);
         System.err.println("Index of created LINK : "+list.indexOf(link));
+    }
 
+    public void addLineLink(Line l , Shape link, int index) {
+        ArrayList<Shape> list = lineLinks.get(l);
+        list.add(index,link);
+        links.add(link);
+    }
+
+    public void removeLink(Shape link) {
+        links.remove(link);
+    }
+    public void addLink(Shape link) {
+        links.add(link);
     }
 
     public void removeLineLink(Line l, boolean inFirst) {
@@ -405,6 +426,7 @@ public class GameView {
     }
 
     public void removeLineLink(Line l, Shape link) {
+
         lineLinks.get(l).remove(link);
         group.getChildren().remove(link);
         links.remove(link);
@@ -454,7 +476,9 @@ public class GameView {
         Station st = c.getStation();
         for(int i =0; i< st.getClientList().size(); ++i) {
             fxClient fxCl = get(st.getClientList().get(i));
-            fxCl.updatePos(st,i+1);
+            if(fxCl != null) {
+                fxCl.updatePos(st, i + 1);
+            }
         }
     }
 

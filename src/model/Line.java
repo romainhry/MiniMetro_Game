@@ -66,6 +66,17 @@ public class Line {
         }
     }
 
+    public void addStationFromLink(int index, Station station , double middleX, double middleY, double middleX2 , double middleY2) {
+        stationList.add(index,station);
+        int indexToAdd = (index-1)*2+1;
+        path.remove((index*2)-1);
+
+        path.add(indexToAdd,new Position(middleX2,middleY2));
+        path.add(indexToAdd,station.getPosition());
+        path.add(indexToAdd,new Position(middleX,middleY));
+
+    }
+
     public void removeStation(Station station) {
         if(isLoop()) {
             System.err.println("looped cannot choose which to remove");

@@ -29,13 +29,13 @@ public class Controller implements Initializable {
     private Pane pane;
 
     double x,y,middleX,middleY,x2,y2;
-    int config;
-    Polyline drawing = new Polyline(0,0,0,0,0,0) ;
+    int config,config2;
+    Polyline drawing = new Polyline(0,0,0,0,0,0) , drawing2 = new Polyline(0,0,0,0,0,0,0,0,0,0) ;
     Polygon drawingTrain = new Polygon(0,0,0,0,0,0,0,0,0,0,0,0);
     Polygon drawingWagon = new Polygon(0,0,0,0,0,0,0,0,0,0);
 
     boolean stationPressed = false, TPressed = false , canRemove = false, isDrawing, wagonPressed =false, canConstruct = true, trainPressed =false;
-    Station currentStation;
+    Station currentStation,currentStation2;
 
     Shape currentT = null, currentLink, currentTrain ;
     model.Line currentLine;
@@ -109,7 +109,7 @@ public class Controller implements Initializable {
                         x2 = event.getX();
                         y2 = event.getY();
                     }
-                    displayDrawing();
+                    displayDrawing(x,y,x2,y2);
                 }else if(trainPressed)
                 {
                     x2 = event.getX();
@@ -288,12 +288,40 @@ public class Controller implements Initializable {
             }
         });
 
-        shape.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        shape.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.err.println("Line clicked "+line);
+                currentLine = line;
+                currentStation = a;
+                currentStation2 = b;
+                currentLink = shape;
             }
         });
+
+        shape.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(currentStation2 != null)
+                    gameView.addLink(currentLink);
+                currentLine = null;
+                currentStation = null;
+                currentStation2 = null;
+                currentLink = null;
+                group.getChildren().remove(drawing2);
+            }
+        });
+
+        shape.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                x2 = event.getX();
+                y2 = event.getY();
+                displayDrawingFromLine(a,b,x2,y2);
+
+            }
+        });
+
+
 
     }
 
@@ -412,7 +440,7 @@ public class Controller implements Initializable {
 
                             return;
                         }
-                        boolean inFirst = gameView.lineLinks.get(currentLine).indexOf(currentLink) == 0;
+                        boolean inFirst = currentLine.getStationList().indexOf(modelSt) == 0;
 
                         /* Removing the link */
                         Shape nextLink = gameView.getNextLineLink(currentLine,currentLink);
@@ -423,10 +451,12 @@ public class Controller implements Initializable {
                         }
 
                         int currentLinkIndex = gameView.lineLinks.get(currentLine).indexOf(currentLink);
-                        gameView.removeLineLink(currentLine,currentLink);
+                        //gameView.removeLineLink(currentLine,currentLink);
+                        gameView.removeLineLink(currentLine,inFirst);
                         nextStation = gameView.getNextStation(currentLine,nextLink);
 
-                        if(currentLinkIndex == 0 )
+
+                        if( inFirst )
                             middle = currentLine.getPath().get(3);
                         else
                             middle = currentLine.getPath().get(currentLine.getPath().size()-4);
@@ -468,7 +498,7 @@ public class Controller implements Initializable {
                     isDrawing = true;
                     x2 = modelSt.getPosition().getX();
                     y2 = modelSt.getPosition().getY();
-                    displayDrawing();
+                    displayDrawing(x,y,x2,y2);
 
                     /*cant link when loops*/
                     if(currentLine != null && currentLine.getStationList().size()!=0 && currentLine.isLoop()) {
@@ -623,12 +653,80 @@ public class Controller implements Initializable {
             }
         });
 
-        shape.setOnMouseReleased(new EventHandler<MouseEvent>() {
+        shape.setOnMouseDragReleased(new EventHandler<MouseDragEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(MouseDragEvent event) {
+                if(currentStation2 != null) {
+
+                    if ( gameView.intersects(drawing2) || (game.getInventory().getTunnelNb()==0 && gameView.intersectRiver(drawing2))) {
+                        drawing2.setStroke(Color.TRANSPARENT);
+                        return;
+                    }
+
+
+                    displayDrawingFromLine(currentStation,currentStation2,modelSt.getPosition().getX(),modelSt.getPosition().getY());
+                    int maxIndex;
+                    if(currentLine.getStationList().indexOf(currentStation)> currentLine.getStationList().indexOf(currentStation2))
+                        maxIndex = currentLine.getStationList().indexOf(currentStation);
+                    else
+                        maxIndex = currentLine.getStationList().indexOf(currentStation2);
+
+                    currentStation.removeLink(currentStation2);
+                    currentStation.addLink(modelSt); currentStation2.addLink(modelSt);
+                    game.computeAllDistances();
+
+                    double middleX,middleY,middleX2,middleY2;
+                    middleX = drawing2.getPoints().get(2); middleY = drawing2.getPoints().get(3);
+                    middleX2 = drawing2.getPoints().get(6) ; middleY2 = drawing2.getPoints().get(7);
+                    currentLine.addStationFromLink(maxIndex,modelSt,middleX,middleY,middleX2,middleY2);
+
+                    Shape link1 = new Polyline(drawing2.getPoints().get(0),drawing2.getPoints().get(1),drawing2.getPoints().get(2),drawing2.getPoints().get(3),drawing2.getPoints().get(4),drawing2.getPoints().get(5));
+                    Shape link2 = new Polyline(drawing2.getPoints().get(4),drawing2.getPoints().get(5),drawing2.getPoints().get(6),drawing2.getPoints().get(7),drawing2.getPoints().get(8),drawing2.getPoints().get(9));
+
+                    fxStation toSubstract = new fxStation(new Station(ShapeType.SQUARE, modelSt.getPosition()));
+                    link2 = Shape.subtract(link2,toSubstract.shape);
+                    link1 = Shape.subtract(link1,toSubstract.shape);
+                    toSubstract = new fxStation(new Station(ShapeType.SQUARE, currentStation.getPosition()));
+                    link2 = Shape.subtract(link2,toSubstract.shape);
+                    toSubstract = new fxStation(new Station(ShapeType.SQUARE, currentStation2.getPosition()));
+                    link1 = Shape.subtract(link1,toSubstract.shape);
+
+                    link1.setStroke(currentLine.getColor()); link1.setStrokeWidth(10);
+                    link2.setStroke(currentLine.getColor()); link2.setStrokeWidth(10);
+
+
+
+
+                    group.getChildren().remove(drawing2);
+
+
+                    maxIndex = gameView.lineLinks.get(currentLine).indexOf(currentLink);
+
+                    gameView.addLineLink(currentLine,link2,maxIndex);
+                    gameView.addLineLink(currentLine,link1,maxIndex);
+
+                    group.getChildren().add(1,link1);
+                    group.getChildren().add(1,link2);
+
+                    addLineEvent(link2,currentStation,modelSt,currentLine);
+                    addLineEvent(link1,modelSt,currentStation2,currentLine);
+
+
+
+
+
+                    gameView.correctRotation(currentLine);
+
+                    gameView.removeLineLink(currentLine,currentLink);
+
+                    currentStation2 = null;
+
+
+
+
+                }
             }
         });
-
 
         shape.setOnMouseDragExited(event -> {
             isDrawing = false;
@@ -661,7 +759,7 @@ public class Controller implements Initializable {
     }
 
     //drawing lines
-    public void displayDrawing () {
+    public void displayDrawing (double x, double y, double x2 , double y2) {
         if (x == x2)
             config = 0;
         if (y == y2)
@@ -714,6 +812,113 @@ public class Controller implements Initializable {
         if ( gameView.intersects(drawing) || (game.getInventory().getTunnelNb()==0 && gameView.intersectRiver(drawing))) {
             drawing.setStroke(Color.TRANSPARENT);
         }
+    }
+
+    public void displayDrawingFromLine(Station a, Station b, double x2 , double y2) {
+        double middleX,middleY,middleX2,middleY2;
+        double x = a.getPosition().getX(),y = a.getPosition().getY();
+
+        if (x == x2)
+            config = 0;
+        if (y == y2)
+            config = 1;
+        if (is45degree(x, y, x2, y2))
+            config = 2;
+
+        verifiateConfig(x2, y2);
+
+        if (config == 0) {
+            if (y2 > y) {
+                middleX = x;
+                middleY = y2 - abs(x2 - x);
+            } else {
+                middleX = x;
+                middleY = y2 + abs(x2 - x);
+            }
+        } else if (config == 1) {
+            middleY = y;
+            if (x2 > x)
+                middleX = x2 - abs(y2 - y);
+            else
+                middleX = x2 + abs(y2 - y);
+        } else {
+            if (sup45degree(x, y, x2, y2)) {
+                middleY = y2;
+                if (x2 > x)
+                    middleX = x + abs(y2 - y);
+                else
+                    middleX = x - abs(y2 - y);
+            } else {
+                middleX = x2;
+                if (y2 > y)
+                    middleY = y + abs(x2 - x);
+                else
+                    middleY = y - abs(x2 - x);
+            }
+        }
+
+        x=b.getPosition().getX(); y = b.getPosition().getY();
+
+        if (x == x2)
+            config2 = 0;
+        if (y == y2)
+            config2 = 1;
+        if (is45degree(x, y, x2, y2))
+            config2 = 2;
+
+        if(config2 == 0 && sup45degree(x,y,x2,y2) || config2 == 1 &&  abs(x-x2) < abs(y2-y) )
+            config2 = 2;
+
+
+        if (config2 == 0) {
+            if (y2 > y) {
+                middleX2 = x;
+                middleY2 = y2 - abs(x2 - x);
+            } else {
+                middleX2 = x;
+                middleY2 = y2 + abs(x2 - x);
+            }
+        } else if (config2 == 1) {
+            middleY2 = y;
+            if (x2 > x)
+                middleX2 = x2 - abs(y2 - y);
+            else
+                middleX2 = x2 + abs(y2 - y);
+        } else {
+            if (sup45degree(x, y, x2, y2)) {
+                middleY2 = y2;
+                if (x2 > x)
+                    middleX2 = x + abs(y2 - y);
+                else
+                    middleX2 = x - abs(y2 - y);
+            } else {
+                middleX2 = x2;
+                if (y2 > y)
+                    middleY2 = y + abs(x2 - x);
+                else
+                    middleY2 = y - abs(x2 - x);
+            }
+        }
+
+        group.getChildren().remove(drawing2);
+
+        if(currentLine != null)
+            drawing2.setStroke(currentLine.getColor());
+        else
+            drawing2.setStroke(game.getDrawingColor());
+
+        drawing2.setStrokeWidth(10);
+        drawing2.getPoints().setAll(x, y, middleX2, middleY2, x2, y2, middleX , middleY , a.getPosition().getX(),a.getPosition().getY());
+        group.getChildren().add(1, drawing2);
+        /* If the current link is intersecting other line or river without tunnel available, we make it transparent */
+
+        gameView.removeLink(currentLink);
+
+        if ( gameView.intersects(drawing2) || (game.getInventory().getTunnelNb()==0 && gameView.intersectRiver(drawing2))) {
+            drawing2.setStroke(Color.TRANSPARENT);
+        }
+
+
     }
 
 

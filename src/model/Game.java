@@ -160,12 +160,12 @@ public class Game {
 
                                 clock.incrementeTime();
                                 view.updateClock(clock.getTime(), clock.getDay());
-                                if(clock.getDay()=="MAR" && !gift)
+                                if(clock.getDay()=="LUN" && !gift)
                                 {
                                     pop2RandomUpgrade();
                                     gift=true;
                                 }
-                                else if (clock.getDay()!="MAR") {
+                                else if (clock.getDay()!="LUN") {
                                     gift=false;
                                 }
 
