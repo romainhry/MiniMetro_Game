@@ -31,8 +31,10 @@ public class Game {
     private List <Color> linesColor ;
     private List <Color> giftColor ;
     private Clock clock;
-    private static boolean pause =false;
+    private static volatile boolean pause =false;
+    private final Object pauseLock = new Object();
     private static boolean gift = true;
+
 
     private boolean clientReady,stationReady;
 
@@ -139,26 +141,45 @@ public class Game {
         Thread threadTime = new Thread() {
             public void run() {
                 while(true){
-                    if(!getPause()) {
-                        try {
-
-                            clock.incrementeTime();
-                            view.updateClock(clock.getTime(), clock.getDay());
-                            if(clock.getDay()=="LUN" && !gift)
-                            {
-                                pop2RandomUpgrade();
-                                gift=true;
+                    //if(!getPause()) {
+                        if (pause) {
+                            synchronized (pauseLock) {
+                                // we are in a while loop here to protect against spurious interrupts
+                                while (pause) {
+                                    try {
+                                        pauseLock.wait();
+                                    } catch (InterruptedException e) {
+                                        Thread.currentThread().interrupt();
+                                        // we should probably quit if we are interrupted?
+                                        return;
+                                    }
+                                }
                             }
-                            else if (clock.getDay()!="LUN") {
-                                gift=false;
-                            }
+                        }else{
+                            try {
 
-                            sleep(833);
+                                clock.incrementeTime();
+                                view.updateClock(clock.getTime(), clock.getDay());
+                                if(clock.getDay()=="MAR" && !gift)
+                                {
+                                    pop2RandomUpgrade();
+                                    gift=true;
+                                }
+                                else if (clock.getDay()!="MAR") {
+                                    gift=false;
+                                }
+
+                                sleep(833);
+                            }
+                            catch(Exception ex) {
+                                System.out.println(ex);
+                            }
                         }
-                        catch(Exception ex) {
-                            System.out.println(ex);
-                        }
-                    }
+
+
+
+
+                    //}
 
                 }
             }
@@ -187,14 +208,16 @@ public class Game {
             view.setGift(n1, n2);
         }
     }
-    
-    public static void pauseGame() {
+
+    public void pauseGame() {
     	pause=true;
     }
-    public static void resumeGame() {
-        pause=false;
+    public void resumeGame() {
+        synchronized (pauseLock) {
+            pause = false;
+            pauseLock.notifyAll(); // Unblocks thread
+        }
     }
-
     public static boolean getPause() {
         return pause;
     }

@@ -198,8 +198,8 @@ public class GameView {
                         updateTunnelNb(Game.getInventory().getTunnelNb());
                     }
 
-                    Game.resumeGame();
-                    seeInfo();
+                    //Game.resumeGame();
+                    controller.game.resumeGame();
                     anim = true;
                     System.out.println(!Game.getPause());
 
@@ -209,6 +209,7 @@ public class GameView {
             }
         });
     }
+
 
     public void updateTunnelNb (int tunnel) {
         info.setNbTunnel(tunnel);
