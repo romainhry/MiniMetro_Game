@@ -146,50 +146,37 @@ public class Game {
 
         Thread threadTime = new Thread() {
             public void run() {
-                while(true){
-                    //if(!getPause()) {
-                        if (pause) {
-                            synchronized (pauseLock) {
-                                // we are in a while loop here to protect against spurious interrupts
-                                while (pause) {
-                                    try {
-                                        pauseLock.wait();
-                                    } catch (InterruptedException e) {
-                                        Thread.currentThread().interrupt();
-                                        // we should probably quit if we are interrupted?
-                                        return;
-                                    }
+                    while (true) {
+                        synchronized (pauseLock) {
+                            // we are in a while loop here to protect against spurious interrupts
+                            if (pause) {
+
+                                try {
+
+                                    pauseLock.wait();
+                                } catch (InterruptedException e) {
+                                    Thread.currentThread().interrupt();
+                                    // we should probably quit if we are interrupted?
+                                    return;
                                 }
                             }
-                        }else{
                             try {
-
                                 clock.incrementeTime();
                                 view.updateClock(clock.getTime(), clock.getDay());
-                                if(clock.getDay()=="LUN" && !gift)
-                                {
+                                if (clock.getDay() == "MAR" && !gift) {
                                     pop2RandomUpgrade();
-                                    gift=true;
+                                    gift = true;
+                                } else if (clock.getDay() != "MAR") {
+                                    gift = false;
                                 }
-                                else if (clock.getDay()!="LUN") {
-                                    gift=false;
-                                }
-
                                 sleep(833);
-                            }
-                            catch(Exception ex) {
+                            } catch (Exception ex) {
                                 System.out.println(ex);
                             }
                         }
-
-
-
-
-                    //}
-
+                    }
                 }
-            }
-        };
+            };
         threadTime.start();
     }
     
@@ -236,7 +223,10 @@ public class Game {
     public void setGameSpeed(int speed) {
     	
     }
-    
+    public static int getTransportedClientNb() {
+        return transportedClientNb;
+    }
+
     public static void addTransportedClient() {
     	++transportedClientNb;
     }

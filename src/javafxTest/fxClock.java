@@ -21,6 +21,9 @@ public class fxClock extends Group {
     private double radius;
     private Text dayName;
     private boolean day = false;
+    private int nbDay;
+
+
 
     public fxClock(double posX, double posY, double radius){
         super();
@@ -88,6 +91,14 @@ public class fxClock extends Group {
         clockNeedle.setEndY(posEndPoint.getY());
     }
     public void setDay(String dayName){
-        this.dayName.setText(dayName);
+        if(dayName!=this.dayName.getText())
+        {
+            this.dayName.setText(dayName);
+            ++nbDay;
+        }
+
+    }
+    public int getNbDay() {
+        return nbDay;
     }
 }
