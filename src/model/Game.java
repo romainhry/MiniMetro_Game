@@ -206,7 +206,6 @@ public class Game {
     	pause=true;
      //   setTrainSpeed(0);
         view.pauseTrains();
-
         view.pauseArc();
     }
     public void resumeGame() {

@@ -127,7 +127,8 @@ public class GameView {
 
                 if(!endGame && arcTimer.lengthProperty().get()==360) {
                     System.out.println("End game");
-                    Game.setTrainSpeed(0);
+                    //Game.setTrainSpeed(0);
+                    Controller.game.pauseGame();
                     endGame=true;
                     endOfGame();
 
@@ -451,10 +452,9 @@ public class GameView {
             return lineLinks.get(l).get(lineLinks.get(l).size()-1);
     }
 
-    public Shape getNextLineLink(Line l, Shape currentLink) {
+    public Shape getNextLineLink(Line l,boolean inFirst) {
         ArrayList<Shape> list = lineLinks.get(l);
-        System.err.println("Index of current Link " + list.indexOf(currentLink));
-        if(list.indexOf(currentLink)==0)
+        if(inFirst)
             return list.get(1);
         else
             return list.get(list.size()-2);

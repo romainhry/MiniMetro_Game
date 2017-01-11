@@ -67,6 +67,7 @@ public class Train {
     }
 
     public Station nextStation() {
+        verif();
         if(direction)
             return line.getStationList().get((nextPointIndex+2)/2);
         return line.getStationList().get((nextPointIndex-2)/2);

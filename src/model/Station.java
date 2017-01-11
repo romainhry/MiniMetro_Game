@@ -31,7 +31,7 @@ public class Station {
         lines = new ArrayList<>();
         distances[t.ordinal()]=0;
         clientList = new ArrayList<Client>();
-        capacity=1;//tmp
+        capacity=8;//tmp
 
     }
 
@@ -86,7 +86,6 @@ public class Station {
         isFull=false;
         System.out.println("start decrease");
         Controller.gameView.startDecreaseArc(this);
-    	
     }
     
     public void setCapacity(int capacity) {

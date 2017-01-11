@@ -236,6 +236,7 @@ public class Controller implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 System.err.println("Line draged "+line);
+                System.err.println("Path " + line.getPath());
                 shape.startFullDrag();
             }
         });
@@ -443,15 +444,13 @@ public class Controller implements Initializable {
                         boolean inFirst = currentLine.getStationList().indexOf(modelSt) == 0;
 
                         /* Removing the link */
-                        Shape nextLink = gameView.getNextLineLink(currentLine,currentLink);
+                        Shape nextLink = gameView.getNextLineLink(currentLine,inFirst);
 
                         if(gameView.intersectRiver(currentLink)) {
                             game.getInventory().addTunnelNb(1);
                             gameView.updateTunnelNb(game.getInventory().getTunnelNb());
                         }
 
-                        int currentLinkIndex = gameView.lineLinks.get(currentLine).indexOf(currentLink);
-                        //gameView.removeLineLink(currentLine,currentLink);
                         gameView.removeLineLink(currentLine,inFirst);
                         nextStation = gameView.getNextStation(currentLine,nextLink);
 
@@ -657,6 +656,10 @@ public class Controller implements Initializable {
             @Override
             public void handle(MouseDragEvent event) {
                 if(currentStation2 != null) {
+
+                    if(currentLine.getStationList().contains(modelSt))
+                        return;
+
                     displayDrawingFromLine(currentStation,currentStation2,modelSt.getPosition().getX(),modelSt.getPosition().getY());
                     Shape link1 = new Polyline(drawing2.getPoints().get(0), drawing2.getPoints().get(1), drawing2.getPoints().get(2), drawing2.getPoints().get(3), drawing2.getPoints().get(4), drawing2.getPoints().get(5));
                     Shape link2 = new Polyline(drawing2.getPoints().get(4), drawing2.getPoints().get(5), drawing2.getPoints().get(6), drawing2.getPoints().get(7), drawing2.getPoints().get(8), drawing2.getPoints().get(9));
