@@ -123,8 +123,11 @@ public class GameView {
 
             @Override
             public void handle(ActionEvent arg0) {
-                System.out.println("End game");
-                Game.setTrainSpeed(0);
+                if(arcTimer.lengthProperty().get()==360) {
+                    System.out.println("End game");
+                    Game.setTrainSpeed(0);
+                }
+
             }
         });
     }
