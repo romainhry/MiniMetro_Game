@@ -17,6 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main extends Application {
+    static Stage stage;
+
 
     /**
      * @param args the command line arguments
@@ -29,11 +31,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
 
-            Group page = (Group) FXMLLoader.load(Main.class.getResource("sample.fxml"));
+
+            Group page = (Group) FXMLLoader.load(Main.class.getResource("mainPage.fxml"));
+
             Color colorScene = new Color((double)240/255, (double)240/255,(double)240/255,0.5);
             Scene scene = new Scene(page,1200,600, colorScene);
+            stage = primaryStage;
             primaryStage.setScene(scene);
-            primaryStage.setTitle("MiniMetro test");
+            primaryStage.setTitle("MiniMetro - UTBM");
             primaryStage.show();
             primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
@@ -46,6 +51,23 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public static void restart(){
+
+        stage.close();
+
+        Platform.runLater( () -> new Main().start( new Stage() ) );
+
+    }
+
+    public static void end(){
+
+        Platform.exit();
+
+    }
+
+
+
 
 
 }

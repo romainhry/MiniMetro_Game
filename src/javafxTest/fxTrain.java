@@ -29,6 +29,7 @@ public class fxTrain extends Group {
     static  final double clientScale = 0.25 ;
     static final double width = 50;
     static final double height = 25 ;
+    TranslateTransition move;
 
     double trainX,trainY;
     Rectangle r;
@@ -53,16 +54,20 @@ public class fxTrain extends Group {
     }
 
     public void move (Position p, int speed) {
-        if(speed==0)return;
+        if(speed==0) {
+            System.err.println("SPEED == 0 : TRAIN STOP");
+            return;
+        }
         double rotation = angle(p,new Position(trainX,trainY)),x = p.getX(), y = p.getY();
         setRotate(rotation);
-        //double millis = 10*distance(trainX,trainY,x,y)+100;
-        double millis = 10*distance(trainX,trainY,x,y)+0;
-        TranslateTransition move = new TranslateTransition(new Duration(millis),this);
+        /* +100 to avoid bug with a duration equal to 0  with the translate transition */
+        double millis = 10*distance(trainX,trainY,x,y)+100;
+        move = new TranslateTransition(new Duration(millis),this);
         move.setByX(x-trainX); move.setByY(y-trainY);
         move.play();
         trainX = x;
         trainY = y;
+
 
         int nextPointIndex = train.getNextPointIndex();
 
@@ -186,5 +191,14 @@ public class fxTrain extends Group {
 
     public void removeClient (Shape s) {
         System.err.println("REMOVAL sucess ? : "+getChildren().remove(s));
+    }
+
+    public void pause() {
+        move.pause();
+    }
+
+    public void resume() {
+
+        move.play();
     }
 }

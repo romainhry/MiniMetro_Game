@@ -56,6 +56,7 @@ public class GameView {
     private Text nbClient;
     private boolean pause=false;
     private boolean gift=true;
+    private boolean endGame = false;
 
 
     public GameView(Group g,Controller c) {
@@ -123,9 +124,14 @@ public class GameView {
 
             @Override
             public void handle(ActionEvent arg0) {
-                if(arcTimer.lengthProperty().get()==360) {
-                    System.out.println("End game");
-                    Game.setTrainSpeed(0);
+                System.out.println("End game");
+                Game.setTrainSpeed(0);
+                if(!endGame) {
+
+                    endGame=true;
+
+                    endOfGame();
+
                 }
 
             }
@@ -171,6 +177,73 @@ public class GameView {
             clock.setDay(dayName);
     }
 
+    public void endOfGame() {
+
+        Platform.runLater(new Runnable() {
+
+            public void run() {
+
+                Stage stage = new Stage();
+
+                try {
+
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+                    alert.setTitle("Game Over");
+
+                    alert.setHeaderText("Votre metro a fermé à cause de la trop longue attente dans la station")  ;
+
+                    alert.setContentText(Game.getTransportedClientNb() + " passagers ont voyagé sur votre metro pendant " + clock.getNbDay() +" jours.");
+
+
+
+                    alert.setGraphic(new ImageView(new Image("file:src/img/lose.png")));
+
+
+
+                    ButtonType buttonTypeOne = new ButtonType("Recommencer");
+
+                    ButtonType buttonTypeTwo = new ButtonType("Quitter");
+
+
+
+                    alert.getButtonTypes().setAll(buttonTypeOne,buttonTypeTwo);
+
+
+
+                    Game.getInventory().addTrain();
+
+                    updateTrainNb(Game.getInventory().getTrain());
+
+
+
+                    Optional<ButtonType> result = alert.showAndWait();
+
+                    if (result.get() == buttonTypeOne) {
+
+                        Main.restart();
+
+                    } else if (result.get() == buttonTypeTwo) {
+
+                        Main.end();
+
+                    }
+
+                } catch (Exception e) {
+
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+
+                }
+
+            }
+
+        });
+
+
+
+    }
+
+
     public void setGift(int gift1, int gift2) {
         Platform.runLater(new Runnable() {
             public void run() {
@@ -181,7 +254,7 @@ public class GameView {
                     alert.setHeaderText("Bienvenue dans une nouvelle semaine ! Vous avez reçu une nouvelle locomotive.")  ;
                     alert.setContentText("Comment voulez-vous depenser le reste de votre budget ?");
 
-                    alert.setGraphic(new ImageView(new Image("file:src/img/train.png",40,40,false,false)));
+                    alert.setGraphic(new ImageView(new Image("file:src/img/train.png")));
 
                     ButtonType buttonTypeOne = new ButtonType("Nouvelle ligne");
                     ButtonType buttonTypeTwo = new ButtonType("Nouveau wagon");
@@ -218,8 +291,7 @@ public class GameView {
 
                     //Game.resumeGame();
                     controller.game.resumeGame();
-                    anim = true;
-                    System.out.println(!Game.getPause());
+                    seeInfo();
 
                 } catch (Exception e) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
@@ -322,7 +394,7 @@ public class GameView {
     }
 
     public void updateNbClient() {
-        int newI = Integer.parseInt(nbClient.getText())+1;
+        int newI = Game.getTransportedClientNb();
         if(newI>=10)
         {
             nbClient.setX(948);
@@ -560,5 +632,18 @@ public class GameView {
     public void move(Train train) {
         fxTrain fxTrain = get(train);
         fxTrain.move(train.getLine().getPath().get(train.getNextPointIndex()), Game.getTrainSpeed());
+    }
+
+    public void pauseTrains() {
+        for(fxTrain train : trains.values()) {
+            train.pause();
+        }
+    }
+
+    public void resumeTrains() {
+        for(fxTrain train : trains.values()) {
+            train.resume();
+        }
+
     }
 }

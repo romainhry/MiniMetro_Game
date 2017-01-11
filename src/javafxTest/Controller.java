@@ -657,44 +657,89 @@ public class Controller implements Initializable {
             @Override
             public void handle(MouseDragEvent event) {
                 if(currentStation2 != null) {
+                    displayDrawingFromLine(currentStation,currentStation2,modelSt.getPosition().getX(),modelSt.getPosition().getY());
+                    Shape link1 = new Polyline(drawing2.getPoints().get(0), drawing2.getPoints().get(1), drawing2.getPoints().get(2), drawing2.getPoints().get(3), drawing2.getPoints().get(4), drawing2.getPoints().get(5));
+                    Shape link2 = new Polyline(drawing2.getPoints().get(4), drawing2.getPoints().get(5), drawing2.getPoints().get(6), drawing2.getPoints().get(7), drawing2.getPoints().get(8), drawing2.getPoints().get(9));
+                    boolean riverLink1 = gameView.intersectRiver(link1), riverLink2 = gameView.intersectRiver(link2);
 
-                    if ( gameView.intersects(drawing2) || (game.getInventory().getTunnelNb()==0 && gameView.intersectRiver(drawing2))) {
+                    int riverIntersectCount = 0;
+                    if (riverLink1)
+                        ++riverIntersectCount;
+                    if (riverLink2)
+                        ++riverIntersectCount;
+
+
+                    if ( Shape.subtract(Shape.intersect(link1,link2),new fxStation(new Station(ShapeType.SQUARE, modelSt.getPosition())).shape).getBoundsInLocal().getWidth() != -1 || gameView.intersects(drawing2) || (game.getInventory().getTunnelNb() < riverIntersectCount && gameView.intersectRiver(drawing2))) {
                         drawing2.setStroke(Color.TRANSPARENT);
                         return;
                     }
 
+                    if (gameView.intersectRiver(currentLink)) {
+                        game.getInventory().addTunnelNb(1);
+                        gameView.updateTunnelNb(game.getInventory().getTunnelNb());
+                    }
 
-                    displayDrawingFromLine(currentStation,currentStation2,modelSt.getPosition().getX(),modelSt.getPosition().getY());
+
+                    displayDrawingFromLine(currentStation, currentStation2, modelSt.getPosition().getX(), modelSt.getPosition().getY());
                     int maxIndex;
-                    if(currentLine.getStationList().indexOf(currentStation)> currentLine.getStationList().indexOf(currentStation2))
+                    if (currentLine.getStationList().indexOf(currentStation) > currentLine.getStationList().indexOf(currentStation2))
                         maxIndex = currentLine.getStationList().indexOf(currentStation);
                     else
                         maxIndex = currentLine.getStationList().indexOf(currentStation2);
 
                     currentStation.removeLink(currentStation2);
-                    currentStation.addLink(modelSt); currentStation2.addLink(modelSt);
+                    currentStation.addLink(modelSt);
+                    currentStation2.addLink(modelSt);
                     game.computeAllDistances();
 
-                    double middleX,middleY,middleX2,middleY2;
-                    middleX = drawing2.getPoints().get(2); middleY = drawing2.getPoints().get(3);
-                    middleX2 = drawing2.getPoints().get(6) ; middleY2 = drawing2.getPoints().get(7);
-                    currentLine.addStationFromLink(maxIndex,modelSt,middleX,middleY,middleX2,middleY2);
+                    double middleX, middleY, middleX2, middleY2;
+                    middleX = drawing2.getPoints().get(2);
+                    middleY = drawing2.getPoints().get(3);
+                    middleX2 = drawing2.getPoints().get(6);
+                    middleY2 = drawing2.getPoints().get(7);
+                    currentLine.addStationFromLink(maxIndex, modelSt, middleX, middleY, middleX2, middleY2);
 
-                    Shape link1 = new Polyline(drawing2.getPoints().get(0),drawing2.getPoints().get(1),drawing2.getPoints().get(2),drawing2.getPoints().get(3),drawing2.getPoints().get(4),drawing2.getPoints().get(5));
-                    Shape link2 = new Polyline(drawing2.getPoints().get(4),drawing2.getPoints().get(5),drawing2.getPoints().get(6),drawing2.getPoints().get(7),drawing2.getPoints().get(8),drawing2.getPoints().get(9));
+
+
+
+                /* make tunnels*/
+                    if (riverLink1) {
+                        Shape tempLink1 = new Polyline(drawing2.getPoints().get(0), drawing2.getPoints().get(1), drawing2.getPoints().get(2), drawing2.getPoints().get(3), drawing2.getPoints().get(4), drawing2.getPoints().get(5));
+                        link1.getStrokeDashArray().addAll(12d, 15d);
+                        Shape toAdd = Shape.intersect(gameView.river, link1);
+                        tempLink1 = Shape.subtract(tempLink1, gameView.river);
+                        tempLink1 = Shape.union(tempLink1, toAdd);
+                        link1 = tempLink1;
+                        game.getInventory().subTunnelNb(1);
+                        gameView.updateTunnelNb(game.getInventory().getTunnelNb());
+
+                    }
+                    if (riverLink2) {
+                        Shape tempLink2 = new Polyline(drawing2.getPoints().get(4), drawing2.getPoints().get(5), drawing2.getPoints().get(6), drawing2.getPoints().get(7), drawing2.getPoints().get(8), drawing2.getPoints().get(9));
+                        link2.getStrokeDashArray().addAll(12d, 15d);
+                        Shape toAdd = Shape.intersect(gameView.river, link2);
+                        tempLink2 = Shape.subtract(tempLink2, gameView.river);
+                        tempLink2 = Shape.union(tempLink2, toAdd);
+                        link2 = tempLink2;
+
+                        game.getInventory().subTunnelNb(1);
+                        gameView.updateTunnelNb(game.getInventory().getTunnelNb());
+                    }
+
 
                     fxStation toSubstract = new fxStation(new Station(ShapeType.SQUARE, modelSt.getPosition()));
-                    link2 = Shape.subtract(link2,toSubstract.shape);
-                    link1 = Shape.subtract(link1,toSubstract.shape);
+                    link2 = Shape.subtract(link2, toSubstract.shape);
+                    link1 = Shape.subtract(link1, toSubstract.shape);
                     toSubstract = new fxStation(new Station(ShapeType.SQUARE, currentStation.getPosition()));
-                    link2 = Shape.subtract(link2,toSubstract.shape);
+                    link2 = Shape.subtract(link2, toSubstract.shape);
                     toSubstract = new fxStation(new Station(ShapeType.SQUARE, currentStation2.getPosition()));
-                    link1 = Shape.subtract(link1,toSubstract.shape);
-
-                    link1.setStroke(currentLine.getColor()); link1.setStrokeWidth(10);
-                    link2.setStroke(currentLine.getColor()); link2.setStrokeWidth(10);
+                    link1 = Shape.subtract(link1, toSubstract.shape);
 
 
+                    link1.setStroke(currentLine.getColor());
+                    link1.setStrokeWidth(10);
+                    link2.setStroke(currentLine.getColor());
+                    link2.setStrokeWidth(10);
 
 
                     group.getChildren().remove(drawing2);
@@ -702,26 +747,21 @@ public class Controller implements Initializable {
 
                     maxIndex = gameView.lineLinks.get(currentLine).indexOf(currentLink);
 
-                    gameView.addLineLink(currentLine,link2,maxIndex);
-                    gameView.addLineLink(currentLine,link1,maxIndex);
+                    gameView.addLineLink(currentLine, link2, maxIndex);
+                    gameView.addLineLink(currentLine, link1, maxIndex);
 
-                    group.getChildren().add(1,link1);
-                    group.getChildren().add(1,link2);
+                    group.getChildren().add(1, link1);
+                    group.getChildren().add(1, link2);
 
-                    addLineEvent(link2,currentStation,modelSt,currentLine);
-                    addLineEvent(link1,modelSt,currentStation2,currentLine);
-
-
-
+                    addLineEvent(link2, currentStation, modelSt, currentLine);
+                    addLineEvent(link1, modelSt, currentStation2, currentLine);
 
 
                     gameView.correctRotation(currentLine);
 
-                    gameView.removeLineLink(currentLine,currentLink);
+                    gameView.removeLineLink(currentLine, currentLink);
 
                     currentStation2 = null;
-
-
 
 
                 }
@@ -914,8 +954,11 @@ public class Controller implements Initializable {
 
         gameView.removeLink(currentLink);
 
-        if ( gameView.intersects(drawing2) || (game.getInventory().getTunnelNb()==0 && gameView.intersectRiver(drawing2))) {
-            drawing2.setStroke(Color.TRANSPARENT);
+        Shape link1 = new Polyline(drawing2.getPoints().get(0), drawing2.getPoints().get(1), drawing2.getPoints().get(2), drawing2.getPoints().get(3), drawing2.getPoints().get(4), drawing2.getPoints().get(5));
+        Shape link2 = new Polyline(drawing2.getPoints().get(4), drawing2.getPoints().get(5), drawing2.getPoints().get(6), drawing2.getPoints().get(7), drawing2.getPoints().get(8), drawing2.getPoints().get(9));
+
+        if ( Shape.subtract(Shape.intersect(link1,link2),new fxStation(new Station(ShapeType.SQUARE, new Position(x2,y2))).shape).getBoundsInLocal().getWidth() != -1 || gameView.intersects(drawing2) || (game.getInventory().getTunnelNb()==0 && gameView.intersectRiver(drawing2))) {
+            drawing2.setStroke(Color.PAPAYAWHIP);
         }
 
 
