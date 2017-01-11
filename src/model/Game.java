@@ -204,13 +204,17 @@ public class Game {
 
     public void pauseGame() {
     	pause=true;
-        setTrainSpeed(0);
+     //   setTrainSpeed(0);
+        view.pauseTrains();
+
         view.pauseArc();
     }
     public void resumeGame() {
         synchronized (pauseLock) {
             pause = false;
-            setTrainSpeed(1);
+            //setTrainSpeed(1);
+            view.resumeTrains();
+
             pauseLock.notifyAll(); // Unblocks thread
             view.resumeArc();
         }

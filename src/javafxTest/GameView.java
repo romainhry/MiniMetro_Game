@@ -633,4 +633,17 @@ public class GameView {
         fxTrain fxTrain = get(train);
         fxTrain.move(train.getLine().getPath().get(train.getNextPointIndex()), Game.getTrainSpeed());
     }
+
+    public void pauseTrains() {
+        for(fxTrain train : trains.values()) {
+            train.pause();
+        }
+    }
+
+    public void resumeTrains() {
+        for(fxTrain train : trains.values()) {
+            train.resume();
+        }
+
+    }
 }
