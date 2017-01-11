@@ -53,11 +53,14 @@ public class fxTrain extends Group {
     }
 
     public void move (Position p, int speed) {
-        if(speed==0)return;
+        if(speed==0) {
+            System.err.println("SPEED == 0 : TRAIN STOP");
+            return;
+        }
         double rotation = angle(p,new Position(trainX,trainY)),x = p.getX(), y = p.getY();
         setRotate(rotation);
-        //double millis = 10*distance(trainX,trainY,x,y)+100;
-        double millis = 10*distance(trainX,trainY,x,y)+0;
+        /* +100 to avoid bug with a duration equal to 0  with the translate transition */
+        double millis = 10*distance(trainX,trainY,x,y)+100;
         TranslateTransition move = new TranslateTransition(new Duration(millis),this);
         move.setByX(x-trainX); move.setByY(y-trainY);
         move.play();
