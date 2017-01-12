@@ -622,7 +622,7 @@ public class GameView {
         }
         Shape intersect = Shape.intersect(square, river);
         if(intersect.getBoundsInLocal().getWidth() != -1) {
-            System.err.println("INTERSECTS RIVER !! ");
+            System.err.println("INTERSECTS RIVER !! POSITION ");
             return true;
         }
         return false;

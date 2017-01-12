@@ -75,6 +75,13 @@ public class Line {
         path.add(indexToAdd,station.getPosition());
         path.add(indexToAdd,new Position(middleX,middleY));
 
+        for(Train t : trainList) {
+            if(t.getNextPointIndex() > indexToAdd) {
+                t.setNextPointIndex(t.getNextPointIndex() + 2);
+                t.verif();
+            }
+        }
+
     }
 
     public void removeStation(Station station) {

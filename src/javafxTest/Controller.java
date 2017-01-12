@@ -480,6 +480,8 @@ public class Controller implements Initializable {
                         }
                         modelSt.removeLink(nextStation);
 
+
+
                         /* FULL DRAG*/
                         currentStation = nextStation;
                         currentT = movedEndLine;
@@ -683,23 +685,58 @@ public class Controller implements Initializable {
                     }
 
 
+                    boolean changeOrder = false;
+                    double middleX, middleY, middleX2, middleY2;
+                    middleX = drawing2.getPoints().get(2);
+                    middleY = drawing2.getPoints().get(3);
+                    middleX2 = drawing2.getPoints().get(6);
+                    middleY2 = drawing2.getPoints().get(7);
+
                     displayDrawingFromLine(currentStation, currentStation2, modelSt.getPosition().getX(), modelSt.getPosition().getY());
                     int maxIndex;
-                    if (currentLine.getStationList().indexOf(currentStation) > currentLine.getStationList().indexOf(currentStation2))
+                    if (currentLine.getStationList().indexOf(currentStation) > currentLine.getStationList().indexOf(currentStation2)) {
                         maxIndex = currentLine.getStationList().indexOf(currentStation);
-                    else
+                    }
+                    else {
                         maxIndex = currentLine.getStationList().indexOf(currentStation2);
+                        if(new Position(drawing2.getPoints().get(0), drawing2.getPoints().get(1)).equals(currentStation2.getPosition())) {
+                            System.err.println("ROTATION BUG TO FIX");
+                            changeOrder = true;
+                            if(  ( currentLine.isLoop() && (currentLine.getStationList().indexOf(currentStation) == 0  || currentLine.getStationList().indexOf(currentStation2) == 0) )) {
+                                System.err.println("DEBUGGING LOOP + max index"+ maxIndex);
+                                ++maxIndex;
+                            }
+                            else {
+
+                                Shape temp = link1;
+                                link1 = link2;
+                                link2 = temp;
+
+                                Station stemp = currentStation;
+                                currentStation = currentStation2;
+                                currentStation2 = stemp;
+
+                                double dtemp = middleX;
+                                middleX = middleX2;
+                                middleX2 = dtemp;
+                                dtemp = middleY;
+                                middleY = middleY2;
+                                middleY2 = dtemp;
+                            }
+
+
+
+
+                        }
+
+                    }
+
 
                     currentStation.removeLink(currentStation2);
                     currentStation.addLink(modelSt);
                     currentStation2.addLink(modelSt);
                     game.computeAllDistances();
 
-                    double middleX, middleY, middleX2, middleY2;
-                    middleX = drawing2.getPoints().get(2);
-                    middleY = drawing2.getPoints().get(3);
-                    middleX2 = drawing2.getPoints().get(6);
-                    middleY2 = drawing2.getPoints().get(7);
                     currentLine.addStationFromLink(maxIndex, modelSt, middleX, middleY, middleX2, middleY2);
 
 
@@ -750,15 +787,27 @@ public class Controller implements Initializable {
 
                     maxIndex = gameView.lineLinks.get(currentLine).indexOf(currentLink);
 
-                    gameView.addLineLink(currentLine, link2, maxIndex);
-                    gameView.addLineLink(currentLine, link1, maxIndex);
+              //      if(!changeOrder) {
+                        gameView.addLineLink(currentLine, link2, maxIndex);
+                        gameView.addLineLink(currentLine, link1, maxIndex);
+         //           }
+                  /*  else {
+                        gameView.addLineLink(currentLine, link1, maxIndex);
+                        gameView.addLineLink(currentLine, link2, maxIndex);
+                    }*/
 
                     group.getChildren().add(1, link1);
                     group.getChildren().add(1, link2);
 
-                    addLineEvent(link2, currentStation, modelSt, currentLine);
-                    addLineEvent(link1, modelSt, currentStation2, currentLine);
+                 //   if(!changeOrder) {
 
+                        addLineEvent(link2, currentStation, modelSt, currentLine);
+                        addLineEvent(link1, modelSt, currentStation2, currentLine);
+                   // }
+                  /*  else {
+                        addLineEvent(link2 ,modelSt , currentStation2, currentLine);
+                        addLineEvent(link1, currentStation, modelSt,  currentLine);
+                    }*/
 
                     gameView.correctRotation(currentLine);
 
