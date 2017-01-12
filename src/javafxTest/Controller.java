@@ -190,7 +190,6 @@ public class Controller implements Initializable {
                 trainPressed = true;
                 currentTrain = shape;
                 modelTrain=modelTr;
-
             }
         });
     }
@@ -392,6 +391,8 @@ public class Controller implements Initializable {
 
                         canConstruct = false;
 
+                        boolean firstEnd = gameView.isFirstEnd(currentT,currentLine);
+
                         group.getChildren().remove(currentT);
 
 
@@ -437,8 +438,6 @@ public class Controller implements Initializable {
                                     game.addToView(cl);
                                 }
                             }
-
-
                             return;
                         }
                         boolean inFirst = currentLine.getStationList().indexOf(modelSt) == 0;
@@ -450,6 +449,9 @@ public class Controller implements Initializable {
                             game.getInventory().addTunnelNb(1);
                             gameView.updateTunnelNb(game.getInventory().getTunnelNb());
                         }
+
+                        System.err.println("NEXT LINK INDEX "+gameView.lineLinks.get(currentLine).indexOf(nextLink));
+
 
                         gameView.removeLineLink(currentLine,inFirst);
                         nextStation = gameView.getNextStation(currentLine,nextLink);
@@ -468,7 +470,9 @@ public class Controller implements Initializable {
                         fxEndLine movedEndLine = new fxEndLine(nextStation,middleX,middleY);
                         movedEndLine.setStroke(currentLine.getColor());
                         group.getChildren().add(1,movedEndLine);
-                        gameView.setLineEnd(currentLine,movedEndLine,inFirst);
+
+                        gameView.setLineEnd(currentLine,movedEndLine,firstEnd);
+
 
                         addTEvent(movedEndLine,nextStation,currentLine,nextLink);
 
@@ -479,7 +483,7 @@ public class Controller implements Initializable {
                             currentLine.removeLoop(modelSt,currentLine.getStationList().indexOf(nextStation)==1);
                         }
                         modelSt.removeLink(nextStation);
-
+                        
 
 
                         /* FULL DRAG*/
@@ -511,12 +515,10 @@ public class Controller implements Initializable {
                             middleX = (x2 + x) / 2;
                             middleY = (y2 + y) / 2;
                         }
-
                     }
+
                     Polyline tempLink = new Polyline(x,y,middleX,middleY,x2,y2);
                     tempLink.setStrokeWidth(10);
-
-
 
                     /* If the current link isn't intersecting other we can add it */
                     if(!gameView.intersects(tempLink)) {
@@ -528,7 +530,6 @@ public class Controller implements Initializable {
                             {
                                 game.getInventory().subTunnelNb(1);
                                 gameView.updateTunnelNb(game.getInventory().getTunnelNb());
-
                             }
                             /* Avoids linking 2 station already linked by the same line*/
                             if (TPressed && !currentLine.addAllowed(modelSt) || (currentLine != null && currentLine.getStationList().size() == 2 && currentLine.getStationList().contains(modelSt) && currentLine.getStationList().contains(currentStation))) {
@@ -558,7 +559,6 @@ public class Controller implements Initializable {
 
                             /* this case we create a new Line */
                             if (TPressed == false) {
-
                                 if(game.getInventory().getLineNb() == 0)
                                     return;
 
@@ -723,14 +723,8 @@ public class Controller implements Initializable {
                                 middleY = middleY2;
                                 middleY2 = dtemp;
                             }
-
-
-
-
                         }
-
                     }
-
 
                     currentStation.removeLink(currentStation2);
                     currentStation.addLink(modelSt);
@@ -738,9 +732,6 @@ public class Controller implements Initializable {
                     game.computeAllDistances();
 
                     currentLine.addStationFromLink(maxIndex, modelSt, middleX, middleY, middleX2, middleY2);
-
-
-
 
                 /* make tunnels*/
                     if (riverLink1) {
@@ -783,39 +774,21 @@ public class Controller implements Initializable {
 
 
                     group.getChildren().remove(drawing2);
-
-
                     maxIndex = gameView.lineLinks.get(currentLine).indexOf(currentLink);
 
-              //      if(!changeOrder) {
-                        gameView.addLineLink(currentLine, link2, maxIndex);
-                        gameView.addLineLink(currentLine, link1, maxIndex);
-         //           }
-                  /*  else {
-                        gameView.addLineLink(currentLine, link1, maxIndex);
-                        gameView.addLineLink(currentLine, link2, maxIndex);
-                    }*/
+                    gameView.addLineLink(currentLine, link2, maxIndex);
+                    gameView.addLineLink(currentLine, link1, maxIndex);
 
                     group.getChildren().add(1, link1);
                     group.getChildren().add(1, link2);
 
-                 //   if(!changeOrder) {
-
-                        addLineEvent(link2, currentStation, modelSt, currentLine);
-                        addLineEvent(link1, modelSt, currentStation2, currentLine);
-                   // }
-                  /*  else {
-                        addLineEvent(link2 ,modelSt , currentStation2, currentLine);
-                        addLineEvent(link1, currentStation, modelSt,  currentLine);
-                    }*/
+                    addLineEvent(link2, currentStation, modelSt, currentLine);
+                    addLineEvent(link1, modelSt, currentStation2, currentLine);
 
                     gameView.correctRotation(currentLine);
-
                     gameView.removeLineLink(currentLine, currentLink);
 
                     currentStation2 = null;
-
-
                 }
             }
         });
@@ -1012,11 +985,7 @@ public class Controller implements Initializable {
         if ( Shape.subtract(Shape.intersect(link1,link2),new fxStation(new Station(ShapeType.SQUARE, new Position(x2,y2))).shape).getBoundsInLocal().getWidth() != -1 || gameView.intersects(drawing2) || (game.getInventory().getTunnelNb()==0 && gameView.intersectRiver(drawing2))) {
             drawing2.setStroke(Color.PAPAYAWHIP);
         }
-
-
     }
-
-
 
     private boolean is45degree(double x1, double y1, double x2, double y2) {
         return abs(x1-x2)== abs(y1-y2);

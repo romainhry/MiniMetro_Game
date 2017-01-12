@@ -74,6 +74,7 @@ public class Train {
     }
 
     public Station currentStation() {
+        verif();
         return line.getStationList().get(nextPointIndex/2);
     }
 

@@ -425,10 +425,11 @@ public class GameView {
 
     public void setLineEnd (Line l, Shape end,boolean inFirst) {
         Shape [] ends  = lineEnds.get(l);
-        if(inFirst)
-            ends[0] = end;
-        else
-            ends[1] = end;
+            if (inFirst)
+                ends[0] = end;
+            else
+                ends[1] = end;
+
     }
 
     public void removeEnds(Line l) {
@@ -643,6 +644,12 @@ public class GameView {
         for(fxTrain train : trains.values()) {
             train.resume();
         }
+
+    }
+
+    public boolean isFirstEnd(Shape currentT,Line l) {
+        Shape [] ends = lineEnds.get(l);
+        return ends[0] == currentT;
 
     }
 }
