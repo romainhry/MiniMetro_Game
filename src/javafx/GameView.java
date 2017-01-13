@@ -229,71 +229,40 @@ public class GameView {
     }
 
     public void endOfGame() {
-
         Platform.runLater(new Runnable() {
-
             public void run() {
-
                 Stage stage = new Stage();
-
                 try {
 
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-
                     alert.setTitle("Game Over");
-
                     alert.setHeaderText("Votre metro a fermé à cause de la trop longue attente dans la station")  ;
-
                     alert.setContentText(Game.getTransportedClientNb() + " passagers ont voyagé sur votre metro pendant " + clock.getNbDay() +" jours.");
-
-
-
                     alert.setGraphic(new ImageView(new Image("file:src/img/lose.png")));
 
-
-
                     ButtonType buttonTypeOne = new ButtonType("Recommencer");
-
                     ButtonType buttonTypeTwo = new ButtonType("Quitter");
-
-
 
                     alert.getButtonTypes().setAll(buttonTypeOne,buttonTypeTwo);
 
-
-
                     Game.getInventory().addTrain();
-
                     updateTrainNb(Game.getInventory().getTrainNb());
-
-
 
                     Optional<ButtonType> result = alert.showAndWait();
 
                     if (result.get() == buttonTypeOne) {
-
                         Controller.game.resumeGame();
-
                         Main.restart();
-
                     } else if (result.get() == buttonTypeTwo) {
-
                         Main.end();
-
                     }
-
                 } catch (Exception e) {
-
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
-
                 }
 
             }
 
         });
-
-
-
     }
 
 

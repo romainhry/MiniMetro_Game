@@ -85,6 +85,7 @@ public class Game {
                     try {
                         Random random = new Random();
                         Thread.sleep( 15000 + random.nextInt(20000));  //min 15 s, max 35 s between 2 new station
+
                         Position pos ;
                         boolean again = false;
                         do {
@@ -95,7 +96,7 @@ public class Game {
                         Station st = new Station(ShapeType.values()[random.nextInt(ShapeType.values().length)],pos);
                         stationList.add(st);
                         Platform.runLater(() -> addToView(st));
-                        //System.out.println("new station");
+                        System.out.println("new station arrived");
                     } catch (Exception e) {
                         System.out.println(e);
                     }
@@ -116,8 +117,10 @@ public class Game {
                         Random random = new Random();
                         Thread.sleep(random.nextInt(5000));  //min 0 s, max 5 s of delay between 2 new clients
                         Station randomStation = stationList.get(random.nextInt(stationList.size()));
+
                         ShapeType randomType;
                         types.remove(randomStation.getType());
+
                         boolean exist = false;
                         do {
                             randomType = types.get(random.nextInt(types.size()));
@@ -131,8 +134,8 @@ public class Game {
                         Client clt = new Client(randomStation,randomType);
                         clientList.add(clt);
                         types.add(randomStation.getType());
-                        Platform.runLater(() -> addToView(clt));                              //bug
-                        //System.out.println("new client");
+                        Platform.runLater(() -> addToView(clt));
+                        System.out.println("new client arrived");
                         if(clt.getStation().getClientList().size()>=clt.getStation().getCapacity()) clt.getStation().startFullTimer();
                     }
                     catch (Exception e)
@@ -142,11 +145,9 @@ public class Game {
                 }
             }
         };
-
         threadClient.start();
-
-
     }
+
 
 
     private void timeGo() {
@@ -157,9 +158,7 @@ public class Game {
                         synchronized (pauseLock) {
                             // we are in a while loop here to protect against spurious interrupts
                             if (pause) {
-
                                 try {
-
                                     pauseLock.wait();
                                 } catch (InterruptedException e) {
                                     Thread.currentThread().interrupt();
@@ -211,7 +210,6 @@ public class Game {
 
     public void pauseGame() {
     	pause=true;
-     //   setTrainSpeed(0);
         threadClient.interrupt();
         threadStation.interrupt();
 
@@ -221,7 +219,6 @@ public class Game {
     public void resumeGame() {
         synchronized (pauseLock) {
             pause = false;
-            //setTrainSpeed(1);
             view.resumeTrains();
             gift=true;
 

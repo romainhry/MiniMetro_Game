@@ -15,13 +15,7 @@ public class fxStation {
     public fxStation(Station s) {
         double x = s.getPosition().getX(), y = s.getPosition().getY();
         arcTimer=new Arc(x, y,33, 33, 0, 0);
-        //arcTimer.setType(ArcType.OPEN);
-       // arcTimer.setStrokeWidth(10);
-        //arcTimer.setStroke(Color.CORAL);
-        //arcTimer.setFill(null);
-
         arcTimeline = new Timeline();
-//        arcTimeline.setCycleCount(1);
         arcTimeline.setAutoReverse(true);
 
         switch(s.getType()) {

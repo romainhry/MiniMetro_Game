@@ -38,7 +38,6 @@ public class fxTrain extends Group {
         super();
         Position p = t.getLine().getPath().get(0);
         trainX = p.getX(); trainY = p.getY();
-
         r = new Rectangle(p.getX()-width/2,p.getY()-(height/2),width,height);
         r.setFill(t.getLine().getColor());
         getChildren().add(r);

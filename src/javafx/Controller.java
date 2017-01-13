@@ -125,6 +125,7 @@ public class Controller implements Initializable {
 
             }
         });
+
         group.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -151,8 +152,6 @@ public class Controller implements Initializable {
             }
         });
 
-        /* MODEL VIEW TEST*/
-
         gameView = new GameView(group,this);
         game = new Game(gameView);
 
@@ -170,6 +169,8 @@ public class Controller implements Initializable {
 
 
     }
+
+
 
     public void addTrainEvent (Shape shape, Train modelTr) {
 
@@ -190,6 +191,8 @@ public class Controller implements Initializable {
             }
         });
     }
+
+
 
     public fxInformations getInfo()
     {
@@ -225,6 +228,8 @@ public class Controller implements Initializable {
         });
         return info;
     }
+
+
 
     public void addLineEvent(Shape shape,Station a, Station b,model.Line line) {
 
@@ -317,10 +322,9 @@ public class Controller implements Initializable {
 
             }
         });
-
-
-
     }
+
+
 
     public void addTEvent (Shape shape, Station modelSt, model.Line modelLine, Shape link) {
         shape.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -354,6 +358,7 @@ public class Controller implements Initializable {
     }
 
 
+
     public void addStationEvent(Shape shape ,Station modelSt) {
         shape.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
@@ -372,8 +377,6 @@ public class Controller implements Initializable {
                 currentStation = modelSt;
             }
         });
-
-
 
         shape.setOnMouseDragOver(new EventHandler<MouseDragEvent>() {
             @Override
@@ -795,6 +798,8 @@ public class Controller implements Initializable {
         });
     }
 
+
+
     //drawing train
     public void displayTrainDrawing()
     {
@@ -808,6 +813,8 @@ public class Controller implements Initializable {
 
     }
 
+
+
     public void displayWagonDrawing()
     {
         group.getChildren().remove(drawingWagon);
@@ -819,6 +826,8 @@ public class Controller implements Initializable {
         group.getChildren().add(1, drawingWagon);
 
     }
+
+
 
     //drawing lines
     public void displayDrawing (double x, double y, double x2 , double y2) {
@@ -875,6 +884,8 @@ public class Controller implements Initializable {
             drawing.setStroke(Color.TRANSPARENT);
         }
     }
+
+
 
     public void displayDrawingFromLine(Station a, Station b, double x2 , double y2) {
         double middleX,middleY,middleX2,middleY2;
@@ -990,7 +1001,6 @@ public class Controller implements Initializable {
     private boolean sup45degree(double x1, double y1, double x2, double y2) {
         return abs(x1-x2) > abs(y2-y1);
     }
-
     private void verifiateConfig(double x2, double y2) {
         if(config == 0 && sup45degree(x,y,x2,y2) || config == 1 &&  abs(x-x2) < abs(y2-y) )
             config = 2;
