@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import javax.swing.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +35,7 @@ public class Main extends Application {
 
 
             Group page = (Group) FXMLLoader.load(Main.class.getResource("mainPage.fxml"));
-
+            //com.apple.eawt.Application.getApplication().setDockIconImage( new ImageIcon(this.getClass().getResource( "/img/iconGame.jpg" )).getImage());
             Color colorScene = new Color((double)240/255, (double)240/255,(double)240/255,0.5);
             Scene scene = new Scene(page,1200,600, colorScene);
             stage = primaryStage;
