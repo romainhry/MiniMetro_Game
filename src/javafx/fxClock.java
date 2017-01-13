@@ -64,14 +64,11 @@ public class fxClock extends Group {
         if(pos>60)pos-=60;
         //int angle=pos*6;
         int angle=pos*30;
-        if(angle==180 && !day)
+        if(pos == 6 || pos == 18)
         {
-            day = true;
+            day = !day;
         }
-        else if(day && angle==180)
-        {
-            day=false;
-        }
+
 
         if(day)
         {

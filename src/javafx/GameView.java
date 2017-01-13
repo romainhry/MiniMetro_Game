@@ -268,7 +268,7 @@ public class GameView {
                     alert.setHeaderText("Bienvenue dans une nouvelle semaine ! Vous avez reçu une nouvelle locomotive.")  ;
                     alert.setContentText("Comment voulez-vous depenser le reste de votre budget ?");
 
-                    alert.setGraphic(new ImageView(new Image("file:src/img/train.png")));
+                    alert.setGraphic(new ImageView(new Image(this.getClass().getResource("/img/train.png").toString())));
 
                     ButtonType buttonTypeOne = new ButtonType("Nouvelle ligne");
                     ButtonType buttonTypeTwo = new ButtonType("Nouveau wagon");
