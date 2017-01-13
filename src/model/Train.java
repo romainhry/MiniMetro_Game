@@ -1,15 +1,10 @@
 package model;
 
-import javafxTest.Controller;
-import javafxTest.GameView;
+import javafx.Controller;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import static model.Game.addTransportedClient;
 import static model.Position.angle;
 
 /**

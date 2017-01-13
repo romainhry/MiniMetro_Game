@@ -2,11 +2,9 @@ package model;
 
 import javafx.scene.paint.Color;
 import javafx.application.Platform;
-import javafxTest.GameView;
+import javafx.GameView;
 
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by romainhry on 08/11/2016.
@@ -164,10 +162,10 @@ public class Game {
                             try {
                                 clock.incrementeTime();
                                 view.updateClock(clock.getTime(), clock.getDay());
-                                if (clock.getDay() == "MAR" && !gift) {
+                                if (clock.getDay() == "LUN" && !gift) {
                                     pop2RandomUpgrade();
                                     gift = true;
-                                } else if (clock.getDay() != "MAR") {
+                                } else if (clock.getDay() != "LUN") {
                                     gift = false;
                                 }
                                 sleep(833);
@@ -217,6 +215,7 @@ public class Game {
             pause = false;
             //setTrainSpeed(1);
             view.resumeTrains();
+            gift=true;
 
             pauseLock.notifyAll(); // Unblocks thread
             view.resumeArc();

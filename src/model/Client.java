@@ -1,6 +1,6 @@
 package model;
 
-import javafxTest.Controller;
+import javafx.Controller;
 
 import static model.Game.addTransportedClient;
 

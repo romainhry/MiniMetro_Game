@@ -1,8 +1,6 @@
 package model;
 
-import javafx.application.Platform;
-import javafxTest.Controller;
-import javafxTest.GameView;
+import javafx.Controller;
 
 import java.util.*;
 
