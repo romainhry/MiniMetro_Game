@@ -115,11 +115,19 @@ public class Game {
                     try {
                         Random random = new Random();
                         Thread.sleep(random.nextInt(5000));  //min 0 s, max 5 s of delay between 2 new clients
-
                         Station randomStation = stationList.get(random.nextInt(stationList.size()));
                         ShapeType randomType;
                         types.remove(randomStation.getType());
-                        randomType = types.get(random.nextInt(types.size()));
+                        boolean exist = false;
+                        do {
+                            randomType = types.get(random.nextInt(types.size()));
+                            exist = false;
+                            for (int i = 0; i < stationList.size() && !exist; ++i) {
+
+                                exist=stationList.get(i).getType()==randomType;
+                            }
+                        }while(!exist);
+
                         Client clt = new Client(randomStation,randomType);
                         clientList.add(clt);
                         types.add(randomStation.getType());

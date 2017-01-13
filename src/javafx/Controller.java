@@ -120,7 +120,7 @@ public class Controller implements Initializable {
                 {
                     x2 = event.getX();
                     y2 = event.getY();
-                    displayTrainDrawing();
+                    displayWagonDrawing();
                 }
 
             }
