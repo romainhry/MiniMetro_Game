@@ -1,14 +1,23 @@
 package javafxTest;
 
+import javafx.animation.TranslateTransition;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.geometry.Point2D;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import model.Position;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Anthony on 06/01/2017.
@@ -16,6 +25,9 @@ import model.Position;
 public class fxClock extends Group {
 
     private Line clockNeedle;
+
+
+
     private Circle clockBorder;
     private Point2D origin;
     private double radius;
@@ -45,6 +57,7 @@ public class fxClock extends Group {
         dayName = new Text(posX-80, posY+7,"LUN");
         dayName.setFill(Color.web("#42322f",1));
         dayName.setFont(Font.font(null, FontWeight.SEMI_BOLD,20));
+
         getChildren().add(clockBorder);
         getChildren().add(clockNeedle);
         getChildren().add(dayName);
@@ -100,5 +113,9 @@ public class fxClock extends Group {
     }
     public int getNbDay() {
         return nbDay;
+    }
+
+    public Circle getClockBorder() {
+        return clockBorder;
     }
 }

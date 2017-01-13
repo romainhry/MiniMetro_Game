@@ -34,6 +34,8 @@ public class Game {
     private static volatile boolean pause =false;
     private final Object pauseLock = new Object();
     private static boolean gift = true;
+    private Thread threadClient;
+    private Thread threadStation;
 
 
     private boolean clientReady,stationReady;
@@ -79,10 +81,9 @@ public class Game {
 
 
     private void popRandomStation() {
-
-        Thread threadStation = new Thread() {
+        threadStation = new Thread() {
             public void run() {
-                while (true) {
+                while (!pause) {
                     try {
                         Random random = new Random();
                         Thread.sleep( 15000 + random.nextInt(20000));  //min 15 s, max 35 s between 2 new station
@@ -110,12 +111,12 @@ public class Game {
 
         ArrayList <ShapeType> types = new ArrayList<>(Arrays.asList(ShapeType.values()));
 
-        Thread threadClient = new Thread() {
+        threadClient = new Thread() {
             public void run() {
-                while(true){
+                while(!pause){
                     try {
                         Random random = new Random();
-                        Thread.sleep(random.nextInt(10000));  //min 0 s, max 10 s of delay between 2 new clients
+                        Thread.sleep(random.nextInt(5000));  //min 0 s, max 5 s of delay between 2 new clients
 
                         Station randomStation = stationList.get(random.nextInt(stationList.size()));
                         ShapeType randomType;
@@ -205,6 +206,9 @@ public class Game {
     public void pauseGame() {
     	pause=true;
      //   setTrainSpeed(0);
+        threadClient.interrupt();
+        threadStation.interrupt();
+
         view.pauseTrains();
         view.pauseArc();
     }
@@ -216,6 +220,8 @@ public class Game {
 
             pauseLock.notifyAll(); // Unblocks thread
             view.resumeArc();
+            popRandomStation();
+            popRandomClient();
         }
     }
     public static boolean getPause() {

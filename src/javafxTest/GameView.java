@@ -67,13 +67,12 @@ public class GameView {
         clients = new HashMap<>();
         group = g;
         controller = c;
-        clock = new fxClock(1150,35,16);
 
 
         info = c.getInfo();
         info.setVisible(false);
 
-        group.getChildren().add(clock);
+
         group.getChildren().add(info);
 
         imageClient = new ImageView(new Image("file:src/img/man.png",40,40,false,false));
@@ -88,9 +87,7 @@ public class GameView {
 
 
         point = new Circle(600,575,4);
-
         point.setStroke(Color.GRAY);
-
         point.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -100,9 +97,71 @@ public class GameView {
                 }
             }
         });
-
         group.getChildren().add(point);
+
+        clock = new fxClock(1150,35,16);
+        group.getChildren().add(clock);
+        Image imagePause = new Image("file:src/img/pause.png",40,40,false,false);
+        Image imagePlay = new Image("file:src/img/play.png",40,40,false,false);
+        ImageView image = new ImageView(imagePause);
+        image.setVisible(false);
+        image.setX(1200);
+        image.setY(65);
+
+        image.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (image.getImage() == imagePlay){
+                    image.setImage(imagePause);
+                    Controller.game.resumeGame();
+                }
+                else
+                {
+                    image.setImage(imagePlay);
+                    Controller.game.pauseGame();
+                }
+            }
+        });
+        group.getChildren().add(image);
+
+
+
+        clock.getClockBorder().setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                image.setVisible(true);
+                TranslateTransition translateTransition =
+                        new TranslateTransition(Duration.millis(1000), image);
+                translateTransition.setFromX(0);
+                translateTransition.setToX(-70);
+                translateTransition.setCycleCount(1);
+                translateTransition.setAutoReverse(true);
+                translateTransition.play();
+                Timer t = new Timer();
+                t.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+
+                        TranslateTransition translateTransition =
+                           new TranslateTransition(Duration.millis(1000), image);
+                        translateTransition.setFromX(-70);
+                        translateTransition.setToX(0);
+                        translateTransition.setCycleCount(1);
+                        translateTransition.setAutoReverse(true);
+                        translateTransition.play();
+                        translateTransition.setOnFinished(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle (ActionEvent e){
+                                image.setVisible(false);
+                            }
+                        });
+
+                    }
+                },5000);
+            }
+        });
     }
+
     public void startIncreaseArc(Station st){
         Arc arcTimer=stations.get(st).arcTimer;
         arcTimer.setType(ArcType.ROUND);

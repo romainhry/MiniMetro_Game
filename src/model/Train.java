@@ -89,6 +89,7 @@ public class Train {
 
     public void addWagon(Wagon added) {
         wagonList.add(added);
+
     }
 
 
