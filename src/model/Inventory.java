@@ -36,45 +36,45 @@ public class Inventory {
 
 
 
-    public int getLine()
+    public int getLineNb()
     {
         return lineNb;
     }
 
-    public void subLine()
+    public void subLineNb()
     {
         --lineNb;
     }
 
-    public void addLine()
+    public void addLineNb()
     {
         ++lineNb;
     }
 
 
-    public int getWagon()
+    public int getWagonNb()
     {
         return wagonNb;
     }
 
-    public void subWagon(int t)
+    public void subWagonNb(int t)
     {
         --wagonNb;
     }
 
-    public void addWagon()
+    public void addWagonNb()
     {
         ++wagonNb;
     }
 
 
 
-    public int getTrain()
+    public int getTrainNb()
     {
         return trainNb;
     }
 
-    public void subTrain()
+    public void subTrainNb()
     {
         --trainNb;
     }
@@ -84,29 +84,6 @@ public class Inventory {
         ++trainNb;
     }
 
-    public int getLineNb() {
-        return lineNb;
-    }
-
-    public void setLineNb(int lineNb) {
-        this.lineNb = lineNb;
-    }
-
-    public int getWagonNb() {
-        return wagonNb;
-    }
-
-    public void setWagonNb(int wagonNb) {
-        this.wagonNb = wagonNb;
-    }
-
-    public int getTrainNb() {
-        return trainNb;
-    }
-
-    public void setTrainNb(int trainNb) {
-        this.trainNb = trainNb;
-    }
 
     public int getInterchangeNb() {
         return interchangeNb;

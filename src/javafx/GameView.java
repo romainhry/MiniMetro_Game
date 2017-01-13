@@ -264,7 +264,7 @@ public class GameView {
 
                     Game.getInventory().addTrain();
 
-                    updateTrainNb(Game.getInventory().getTrain());
+                    updateTrainNb(Game.getInventory().getTrainNb());
 
 
 
@@ -324,19 +324,19 @@ public class GameView {
                     alert.getButtonTypes().setAll(list.get(gift1),list.get(gift2));
 
                     Game.getInventory().addTrain();
-                    updateTrainNb(Game.getInventory().getTrain());
+                    updateTrainNb(Game.getInventory().getTrainNb());
 
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get() == buttonTypeOne) {
-                        Game.getInventory().addLine();
+                        Game.getInventory().addLineNb();
                         Controller.game.addGiftColor();
-                        updateLineNb(Game.getInventory().getLine());
+                        updateLineNb(Game.getInventory().getLineNb());
                     } else if (result.get() == buttonTypeTwo) {
-                        Game.getInventory().addWagon();
-                        updateWagonNb(Game.getInventory().getWagon());
+                        Game.getInventory().addWagonNb();
+                        updateWagonNb(Game.getInventory().getWagonNb());
                     } else if (result.get() == buttonTypeThree) {
                         Game.getInventory().addTrain();
-                        updateTrainNb(Game.getInventory().getTrain());
+                        updateTrainNb(Game.getInventory().getTrainNb());
                     } else if (result.get() == buttonTypeFour) {
                         Game.getInventory().addTunnelNb(1);
                         updateTunnelNb(Game.getInventory().getTunnelNb());

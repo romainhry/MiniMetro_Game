@@ -140,6 +140,7 @@ public class Controller implements Initializable {
                 trainPressed=false;
                 group.getChildren().remove(drawing);
                 group.getChildren().remove(drawingTrain);
+                group.getChildren().remove(drawingWagon);
                 if(currentTrain != null)
                     currentTrain.opacityProperty().set(1);
                 currentT = null;
@@ -253,8 +254,8 @@ public class Controller implements Initializable {
                         gameView.put(modelTrain);
                         modelTrain.move();
                         modelTrain = null;
-                        Game.getInventory().subTrain();
-                        gameView.updateTrainNb(Game.getInventory().getTrain());
+                        Game.getInventory().subTrainNb();
+                        gameView.updateTrainNb(Game.getInventory().getTrainNb());
                     }
                     trainPressed=false;
                 }
@@ -418,9 +419,9 @@ public class Controller implements Initializable {
                                 tr.setLine(null);
                                 game.getInventory().addTrain();
                             }
-                            game.getInventory().addLine();
-                            gameView.updateTrainNb(game.getInventory().getTrain());
-                            gameView.updateLineNb(game.getInventory().getLine());
+                            game.getInventory().addLineNb();
+                            gameView.updateTrainNb(game.getInventory().getTrainNb());
+                            gameView.updateLineNb(game.getInventory().getLineNb());
 
                             a.removeLink(b);
                             currentLine.removeStation(a);
@@ -571,13 +572,13 @@ public class Controller implements Initializable {
                                 gameView.createLine(currentLine, endLine, endLine2);
 
 
-                                game.getInventory().subLine();
+                                game.getInventory().subLineNb();
 
-                                gameView.updateLineNb(game.getInventory().getLine());
-                                if(game.getInventory().getTrain()!=0)
+                                gameView.updateLineNb(game.getInventory().getLineNb());
+                                if(game.getInventory().getTrainNb()!=0)
                                 {
-                                    game.getInventory().subTrain();
-                                    gameView.updateTrainNb(game.getInventory().getTrain());
+                                    game.getInventory().subTrainNb();
+                                    gameView.updateTrainNb(game.getInventory().getTrainNb());
 
                                     train = new Train(0, created, true);
                                     currentLine.addTrain(train);
