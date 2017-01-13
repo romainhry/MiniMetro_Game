@@ -5,9 +5,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by romainhry on 07/11/2016.
- */
+
 public class Line {
     private Color color;
     private List<Station> stationList;
@@ -154,7 +152,6 @@ public class Line {
     }
 
     public boolean isLoop () {
-        //return path.get(0).equals(path.get(path.size()-1)) ;
         return stationList.get(0) == stationList.get(stationList.size()-1) && stationList.size()!=1 ;
     }
 

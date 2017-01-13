@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -38,6 +39,7 @@ public class Main extends Application {
             Scene scene = new Scene(page,1200,600, colorScene);
             stage = primaryStage;
             primaryStage.setScene(scene);
+            primaryStage.getIcons().add(new Image(this.getClass().getResource("/img/iconGame.jpg").toString()));
             primaryStage.setTitle("MiniMetro - UTBM");
             primaryStage.setResizable(false);
             primaryStage.show();
@@ -56,14 +58,13 @@ public class Main extends Application {
     public static void restart(){
 
         stage.close();
-
         Platform.runLater( () -> new Main().start( new Stage() ) );
 
     }
 
     public static void end(){
 
-        Platform.exit();
+        System.exit(0);
 
     }
 

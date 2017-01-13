@@ -643,8 +643,11 @@ public class Controller implements Initializable {
                                 gameView.setLineEnd(currentLine, endLine, b);
                             }
 
-                            if (train != null)
+                            if (train != null) {
                                 train.move();
+                                if (Game.getPause())
+                                    gameView.get(train).pause();
+                            }
 
                             /* FULL DRAG*/
                             currentT = endLine;

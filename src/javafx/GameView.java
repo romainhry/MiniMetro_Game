@@ -42,13 +42,9 @@ public class GameView {
     private Controller controller;
     private fxClock clock;
     private fxInformations info;
-    private boolean anim =false;
     private Circle point;
     private ImageView imageClient;
     private Text nbClient;
-    private boolean pause=false;
-    private boolean gift=true;
-    private boolean endGame = false;
 
 
     public GameView(Group g,Controller c) {
@@ -67,7 +63,7 @@ public class GameView {
 
         group.getChildren().add(info);
 
-        imageClient = new ImageView(new Image("file:src/img/man.png",40,40,false,false));
+        imageClient = new ImageView(new Image(this.getClass().getResource("/img/man.png").toString(),40,40,false,false));
         imageClient.setX(980);
         imageClient.setY(13);
         nbClient = new Text(960, 43,"0");
@@ -83,18 +79,15 @@ public class GameView {
         point.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(!anim) {
                     seeInfo();
-                    anim = true;
-                }
             }
         });
         group.getChildren().add(point);
 
         clock = new fxClock(1150,35,16);
         group.getChildren().add(clock);
-        Image imagePause = new Image("file:src/img/pause.png",40,40,false,false);
-        Image imagePlay = new Image("file:src/img/play.png",40,40,false,false);
+        Image imagePause = new Image(this.getClass().getResource("/img/pause.png").toString(),40,40,false,false);
+        Image imagePlay = new Image(this.getClass().getResource("/img/play.png").toString(),40,40,false,false);
         ImageView image = new ImageView(imagePause);
         image.setVisible(false);
         image.setX(1200);
@@ -116,40 +109,40 @@ public class GameView {
         });
         group.getChildren().add(image);
 
-
-
         clock.getClockBorder().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                image.setVisible(true);
-                TranslateTransition translateTransition =
-                        new TranslateTransition(Duration.millis(1000), image);
-                translateTransition.setFromX(0);
-                translateTransition.setToX(-70);
-                translateTransition.setCycleCount(1);
-                translateTransition.setAutoReverse(true);
-                translateTransition.play();
-                Timer t = new Timer();
-                t.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
+                if(!image.isVisible()) {
+                    image.setVisible(true);
+                    TranslateTransition translateTransition =
+                            new TranslateTransition(Duration.millis(1000), image);
+                    translateTransition.setFromX(0);
+                    translateTransition.setToX(-70);
+                    translateTransition.setCycleCount(1);
+                    translateTransition.setAutoReverse(true);
+                    translateTransition.play();
+                    Timer t = new Timer();
+                    t.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
 
-                        TranslateTransition translateTransition =
-                           new TranslateTransition(Duration.millis(1000), image);
-                        translateTransition.setFromX(-70);
-                        translateTransition.setToX(0);
-                        translateTransition.setCycleCount(1);
-                        translateTransition.setAutoReverse(true);
-                        translateTransition.play();
-                        translateTransition.setOnFinished(new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle (ActionEvent e){
-                                image.setVisible(false);
-                            }
-                        });
+                            TranslateTransition translateTransition =
+                                    new TranslateTransition(Duration.millis(1000), image);
+                            translateTransition.setFromX(-70);
+                            translateTransition.setToX(0);
+                            translateTransition.setCycleCount(1);
+                            translateTransition.setAutoReverse(true);
+                            translateTransition.play();
+                            translateTransition.setOnFinished(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent e) {
+                                    image.setVisible(false);
+                                }
+                            });
 
-                    }
-                },8000);
+                        }
+                    }, 8000);
+                }
             }
         });
     }
@@ -176,11 +169,9 @@ public class GameView {
             @Override
             public void handle(ActionEvent arg0) {
 
-                if(!endGame && arcTimer.lengthProperty().get()==360) {
+                if(arcTimer.lengthProperty().get()==360) {
                     System.out.println("End game");
-                    //Game.setTrainSpeed(0);
                     Controller.game.pauseGame();
-                    endGame=true;
                     endOfGame();
 
                 }
@@ -211,7 +202,6 @@ public class GameView {
     }
 
     public void pauseArc(){
-        //stations.values().g
         for(fxStation fxt: stations.values()){
             fxt.arcTimeline.pause();
         }
@@ -238,22 +228,24 @@ public class GameView {
                     alert.setTitle("Game Over");
                     alert.setHeaderText("Votre metro a fermé à cause de la trop longue attente dans la station")  ;
                     alert.setContentText(Game.getTransportedClientNb() + " passagers ont voyagé sur votre metro pendant " + clock.getNbDay() +" jours.");
-                    alert.setGraphic(new ImageView(new Image("file:src/img/lose.png")));
+                    alert.setGraphic(new ImageView(new Image(this.getClass().getResource("/img/lose.png").toString())));
 
-                    ButtonType buttonTypeOne = new ButtonType("Recommencer");
+                    //ButtonType buttonTypeOne = new ButtonType("Recommencer");
                     ButtonType buttonTypeTwo = new ButtonType("Quitter");
 
-                    alert.getButtonTypes().setAll(buttonTypeOne,buttonTypeTwo);
+                    alert.getButtonTypes().setAll(buttonTypeTwo);
 
                     Game.getInventory().addTrain();
                     updateTrainNb(Game.getInventory().getTrainNb());
 
                     Optional<ButtonType> result = alert.showAndWait();
 
+                    /*
                     if (result.get() == buttonTypeOne) {
                         Controller.game.resumeGame();
                         Main.restart();
-                    } else if (result.get() == buttonTypeTwo) {
+                        */
+                    if (result.get() == buttonTypeTwo) {
                         Main.end();
                     }
                 } catch (Exception e) {
@@ -346,39 +338,40 @@ public class GameView {
 
     public void seeInfo()
     {
-        info.setVisible(true);
-        TranslateTransition translateTransition =
-                new TranslateTransition(Duration.millis(1000), info);
-        translateTransition.setFromY(0);
-        translateTransition.setToY(-70);
-        translateTransition.setCycleCount(1);
-        translateTransition.setAutoReverse(true);
-        translateTransition.play();
+        if(!info.isVisible()) {
+            info.setVisible(true);
+            TranslateTransition translateTransition =
+                    new TranslateTransition(Duration.millis(1000), info);
+            translateTransition.setFromY(0);
+            translateTransition.setToY(-70);
+            translateTransition.setCycleCount(1);
+            translateTransition.setAutoReverse(true);
+            translateTransition.play();
 
-        TranslateTransition translateTransition2 =
-                new TranslateTransition(Duration.millis(1000), point);
-        translateTransition2.setFromY(0);
-        translateTransition2.setToY(-70);
-        translateTransition2.setCycleCount(1);
-        translateTransition2.setAutoReverse(true);
-        translateTransition2.play();
+            TranslateTransition translateTransition2 =
+                    new TranslateTransition(Duration.millis(1000), point);
+            translateTransition2.setFromY(0);
+            translateTransition2.setToY(-70);
+            translateTransition2.setCycleCount(1);
+            translateTransition2.setAutoReverse(true);
+            translateTransition2.play();
 
-        ParallelTransition para = new ParallelTransition();
-        para.getChildren().addAll(
-                translateTransition2,
-                translateTransition
-        );
-        para.setCycleCount(1);
-        para.play();
+            ParallelTransition para = new ParallelTransition();
+            para.getChildren().addAll(
+                    translateTransition2,
+                    translateTransition
+            );
+            para.setCycleCount(1);
+            para.play();
 
-        Timer t = new Timer();
-        t.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                hideInfo();
-            }
-        },
-        5000);
+            Timer t = new Timer();
+            t.schedule(new TimerTask() {
+                           @Override
+                           public void run() {
+                               hideInfo();
+                           }
+                       }, 5000);
+        }
     }
 
     public void hideInfo()
@@ -410,7 +403,6 @@ public class GameView {
             @Override
             public void handle(ActionEvent event) {
                 info.setVisible(false);
-                anim=false;
             }
         });
     }

@@ -20,7 +20,6 @@ public class Game {
     private int height = 600;
     private static int maxShapeWidth = 30;
     private static double distanceSpacing = 100;
-    private Timer day;
     private static Inventory inventory;
     private List<Train> trainList;
     private List<Client> clientList;
@@ -105,7 +104,9 @@ public class Game {
         };
         threadStation.start();
     }
-  
+
+
+
     private void popRandomClient() {
 
         ArrayList <ShapeType> types = new ArrayList<>(Arrays.asList(ShapeType.values()));

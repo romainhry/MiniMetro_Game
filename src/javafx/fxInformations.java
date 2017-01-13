@@ -30,10 +30,10 @@ public class fxInformations extends Group {
     public fxInformations(double posX, double posY){
         super();
 
-        imageTunnel = new ImageView(new Image("file:src/img/tunnel.png",40,40,false,false));
-        imageTrain = new ImageView(new Image("file:src/img/train.png",40,40,false,false));
-        imageWagon = new ImageView(new Image("file:src/img/wagon.png",40,40,false,false));
-        imageLine = new ImageView(new Image("file:src/img/rails.png",40,40,false,false));
+        imageTunnel = new ImageView(new Image(this.getClass().getResource("/img/tunnel.png").toString(),40,40,false,false));
+        imageTrain = new ImageView(new Image(this.getClass().getResource("/img/train.png").toString(),40,40,false,false));
+        imageWagon = new ImageView(new Image(this.getClass().getResource("/img/wagon.png").toString(),40,40,false,false));
+        imageLine = new ImageView(new Image(this.getClass().getResource("/img/rails.png").toString(),40,40,false,false));
 
         imageTrain.setX(posX);
         imageTrain.setY(posY);
