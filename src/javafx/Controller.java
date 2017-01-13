@@ -247,9 +247,13 @@ public class Controller implements Initializable {
             public void handle(MouseDragEvent event) {
                 if(trainPressed) {
                     if (modelTrain!=null){
-                        gameView.removeTrain(modelTrain);
                         modelTrain.changeLine(new Position(event.getX(), event.getY()), line);
-                        gameView.put(modelTrain);
+                        gameView.trainChangeLine(modelTrain);
+                        if(Game.getPause())
+                        {
+                            modelTrain.move();
+                            gameView.get(modelTrain).pause();
+                        }
                         modelTrain = null;
                     }
                     else if( modelTrain==null)
@@ -257,7 +261,10 @@ public class Controller implements Initializable {
                         modelTrain = new Train(0,line,true);
                         line.addTrain(modelTrain);
                         gameView.put(modelTrain);
+
                         modelTrain.move();
+                        if(Game.getPause())
+                            gameView.get(modelTrain).pause();
                         modelTrain = null;
                         Game.getInventory().subTrainNb();
                         gameView.updateTrainNb(Game.getInventory().getTrainNb());

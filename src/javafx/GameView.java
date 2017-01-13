@@ -562,11 +562,20 @@ public class GameView {
         trains.put(t,new fxTrain(t));
         group.getChildren().add(1,trains.get(t));
         controller.addTrainEvent(trains.get(t).r,t);
+    }
+
+    public void trainChangeLine(Train t)
+    {
+        group.getChildren().remove(get(t));
+        trains.replace(t,new fxTrain(t));
+        group.getChildren().add(1,trains.get(t));
+        controller.addTrainEvent(trains.get(t).r,t);
 
     }
 
     public void put(Client c) {
         clients.put(c,new fxClient(c));
+
         group.getChildren().add(clients.get(c).shape);
     }
 
