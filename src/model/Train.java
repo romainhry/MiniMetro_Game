@@ -1,20 +1,13 @@
 package model;
 
-import javafxTest.Controller;
-import javafxTest.GameView;
+import javafx.Controller;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import static model.Game.addTransportedClient;
 import static model.Position.angle;
 
-/**
- * Created by romainhry on 07/11/2016.
- */
+
 public class Train {
     private int nextPointIndex; // +2 if at a station to know the next station
     private java.util.List<Client> clientList;
@@ -67,12 +60,14 @@ public class Train {
     }
 
     public Station nextStation() {
+        verif();
         if(direction)
             return line.getStationList().get((nextPointIndex+2)/2);
         return line.getStationList().get((nextPointIndex-2)/2);
     }
 
     public Station currentStation() {
+        verif();
         return line.getStationList().get(nextPointIndex/2);
     }
 
@@ -87,13 +82,15 @@ public class Train {
 
     public void addWagon(Wagon added) {
         wagonList.add(added);
+
     }
 
 
     public void changeLine (Position newPosition,Line newLine) {
         line.removeTrain(this);
         newLine.addTrain(this);
-        // nexpointindex ...
+        setNextPointIndex(0);
+        verif();
     }
 
     public void setPosition(Position pos) {
@@ -114,6 +111,9 @@ public class Train {
         }
     }
 
+
+
+
     public void removeClient(Client client) {
 
         if(clientList.contains(client))
@@ -127,6 +127,7 @@ public class Train {
             }
         }
     }
+
 
 
     public void stopAtStation () {
@@ -152,30 +153,15 @@ public class Train {
                 Controller.gameView.addClientToTrain(this,cl);
             }
         }
-
-
-        // then moves
-
-        // BUG : TRAINS FREEZE AT RANDOM TIMES ???
-        /*
-        Timer t = new Timer();
-        t.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                move();
-            }
-        }, 500);
-        */
-
         move();
-
     }
+
+
 
     public void move () {
 
         if(line == null)
             return;
-
 
         /* avoids stopping at the middle of a line*/
         if(  nextPointIndex != line.getPath().size()-1 && nextPointIndex%2 == 0) {
@@ -214,27 +200,12 @@ public class Train {
             else if(nextPointIndex == 0)
                 direction = true;
         }
-
-
-
-
         Controller.gameView.move(this);
-        /*
-        Timer t = new Timer();
-        double delay = p.distance(line.getPath().get(nextPointIndex))*10;
-        t.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Train.this.move();
-            }
-        }, (long) delay);
-        */
-
     }
 
+
+
     public void verif() {
-
-
         if(nextPointIndex > line.getPath().size()-1) {
             if(direction) {
                 nextPointIndex = line.getPath().size()-2;
@@ -263,8 +234,5 @@ public class Train {
             else if(nextPointIndex == 0)
                 direction = true;
         }
-
-
     }
-
 }

@@ -1,12 +1,10 @@
 package model;
 
-import javafxTest.Controller;
+import javafx.Controller;
 
 import static model.Game.addTransportedClient;
 
-/**
- * Created by romainhry on 07/11/2016.
- */
+
 public class Client {
     private Station station = null;
     private ShapeType destinationType = null;
@@ -37,6 +35,10 @@ public class Client {
             || train.nextStation().getMinDistance(destinationType) < station.getMinDistance(destinationType)) {
             station.removeClient(this);
             train.addClient(this);
+            //If the station is actually not full and was full before
+            if( (station.getClientList().size() <= station.getCapacity()) && station.getIsFull()){
+                station.decreaseFullTimer();
+            }
             return true;
         }
         return false;
@@ -60,6 +62,10 @@ public class Client {
             else {
                 station.addClient(this);
                 Controller.gameView.put(this);
+                //If the station is actually full and was not already full
+                if( (station.getClientList().size() > station.getCapacity()) && !station.getIsFull()){
+                    station.startFullTimer();
+                }
             }
             return true;
         }
@@ -68,8 +74,12 @@ public class Client {
         for (Wagon wagon:train.getWagonList()){
             if(wagon.getClientList().contains(this)){
                 wagon.removeClient(this);
-                station.addClient(this);
                 station = train.currentStation();
+                station.addClient(this);
+                //If the station is actually full and was not already full
+                if( (station.getClientList().size() > station.getCapacity()) && !station.getIsFull()){
+                    station.startFullTimer();
+                }
                 wagon.setWillSwap(false);
                 //...
                 return true;

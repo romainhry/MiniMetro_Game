@@ -2,18 +2,16 @@ package model;
 
 import javafx.scene.paint.Color;
 import javafx.application.Platform;
-import javafxTest.GameView;
+import javafx.GameView;
 
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by romainhry on 08/11/2016.
  */
 public class Game {
     public GameView view;
-    private static int trainSpeed ;
+    private static int trainSpeed = 1;
     protected static int vehicleCapacity = 8 ;
     private static int stationCapacity ;
     private static int timeSpeed ;
@@ -22,16 +20,20 @@ public class Game {
     private int height = 600;
     private static int maxShapeWidth = 30;
     private static double distanceSpacing = 100;
-    private Timer day;
     private static Inventory inventory;
     private List<Train> trainList;
     private List<Client> clientList;
     private List<Line> lineList;
     private List <Station> stationList ;
     private List <Color> linesColor ;
+    private List <Color> giftColor ;
     private Clock clock;
-    private static boolean pause =false;
+    private static volatile boolean pause =false;
+    private final Object pauseLock = new Object();
     private static boolean gift = true;
+    private Thread threadClient;
+    private Thread threadStation;
+
 
     private boolean clientReady,stationReady;
 
@@ -44,6 +46,7 @@ public class Game {
         inventory = new Inventory(3,3,0,3,0);
         linesColor  = new ArrayList<>();
         linesColor.add(Color.RED); linesColor.add(Color.BLUE);linesColor.add(Color.ORANGE);
+        giftColor = new ArrayList<>();  giftColor.add(Color.GREEN); giftColor.add(Color.AQUAMARINE); giftColor.add(Color.PURPLE);
         clock = new Clock();
     }
 
@@ -53,19 +56,35 @@ public class Game {
         return c;
     }
 
+    public Color getDrawingColor() {
+        if(linesColor.size()==0)
+            return Color.PAPAYAWHIP;
+        return linesColor.get(0);
+    }
+
     public void addColor(Color c) {
         linesColor.add(c);
     }
 
+    public void addGiftColor() {
+        addColor(giftColor.remove(0));
+    }
+
+    public static void setTrainSpeed(int speed){
+        trainSpeed=speed;
+    }
+
+    public static int getTrainSpeed(){return trainSpeed;}
+
 
     private void popRandomStation() {
-
-        Thread threadStation = new Thread() {
+        threadStation = new Thread() {
             public void run() {
-                while (true) {
+                while (!pause) {
                     try {
                         Random random = new Random();
                         Thread.sleep( 15000 + random.nextInt(20000));  //min 15 s, max 35 s between 2 new station
+
                         Position pos ;
                         boolean again = false;
                         do {
@@ -76,7 +95,7 @@ public class Game {
                         Station st = new Station(ShapeType.values()[random.nextInt(ShapeType.values().length)],pos);
                         stationList.add(st);
                         Platform.runLater(() -> addToView(st));
-                        //System.out.println("new station");
+                        System.out.println("new station arrived");
                     } catch (Exception e) {
                         System.out.println(e);
                     }
@@ -85,27 +104,40 @@ public class Game {
         };
         threadStation.start();
     }
-  
+
+
+
     private void popRandomClient() {
 
         ArrayList <ShapeType> types = new ArrayList<>(Arrays.asList(ShapeType.values()));
 
-        Thread threadClient = new Thread() {
+        threadClient = new Thread() {
             public void run() {
-                while(true){
+                while(!pause){
                     try {
                         Random random = new Random();
-                        Thread.sleep(random.nextInt(10000));  //min 0 s, max 10 s of delay between 2 new clients
-
+                        Thread.sleep(random.nextInt(5000));  //min 0 s, max 5 s of delay between 2 new clients
                         Station randomStation = stationList.get(random.nextInt(stationList.size()));
+
                         ShapeType randomType;
                         types.remove(randomStation.getType());
-                        randomType = types.get(random.nextInt(types.size()));
+
+                        boolean exist = false;
+                        do {
+                            randomType = types.get(random.nextInt(types.size()));
+                            exist = false;
+                            for (int i = 0; i < stationList.size() && !exist; ++i) {
+
+                                exist=stationList.get(i).getType()==randomType;
+                            }
+                        }while(!exist);
+
                         Client clt = new Client(randomStation,randomType);
                         clientList.add(clt);
                         types.add(randomStation.getType());
-                        Platform.runLater(() -> addToView(clt));                              //bug
-                        //System.out.println("new client");
+                        Platform.runLater(() -> addToView(clt));
+                        System.out.println("new client arrived");
+                        if(clt.getStation().getClientList().size()>=clt.getStation().getCapacity()) clt.getStation().startFullTimer();
                     }
                     catch (Exception e)
                     {
@@ -114,42 +146,44 @@ public class Game {
                 }
             }
         };
-
         threadClient.start();
-
-
     }
+
 
 
     private void timeGo() {
 
         Thread threadTime = new Thread() {
             public void run() {
-                while(true){
-                    if(!getPause()) {
-                        try {
-
-                            clock.incrementeTime();
-                            view.updateClock(clock.getTime(), clock.getDay());
-                            if(clock.getDay()=="LUN" && !gift)
-                            {
-                                pop2RandomUpgrade();
-                                gift=true;
+                    while (true) {
+                        synchronized (pauseLock) {
+                            // we are in a while loop here to protect against spurious interrupts
+                            if (pause) {
+                                try {
+                                    pauseLock.wait();
+                                } catch (InterruptedException e) {
+                                    Thread.currentThread().interrupt();
+                                    // we should probably quit if we are interrupted?
+                                    return;
+                                }
                             }
-                            else if (clock.getDay()!="LUN") {
-                                gift=false;
+                            try {
+                                clock.incrementeTime();
+                                view.updateClock(clock.getTime(), clock.getDay());
+                                if (clock.getDay() == "LUN" && !gift) {
+                                    pop2RandomUpgrade();
+                                    gift = true;
+                                } else if (clock.getDay() != "LUN") {
+                                    gift = false;
+                                }
+                                sleep(833);
+                            } catch (Exception ex) {
+                                System.out.println(ex);
                             }
-
-                            sleep(833);
-                        }
-                        catch(Exception ex) {
-                            System.out.println(ex);
                         }
                     }
-
                 }
-            }
-        };
+            };
         threadTime.start();
     }
     
@@ -159,20 +193,42 @@ public class Game {
 
         pauseGame();
         int n1,n2;
-        n1=random.nextInt(4);
-        do {
-            n2 =random.nextInt(4);
-        }while(n2==n1);
-        view.setGift(n1,n2);
-    }
-    
-    public static void pauseGame() {
-    	pause=true;
-    }
-    public static void resumeGame() {
-        pause=false;
+        if(giftColor.size() != 0) {
+            n1 = random.nextInt(4);
+            do {
+                n2 = random.nextInt(4);
+            } while (n2 == n1);
+            view.setGift(n1, n2);
+        }
+        else {
+            n1 = random.nextInt(3) + 1;
+            do {
+                n2 = random.nextInt(3) +1;
+            } while (n2 == n1);
+            view.setGift(n1, n2);
+        }
     }
 
+    public void pauseGame() {
+    	pause=true;
+        threadClient.interrupt();
+        threadStation.interrupt();
+
+        view.pauseTrains();
+        view.pauseArc();
+    }
+    public void resumeGame() {
+        synchronized (pauseLock) {
+            pause = false;
+            view.resumeTrains();
+            gift=true;
+
+            pauseLock.notifyAll(); // Unblocks thread
+            view.resumeArc();
+            popRandomStation();
+            popRandomClient();
+        }
+    }
     public static boolean getPause() {
         return pause;
     }
@@ -181,7 +237,10 @@ public class Game {
     public void setGameSpeed(int speed) {
     	
     }
-    
+    public static int getTransportedClientNb() {
+        return transportedClientNb;
+    }
+
     public static void addTransportedClient() {
     	++transportedClientNb;
     }

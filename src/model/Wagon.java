@@ -8,8 +8,10 @@ import java.util.ArrayList;
 public class Wagon {
     private java.util.List<Client> clientList;
     private boolean willSwap;
+    private Train train;
 
-    Wagon(){
+    Wagon(Train t){
+        train =t;
         clientList = new ArrayList<>();
         willSwap = false;
     }
@@ -28,9 +30,10 @@ public class Wagon {
     public boolean getWillSwap(){return willSwap;}
     public void setWillSwap(boolean value){ willSwap=value;}
 
-    public void swapWagon(Train added) {
-        willSwap=true;
-        // ...
+    public void changeTrain(Train t) {
+        train.getWagonList().remove(this);
+        train=t;
+        train.getWagonList().add(this);
     }
 
 }

@@ -5,9 +5,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by romainhry on 07/11/2016.
- */
+
 public class Line {
     private Color color;
     private List<Station> stationList;
@@ -66,6 +64,24 @@ public class Line {
         }
     }
 
+    public void addStationFromLink(int index, Station station , double middleX, double middleY, double middleX2 , double middleY2) {
+        stationList.add(index,station);
+        int indexToAdd = (index-1)*2+1;
+        path.remove((index*2)-1);
+
+        path.add(indexToAdd,new Position(middleX2,middleY2));
+        path.add(indexToAdd,station.getPosition());
+        path.add(indexToAdd,new Position(middleX,middleY));
+
+        for(Train t : trainList) {
+            if(t.getNextPointIndex() > indexToAdd) {
+                t.setNextPointIndex(t.getNextPointIndex() + 2);
+                t.verif();
+            }
+        }
+
+    }
+
     public void removeStation(Station station) {
         if(isLoop()) {
             System.err.println("looped cannot choose which to remove");
@@ -120,6 +136,7 @@ public class Line {
     
     public void addTrain(Train train) {
         trainList.add(train);
+        train.setLine(this);
     }
 
     public void removeTrain(Train train) {
@@ -135,7 +152,6 @@ public class Line {
     }
 
     public boolean isLoop () {
-        //return path.get(0).equals(path.get(path.size()-1)) ;
         return stationList.get(0) == stationList.get(stationList.size()-1) && stationList.size()!=1 ;
     }
 

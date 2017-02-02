@@ -10,6 +10,7 @@ public class Clock {
     int currentDay;
     int time;
 
+
     public Clock(){
         time=0;
         currentDay=0;
